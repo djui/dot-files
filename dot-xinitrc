@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+xsetroot -solid black &
+gnome-screensaver &
+gnome-settings-daemon &
+gnome-power-manager &
+gnome-volumr-manager &
+nm-applet &
+
+exec /usr/bin/awesome

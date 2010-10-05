@@ -1,0 +1,4 @@
+#name : {error, ...}
+# --
+{error, ${1:$$(yas/choose-value '("not_yet_implemented" "deprecated" "{badarg, Reason}" "Reason" "'', Reason"))}}$0
+

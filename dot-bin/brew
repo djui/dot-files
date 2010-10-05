@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+case $1 in
+     search) 
+        shift
+        apt-cache search $@
+        ;;
+     *)
+        apt-get $*
+        ;;
+esac

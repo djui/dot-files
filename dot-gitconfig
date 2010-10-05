@@ -1,0 +1,26 @@
+[user]
+	name = Uwe Dauernheim
+	email = uwe@klarna.com
+[core]
+	editor = emacs -nw
+[alias]
+	unstage = reset HEAD --
+	last = log -1 HEAD
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[gui]
+	recentrepo = /home/uwe/dev
+	recentrepo = /home/uwe/dot-files
+[merge]
+	tool = p4merge
+[mergetool "p4merge"]
+	cmd = p4merge $BASE $LOCAL $REMOTE $MERGED
+[guitool "Ignore file"]
+	cmd = echo "$FILENAME" >> .gitignore
+	needsfile = yes
+[guitool "Delete file"]
+	cmd = git rm $FILENAME
+	needsfile = yes

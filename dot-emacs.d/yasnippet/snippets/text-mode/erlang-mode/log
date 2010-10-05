@@ -1,0 +1,4 @@
+#name : logger:log(...)
+# logger:log(${1:$$(yas/choose-value '("debug" "info" "warn" "error" "fatal"))}, ${2:"$3"}${4:, [$5]})$0
+# --
+logger:log(${1:debug}, ${2:"$3"}${4:, [$5]})$0

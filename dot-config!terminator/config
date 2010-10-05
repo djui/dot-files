@@ -1,0 +1,45 @@
+[global_config]
+  handle_size = 0
+  borderless = True
+  geometry_hinting = False
+  title_transmit_bg_color = "#272821"
+  tab_position = bottom
+  title_inactive_bg_color = "#272821"
+[keybindings]
+  cycle_prev = <Shift><Control>asciitilde
+  toggle_zoom = <Shift><Control>g
+  go_up = <Shift><Control>Up
+  resize_up = None
+  resize_left = None
+  go_prev = None
+  new_window = <Shift><Control>n
+  go_down = <Shift><Control>Down
+  cycle_next = <Control>grave
+  reset_clear = <Shift><Control>x
+  go_right = <Shift><Control>Right
+  go_next = None
+  go_left = <Shift><Control>Left
+  resize_right = None
+  resize_down = None
+[profiles]
+  [[default]]
+    use_system_font = False
+    background_darkness = 0.83
+    scrollbar_position = hidden
+    foreground_color = "#f8f8f2"
+    scroll_on_output = False
+    icon_bell = False
+    show_titlebar = False
+    font = ProggyCleanTTSZBP 12
+    background_color = "#272821"
+    scrollback_infinite = True
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]

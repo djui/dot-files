@@ -1,0 +1,28 @@
+# Simple but enough status formatting
+hardstatus alwayslastline "%{= kK}%-Lw%{= g}%n*$ %t%{= kK}%+Lw%=%H"
+
+# Don't show startup message
+startup_message off
+
+# Show visual bell e.g. on false inputs
+vbell on
+
+# Don't block output if e.g. SSH connection timesout
+nonblock on
+
+# Forward mouse scroll to screen
+termcapinfo xterm|xterms|xs|rxvt ti@:te@
+
+# Don't use C-a but C-z as screen meta key
+escape ^Zz
+
+#Activate UTF-8
+defutf8 on
+
+# terminfo and termcap for nice 256 color terminal
+# allow bold colors - necessary for some reason
+#attrcolor b ".I" 
+# tell screen how to set colors. AB = background, AF=foreground 
+#termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm' 
+# erase background with current bg color 
+#defbce "on"

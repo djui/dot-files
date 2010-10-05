@@ -1,0 +1,279 @@
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Configurations
+;; These do not work with setq(-default)
+(tool-bar-mode     -1) ; nil toggles
+(scroll-bar-mode   -1) ; nil toggles
+(menu-bar-mode     -1) ; nil toggles
+(iswitchb-mode      t)
+(global-linum-mode  t)
+(mouse-wheel-mode   t)
+;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
+(setq-default user-full-name               "Uwe Dauernheim"
+              user-mail-address            "uwe@klarna.com"
+              ;; Annoying stuff
+              inhibit-startup-echo-area-message t
+              inhibit-startup-screen       t
+              initial-scratch-message      nil
+              visible-bell                 t
+              ;; Save session to reopen next time
+              ;; desktop-save-mode         t
+              ;; Compilation help
+              byte-compile-warnings        nil
+              compilation-scroll-output    t
+              ;; Combine killring and X clipboard
+              x-select-enable-clipboard    t
+              interprogram-paste-function  'x-cut-buffer-or-selection-value
+              ;; Completion
+              completion-ignore-case       t
+              pcomplete-ignore-case        t
+              ;; Selection mode
+              shift-select-mode            t
+              delete-selection-mode        t
+              transient-mark-mode          t
+              ;; Line numbering mode
+              global-visual-line-mode      t
+              global-whitespace-mode       t
+              line-number-mode             t
+              column-number-mode           t
+              linum-format                 "%3d "
+              ;; Syntax-, region mark-, parentals-Highlighting
+              global-font-lock-mode        t
+              font-lock-maximum-decoration t
+              ;; Default tab width
+              tab-width                    2
+              c-basisc-indent              2
+              c-basic-offset               2
+              py-indent-offset             2
+              indent-tabs-mode             nil
+              ;; Have a border above and below the cursor while scrolling
+              scroll-margin                5
+              ;; Only scroll by 1 line a time
+              scroll-up-aggressively       0.1
+              scroll-down-aggressively     0.1
+              scroll-conservatively        most-positive-fixnum
+              scroll-preserve-screen-position t
+              ;; Keep old backups of changed files
+              make-backup-files            t
+              backup-by-copying            t
+              version-control              t
+              delete-old-versions          t
+              kept-new-versions            10
+              kept-old-versions            10
+              backup-directory-alist       '(("." . "~/.emacs.d/backups"))
+              undo-limit                   100000
+              ;; Scrolling and mouse
+              xterm-mouse-mode             t
+              ;; Version control
+              vc-follow-symlinks           nil
+              ;; Change frame title
+              frame-title-format (setq icon-title-format
+                                       (format "%%b - %semacs" 
+                                               (if (featurep 'xemacs) "x" "")))
+              ;; Highlight long lines
+              whitespace-style (quote (lines-tail)) whitespace-line-column 80
+              ;; Initial modes
+              initial-major-mode 'erlang-mode)
+              ;default-major-mode 'erlang-mode)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Global keybindings
+;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
+(global-set-key (kbd "M-g")         'goto-line)
+(global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
+(global-set-key (kbd "C-t")         'transpose-lines)
+(global-set-key (kbd "C-S-k")       'backward-kill-line)
+(global-set-key (kbd "C-S-d")       'another-line)
+;; Resize windows keyboard shortcuts
+(global-set-key (kbd "M-S-<left>")  'shrink-window-horizontally)
+(global-set-key (kbd "M-S-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "M-S-<down>")  'shrink-window)
+(global-set-key (kbd "M-S-<up>")    'enlarge-window)
+(global-set-key (kbd "M-<tab>")     'next-source-buffer)
+(global-set-key (kbd "C-/")         'comment-or-uncomment-region)
+;; Format Erlang code like Eclipse
+(global-set-key (kbd "C-f")         'erlang-indent-function)
+(global-set-key (kbd "C-S-f")       'erlang-indent-current-buffer)
+;; Auto-Completition
+(global-set-key (kbd "C-<esc>")     'dabbrev-expand)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Encoding type
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Hooks
+(add-hook 'erlang-mode-hook 'highlight-todo-hook)
+(add-hook 'python-mode-hook (local-set-key "\C-c\C-c" 'python-compile))
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Assign mode to file (extensions)
+(add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
+(add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-moede))
+(add-to-list 'auto-mode-alist '("README" . text-mode))
+(add-to-list 'auto-mode-alist '("\\.html$" . html-helper-mode))
+(add-to-list 'auto-mode-alist '("\\.htm$" . html-helper-mode))
+(add-to-list 'auto-mode-alist '("^COMMIT_EDITMSG$" . vc-git-log-view-mode))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Custom functions
+(defun next-source-buffer ()
+  (interactive)
+  (next-buffer)
+  ;;(while (string-match "^\*.*\*$" (buffer-name)) (next-buffer)))
+  (if (string-match "^\*.*\*$" (buffer-name))
+      (next-source-buffer)))
+(defun backward-kill-line (arg) 
+  (interactive "p") 
+  (kill-line 0))
+(defun highlight-todo-hook ()
+  (font-lock-add-keywords nil '(("\\(@todo\\|@fixme\\|XXX\\|TODO\\|FIXME\\)" 1
+                                 font-lock-warning-face prepend))))
+(defun python-compile () 
+  (interactive) (compile (concat "python " (buffer-name))))
+(defun duplicate-line ()
+  (interactive)
+  (move-beginning-of-line 1)
+  (kill-line)
+  (yank)
+  (open-line 1)
+  (next-line 1)
+  (yank))
+;;; Original author: ttn at netcom dot com, 28-Jan-1996
+;;; Modified for multiple lines: Eric
+;;; http://curiousprogrammer.wordpress.com/2009/02/11/simple-emacs-shortcut/
+(defun another-line (num-lines)
+  "Copies line, preserving cursor column, and increments any numbers found.
+  This should probably be generalized in the future.
+  Argument NUM-LINES is the number of lines to modify."
+  (interactive "p")
+  (if (not num-lines) (setq num-lines 0) (setq num-lines (1- num-lines)))
+  (let* ((col (current-column))
+         (bol (save-excursion (forward-line (- num-lines)) (beginning-of-line) (point)))
+         (eol (progn (end-of-line) (point)))
+         (line (buffer-substring bol eol)))
+    (goto-char bol)
+    (while (re-search-forward "[0-9]+" eol 1)
+      (let ((num (string-to-int (buffer-substring
+                                 (match-beginning 0) (match-end 0)))))
+        (replace-match (int-to-string (1+ num))))
+      (setq eol (save-excursion (goto-char eol) (end-of-line) (point))))
+    (goto-char bol)
+    (insert line "\n")
+    (move-to-column col)))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Custom aliases
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Color Themes
+;; To see your style colors associations: M-x list-faces-display
+;(require 'font-lock)
+(add-to-list 'load-path "~/.emacs.d/color-theme")
+(require 'color-theme)
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-almost-monokai.el")
+;(color-theme-almost-monokai)
+(load-file "~/.emacs.d/color-theme/themes/color-theme-eclips3media.el")
+(color-theme-eclips3media)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Erlang Mode
+;(add-to-list 'load-path "~/OTP/install/R13B03/lib/erlang/lib/tools-2.6.5/emacs")
+;(add-to-list 'exec-path "~/OTP/install/R13B03/bin")
+;(setq erlang-root-dir "~/OTP/install/R13B03")
+
+(add-to-list 'load-path "/usr/lib/erlang/lib/tools-2.6.5/emacs")
+(add-to-list 'exec-path "/usr/bin")
+(setq erlang-root-dir "/usr")
+
+(require 'erlang-start)
+(setq erlang-tab-mode nil)
+(setq erlang-electric-commands t)
+(setq erlang-indent-level '2)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Distel
+(add-to-list 'load-path "~/.emacs.d/distel/elisp")
+(require 'distel)
+(distel-setup)
+(setq erl-nodename-cache 'distel\@simpknot.hq.kred)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Efene/Ifene Mode
+(add-to-list 'load-path "~/.emacs.d/efene-mode")
+(require 'ifene)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Scala Mode
+(add-to-list 'load-path "~/.emacs.d/scala-mode")
+(require 'scala-mode-auto)
+
+;; Ensime for Scala Mode
+(add-to-list 'load-path "~/.emacs.d/ensime/elisp")
+(require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Lua Mode
+(add-to-list 'load-path "~/.emacs.d/lua-mode")
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+(setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Markdown Mode
+(add-to-list 'load-path "~/.emacs.d/markdown-mode")
+(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
+(setq auto-mode-alist (append '(("\\.md" . markdown-mode)
+                                ("\\.markdown" . markdown-mode)) auto-mode-alist))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Yet Another Snippet plugin
+;; See http://yasnippet.googlecode.com/svn/trunk/doc/snippet-development.html
+(add-to-list 'load-path "~/.emacs.d/yasnippet")
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/yasnippet/snippets")
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Delete old backup files
+(message "Deleting old backup files...")
+(let ((week (* 60 60 24 7))
+      (current (float-time (current-time))))
+  (dolist (file (directory-files temporary-file-directory t))
+    (when (and (backup-file-name-p file)
+               (> (- current (float-time (fifth (file-attributes file))))
+                  week))
+      (message file)
+      (delete-file file))))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Custom set variables
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(fringe-mode 0 nil (fringe))
+ '(safe-local-variable-values (quote ((erlang-indent-level . 2))))
+ '(tooltip-mode nil))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+)
+(if window-system
+    (custom-set-faces
+     '(default ((t (:inherit nil :stipple nil :background "#272821" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "unknown" :family "ProggyCleanTTSZBP"))))
+     '(mode-line ((t (:box nil))))
+     '(mode-line-inactive ((t (:box nil))))
+     '(whitespace-line ((t (:background "gray20" :foreground "#D62E00"))))))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Misc
+;; Do a recompile once in a while to make startup faster
+;(byte-recompile-directory "~/.emacs.d") 

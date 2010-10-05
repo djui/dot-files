@@ -1,0 +1,10 @@
+; generated_rule emacs
+( if 
+( and 
+( is ( window_class ) "Emacs" )
+) 
+( begin 
+( undecorate )
+( println "match" )
+)
+)

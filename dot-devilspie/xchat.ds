@@ -1,0 +1,12 @@
+; generated_rule xchat
+( if 
+( and 
+( is ( window_class ) "Xchat" )
+) 
+( begin 
+( pin )
+( undecorate )
+( opacity 80 )
+( println "match" )
+)
+)

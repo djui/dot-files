@@ -1,0 +1,148 @@
+[ -z "$PS1" ] && return
+shopt -s histappend
+shopt -s checkwinsize
+
+####################################################################
+## PROMPT SCRIPT ###################################################
+####################################################################
+
+#PS1='\[\033[01;32m\]█ `dirs`$\[\033[00m\] '
+#PS1='\[\033[01;32m\]█ \[\033[01;33m\]`for ((i=1; $i < ${#DIRSTACK[*]}; i++)); do echo -n +; done` \[\033[01;32m\]\w$\[\033[00m\] '
+PS1='\[\033[01;33m\]`stack=$((${#DIRSTACK[*]}-1)) ; if [[ $stack -gt 0 ]] ; then echo -n $stack ; fi`\[\033[01;32m\]\w$\[\033[00m\] '
+#PS1="\[\033[01;32m\]█\D{%H:%M}$PS1"
+PS1="\[\033[01;32m\]◤$(hostname | cut -c 1) $PS1"
+
+####################################################################
+## ALIASES##########################################################
+####################################################################
+
+alias .='pwd'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias beep='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
+alias cd..='cd ..'
+alias diff='diff -u'
+alias dir='ls -ghp'
+alias dirs='dirs -l -v -p'
+alias erlgrep='grep *.erl'
+alias grep='grep -n --color=auto'
+alias locate='find / -wholename "/proc" -prune -o -iname'
+alias ls='ls --color=auto'
+alias lstree='tree -dL 2'
+alias open='xdg-open'
+alias notify='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
+alias pushd='pushd > /dev/null'
+alias popd='popd > /dev/null'
+alias whereis='find . -iname'
+
+#alias distel='erl -name distel -pa /home/uwe/Dev/kred/trunk/lib/*/ebin -pa /home/uwe/Dev/kred/trunk/test/shared/ebin -pa /home/uwe/Dev/distel/ebin'
+#alias gperf='erl -name gperf -run gperf -pa /home/uwe/Dev/kred/trunk/lib/eper/ebin -pa /usr/local/lib/erlang/lib/gtknode-0.30/ebin/'
+
+alias a=''
+alias b=''
+alias c=''
+alias d='git diff'
+alias e='emacs -nw'
+alias f='find'
+alias g='grep'
+alias h='head'
+alias i=''
+#alias j='jumpstart'
+alias k=''
+alias l='ls'
+alias m=''
+alias n=''
+alias o=''
+alias p='ps -aux'
+alias q=''
+alias r=''
+alias s=''
+alias t='tail'
+alias u=''
+alias v=''
+alias w=''
+alias x=''
+alias y=''
+alias z=''
+
+####################################################################
+## FUNCTIONS #######################################################
+####################################################################
+
+function google {
+    w3m "http://www.google.com/search?q=$@"
+}
+
+function encrypt {
+    openssl aes-256-cbc -a -salt -in "$1" -out "$1.aes"
+    shred --remove "$1"
+}
+
+function decrypt {
+    openssl aes-256-cbc -d -a -salt -in "$1.aes" -out "$1"
+}
+
+function title {
+    echo -ne "\033]0;"$@"\007"
+}
+
+function 2sv {
+    urlenctext="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$@")"
+    transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Csv" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
+    echo {${transtext#*:}
+}
+
+function 2en {
+    urlenctext="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$@")"
+    transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Cen" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
+    echo {${transtext#*:}
+}
+
+####################################################################
+## EXPORTS #########################################################
+####################################################################
+
+export PATH="$PATH:${HOME}/.bin"
+export EDITOR="emacs -nw"
+# Allow 256 colors in terminal
+# Also look here: http://www.xvx.ca/~awg/emacs-colors-howto.txt
+# sudo apt-get install ncurses-term
+export TERM=xterm-256color
+export NAME="Uwe Dauernheim"
+export MAIL="uwe@klarna.com"
+export ORGANIZATION="Klarna AB"
+
+####################################################################
+## ERLANG STUFF ####################################################
+####################################################################
+
+export KRED_POLL=true
+export ORIG_PATH="${PATH}"
+
+function r13b03 {
+    export PATH="${HOME}/dev/otp/install/R13B03/bin:${ORIG_PATH}"
+    export DIALYZER_PLT="$HOME/dev/otp/install/R13B03/dialyzer.plt"
+}
+
+function r13b04 {
+    export PATH="$HOME/dev/otp/install/R13B04/bin:${ORIG_PATH}"
+    export DIALYZER_PLT="$HOME/dev/otp/install/R13B04/dialyzer.plt"
+}
+
+function interl {
+    r13b04
+}
+
+
+## Use latest Erlang version
+interl
+
+####################################################################
+####################################################################
+####################################################################
+
+# Added by autojump install.sh
+source /etc/profile.d/autojump.bash
+
+[ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] && \
+     $HOME/Dropbox/Klarna/klarna_animation.sh 1
