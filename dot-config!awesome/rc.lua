@@ -37,22 +37,26 @@ layouts =
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
+--  awful.layout.suit.fair,
+--  awful.layout.suit.fair.horizontal,
 --  awful.layout.suit.spiral,
 --  awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier
+--  awful.layout.suit.max.fullscreen,
+     awful.layout.suit.magnifier
 }
 -- }}}
 
 -- {{{ Tags
--- Define a tag table which hold all screen tags.
-tags = {}
+-- Define a tag table which will hold all screen tags.
+tags = {
+  names  = { "1:www ", "  2  ", "  3  ", "  4  ", "  5  ", "  6  ", "  7  ", "  8  ", "9:irc " },
+  layout = { layouts[2], layouts[2], layouts[2], layouts[2], layouts[2],
+             layouts[2], layouts[2], layouts[2], layouts[2]
+}}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[2])
+    tags[s] = awful.tag(tags.names, s, tags.layout)
 end
 -- }}}
 
@@ -77,16 +81,35 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 
 -- {{{ Wibox
 
--- Create a battery usage widget
-batwidget = awful.widget.progressbar()
-batwidget:set_width(28)
-batwidget:set_height(10)
-batwidget:set_vertical(true)
-batwidget:set_background_color("#494B4F")
-batwidget:set_border_color(nil)
-batwidget:set_color("#AECF96")
-batwidget:set_gradient_colors({ "#AECF96", "#88A175", "#FF5656" })
-vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
+-- Create a gmail widget
+gmailicon = widget({ type = "imagebox" })
+gmailicon.image = image("/home/uwe/.config/awesome/icons/icons_18x18/png/red/normal/001_02.png")
+gmailwidget = widget({ type = "textbox" })
+vicious.register(gmailwidget, vicious.widgets.gmail, "${count}", 260)
+
+-- -- Create a batwidget
+-- baticon = widget({ type = "imagebox" })
+-- baticon.image = image("/home/jfalco/.config/awesome/icons/bat.png")
+-- -- Initilize widget
+-- batwidget = widget({ type = "textbox" })
+-- -- Register widget
+-- vicious.register(batwidget, vicious.widgets.bat, "$1$2%", 31, "BAT0")
+
+-- -- Create a wifiwidget
+-- wifiicon = widget({ type = "imagebox" })
+-- wifiicon.image = image("/home/jfalco/.config/awesome/icons/wifi.png")
+-- -- Initilize widget
+-- wifiwidget = widget({ type = "textbox" })
+-- -- Register widget
+-- vicious.register(wifiwidget, vicious.widgets.wifi, "${ssid} ${link}% ${rate} Mb/s", 5, "wlan0")
+
+-- -- Create a volume widget
+-- volicon = widget({ type ="imagebox" })
+-- volicon.image = image("/home/jfalco/.config/awesome/icons/vol.png")
+-- -- Initilize widget
+-- volwidget = widget({ type = "textbox" })
+-- -- Register widget
+-- vicious.register(volwidget, vicious.widgets.volume, " $1% ", 2, "Master")
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
@@ -164,9 +187,11 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
+        gmailwidget, spacer, gmailicon, spacer,
+        -- Doesn't work:
+        -- batwidget, spacer,
         s == 1 and mysystray or nil,
         mytasklist[s],
-        batwidget,
         layout = awful.widget.layout.horizontal.rightleft
     }
 end

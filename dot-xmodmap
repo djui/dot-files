@@ -1,18 +1,18 @@
-!! Make the left Command key an additional Control key
-!remove Mod4 = Super_L
-!add Control = Super_L
-!!keycode 0x73 = Control_L
-
-!! Switch left Alt and Ctrl keys
-remove control = Control_L
-remove mod1 = Alt_L
-keycode 64 = Control_L
-keycode 37 = Alt_L
-add control = Control_L
-add mod1 = Alt_L
-
 !! Make the key left of the 'z' the grave/asciitilde key
 keycode 94 = grave asciitilde
 
 !! Make the key left of the '1' the section/plusminus key
 keycode 49 = section plusminus
+
+!! Switch left Control and left Mod4/Win key
+remove Mod4 = Super_L
+remove Control = Control_L
+keycode 133 = Super_L
+keycode 37 = Control_L
+add Mod4 = Control_L
+add Control = Super_L
+
+!! Assign Control to CapsLock
+!remove Lock = Caps_Lock
+!keycode 66 = Control_L
+!add Lock = Control_L

@@ -5,7 +5,7 @@ hardstatus alwayslastline "%{= kK}%-Lw%{= g}%n*$ %t%{= kK}%+Lw%=%H"
 startup_message off
 
 # Show visual bell e.g. on false inputs
-vbell on
+vbell off
 
 # Don't block output if e.g. SSH connection timesout
 nonblock on

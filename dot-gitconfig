@@ -4,8 +4,36 @@
 [core]
 	editor = emacs -nw
 [alias]
-	unstage = reset HEAD --
-	last = log -1 HEAD
+  glog  = log --graph --abbrev-commit --pretty=oneline
+  lol   = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  lola  = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
+  # Called from the top-level dir. Pull from git://HOST/.
+  serv  = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git 
+  st    = status --ignore-submodules
+  ci    = commit
+  br    = branch
+  co    = checkout
+  df    = diff --ignore-submodules
+  lg    = log -p
+  # all new commits after you fetched, with stats, but excluding merges
+  lc    = log ORIG_HEAD.. --stat --no-merges
+  in    = log HEAD..origin/master
+  out   = log origin/master..HEAD
+  # Recall that the commit which will be committed after we resolve this conflict
+  # will have two parents instead of the usual one: one parent will be HEAD, the 
+  # tip of the current branch; the other will be the tip of the other branch, 
+  # which is stored temporarily in MERGE_HEAD.
+  gitkconflict = !gitk --left-right HEAD...MERGE_HEAD
+  # "pull" or "merge" always leaves the original tip of the current branch in ORIG_HEAD.
+  # Hence, to see what a merge brought in, use the mdiff alias:
+  mdiff = !gitk --left-right HEAD...ORIG_HEAD
+  # Remove a file from the index: git unstage <file>
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"     
+  who = "!git shortlog -s -- | sort -n -k1"                                                             
+  aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"   
+  swap = checkout "@{-1}"
 [color]
 	branch = auto
 	diff = auto
@@ -15,12 +43,16 @@
 	recentrepo = /home/uwe/dev
 	recentrepo = /home/uwe/dot-files
 [merge]
-	tool = p4merge
-[mergetool "p4merge"]
-	cmd = p4merge $BASE $LOCAL $REMOTE $MERGED
+	tool = kdiff3
 [guitool "Ignore file"]
 	cmd = echo "$FILENAME" >> .gitignore
 	needsfile = yes
 [guitool "Delete file"]
 	cmd = git rm $FILENAME
 	needsfile = yes
+[push]
+  # instead of pushing all branches with git push, you only push the current one.
+  default = current
+[core]
+  # global per user gitignore file
+  excludesfile = "~/.gitignore"

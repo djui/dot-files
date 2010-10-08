@@ -111,7 +111,7 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Assign mode to file (extensions)
 (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
-(add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-moede))
+(add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("README" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.html$" . html-helper-mode))
 (add-to-list 'auto-mode-alist '("\\.htm$" . html-helper-mode))
