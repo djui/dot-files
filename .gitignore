@@ -2,4 +2,6 @@
 /dot-emacs.d/backups
 *~
 /dot-ssh/*
+!/dot-ssh/config
 !/dot-ssh/github_rsa.pub
+!/dot-ssh/kit_rsa.pub
