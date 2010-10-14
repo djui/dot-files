@@ -22,6 +22,8 @@ SRCITEMS=(
 ## First, get all git submodules like .config/awesome/vicious and .emacs.d/distel
 git submodule update --init
 
+mkdir $HOME/.config
+
 for SRCITEM in ${SRCITEMS[*]} ; do 
     DESTITEM=$(echo $SRCITEM | tr '!' '/')
     echo "Trying to link $DESTDIR/.$SRCITEM ..."
@@ -31,4 +33,5 @@ for SRCITEM in ${SRCITEMS[*]} ; do
 done
 
 ## Create some symlinks
+[ $(hostname) == "simpknot" ] && \
 sudo ln -s ~/.bin/p4v/bin/p4merge /usr/local/bin/p4merge
