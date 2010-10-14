@@ -3,21 +3,22 @@ shopt -s histappend
 shopt -s checkwinsize
 
 [ -f /etc/bash_completion ] && source /etc/bash_completion
-[ -f $HOME/.bin/.git-completion.bash ] && source $HOME/.bin/git-completion.bash
+[ -f $HOME/.bin/git-completion.bash ] && source $HOME/.bin/git-completion.bash
 export GIT_PS1_SHOWDIRTYSTATE=true
 
 ####################################################################
 ## PROMPT SCRIPT ###################################################
 ####################################################################
 
-PS1='\[\033[01;33m\]`stack=$((${#DIRSTACK[*]}-1)) ; if [[ $stack -gt 0 ]] ; then echo -n $stack ; fi`\[\033[01;32m\]\w\[\033[00m\]'
-PS1="\[\033[01;32m\]◤$(hostname | cut -c 1) $PS1$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]") "
+#PS1='\[\033[01;33m\]`stack=$((${#DIRSTACK[*]}-1)) ; if [[ $stack -gt 0 ]] ; then echo -n $stack ; fi`\[\033[01;32m\]\w\[\033[00m\]'
+#PS1="\[\033[01;32m\]◤$(hostname | cut -c 1) $PS1$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]") "
+#PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+PS1='\[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]") '
 
 ####################################################################
 ## ALIASES #########################################################
 ####################################################################
 
-alias .='pwd'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias apt-search='apt-cache search'
@@ -26,8 +27,7 @@ alias cd..='cd ..'
 alias diff='diff -u'
 alias dir='ls -lhp'
 alias dirs='dirs -l -v -p'
-alias erlgrep='grep *.erl'
-alias grep='grep --color=auto'
+alias erlgrep='find . -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
 alias locate='find / -wholename "/proc" -prune -o -iname'
 alias la='ls -alhp'
 alias ls='ls --color=auto'
@@ -35,27 +35,29 @@ alias lt='tree -dCL 2'
 alias open='xdg-open'
 alias notify='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
 alias pushd='pushd > /dev/null'
+alias pd='pushd'
 alias popd='popd > /dev/null'
 alias whereis='find . -iname'
 
-alias distel='erl -name distel -pa /home/uwe/dev/dev/lib/*/ebin -pa /home/uwe/dev/dev/test/shared/ebin -pa /home/uwe/.emacs.d/distel/ebin'
+alias distel='erl -sname distel -pa /home/uwe/dev/klarna/kred/lib/*/ebin -pa /home/uwe/dev/klarna/kred/test/shared/ebin -pa /home/uwe/.emacs.d/distel/ebin'
 #alias gperf='erl -name gperf -run gperf -pa /home/uwe/Dev/kred/trunk/lib/eper/ebin -pa /usr/local/lib/erlang/lib/gtknode-0.30/ebin/'
 
 alias a=''
-alias b=''
-alias c=''
+alias b='emacs -nw ~/.bashrc'
+alias c='clear'
 alias d='git diff'
-#alias e='emacs -nw'
+alias e='emacsclient -a "" -nw'
 alias f='find'
 alias g='grep'
 alias h='head'
-alias i=''
+#alias i='ifconfig | grep -o "inet addr:[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | cut -c 11-'
+alias i='hostname -I'
 #alias j='jumpstart'
 alias k=''
 alias l='ls'
 alias m=''
 alias n=''
-alias o=''
+#alias o=''
 alias p='ps -aux'
 alias q=''
 alias r=''
@@ -72,9 +74,13 @@ alias z=''
 ## FUNCTIONS #######################################################
 ####################################################################
 
-function e {
-    emacs $* &
+function o {
+    find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient
 }
+
+#function e {
+#    emacs $* &
+#}
 
 function google {
     w3m "http://www.google.com/search?q=$@"
@@ -131,11 +137,12 @@ export NAME="Uwe Dauernheim"
 export MAIL="uwe@klarna.com"
 export ORGANIZATION="Klarna AB"
 export KRED_POLL=true
-export ORIG_PATH="${PATH}"
+export ERL_INETRC=$HOME/.inetrc
+export ORIG_PATH="$PATH"
 
 function r13b04 {
     export PATH="$HOME/dev/OTP/install/R13B04/bin:${ORIG_PATH}"
-    export DIALYZER_PLT="$HOME/dev/otp/install/R13B04/dialyzer.plt"
+    export DIALYZER_PLT="$HOME/dev/OTP/install/R13B04/dialyzer.plt"
     echo "Erlang: " `which erl`
 }
 
@@ -152,3 +159,5 @@ r13b04
 
 [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] && \
      $HOME/Dropbox/Klarna/klarna_animation.sh 1
+
+cd $HOME/dev/klarna/kred

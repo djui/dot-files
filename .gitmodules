@@ -4,9 +4,21 @@
         ignore = dirty
 [submodule "distel"]
 	path = dot-emacs.d/distel
-	url = git://github.com/massemanet/distel.git
+	url = git://github.com/rost/distel.git
         ignore = dirty
 [submodule "markdown"]
 	path = dot-emacs.d/markdown-mode
 	url = git://jblevins.org/git/markdown-mode.git
+        ignore = dirty
+[submodule "autojump"]
+	path = dot-bin/autojump
+	url = git://github.com/joelthelion/autojump.git
+        ignore = dirty
+[submodule "git-extras"]
+	path = dot-bin/git-extras
+	url = git://github.com/visionmedia/git-extras.git
+        ignore = dirty
+[submodule "magit"]
+	path = dot-emacs.d/magit
+	url = git://github.com/visionmedia/git-extras.git
         ignore = dirty

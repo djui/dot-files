@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--perforce-xml-version=1.0-->
+<FeaturesEnabled varName="FeaturesEnabled" >
+ <Visibility varName="Functionality" >
+  <Integration>On</Integration>
+  <Labeling>On</Labeling>
+  <Jobs>On</Jobs>
+  <RevisionGraph>On</RevisionGraph>
+  <Timelapse>On</Timelapse>
+  <CustomTools>On</CustomTools>
+  <Administration>On</Administration>
+  <ConnectionWizard>On</ConnectionWizard>
+  <Workspaces>On</Workspaces>
+  <Offline>On</Offline>
+  <DashBoard>On</DashBoard>
+  <P4Applets>On</P4Applets>
+ </Visibility>
+</FeaturesEnabled>
+

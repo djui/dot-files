@@ -43,7 +43,12 @@
 	recentrepo = /home/uwe/dev
 	recentrepo = /home/uwe/dot-files
 [merge]
-	tool = kdiff3
+  summary = true
+  tool = "p4merge" 
+[mergetool "p4merge"]
+  cmd = p4merge "$PWD/$BASE" "$PWD/$LOCAL" "$PWD/$REMOTE" "$PWD/$MERGED" 
+  keepBackup = false
+  trustExitCode = false
 [guitool "Ignore file"]
 	cmd = echo "$FILENAME" >> .gitignore
 	needsfile = yes

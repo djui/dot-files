@@ -1,0 +1,6 @@
+#!/bin/bash
+
+FROM="."
+TO="$HOME/.wine"
+
+cp "$FROM/winemp3.acm" "$TO/drive_c/windows/system32/winemp3.acm"

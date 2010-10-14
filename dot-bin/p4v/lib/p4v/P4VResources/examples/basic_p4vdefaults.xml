@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--perforce-xml-version=1.0-->
+<PreferencesDefaults varName="PreferencesDefaults" >
+ <ConfigPreferences varName="Initial Preferences" >
+  <Performance>
+   <!--Server refresh interval-->
+   <ServerRefresh>5</ServerRefresh>
+   <!--Maximum number of files displayed in changelists,-->
+   <!--and the resolve dialog-->
+   <MaxFiles>1000</MaxFiles>
+   <!--Maximum size of file preview in k-bytes-->
+   <MaxFilePreviewSize>500</MaxFilePreviewSize>
+   <!--Number of entries to fetch at a time-->
+   <!--(applies to changelists, jobs, branches and labels)-->
+   <!--(provided value should be a mulitple of 100)-->
+   <FetchCount>100</FetchCount>
+  </Performance>
+  <Layout>
+   <!--Show Address Bar-->
+   <!--( true or false )-->
+   <ShowAddressbar>false</ShowAddressbar>
+   <!--Show Log Pane-->
+   <!--( true or false )-->
+   <ShowLogPane>false</ShowLogPane>
+    <!--Show Dashboard-->
+    <!--( true or false )-->
+    <ShowDashboard>false</ShowDashboard>
+    <!--Show Detail Pane-->
+   <!--( true or false )-->
+   <ShowDetailPane>false</ShowDetailPane>
+   <!--Show Filetype in the Workspace and Depot Tree-->
+   <!--( true or false )-->
+   <ShowFileType>false</ShowFileType>
+   <!--Show Revision Information in the Workspace-->
+   <!--and Depot Tree-->
+   <!--( true or false )-->
+   <ShowRevInfo>false</ShowRevInfo>
+ </Layout>
+ </ConfigPreferences>
+</PreferencesDefaults>

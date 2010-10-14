@@ -33,12 +33,12 @@ modkey = "Mod4"
 layouts =
 {
     awful.layout.suit.floating,
+    awful.layout.suit.fair,
+    awful.layout.suit.fair.horizontal,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
---  awful.layout.suit.fair,
---  awful.layout.suit.fair.horizontal,
 --  awful.layout.suit.spiral,
 --  awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
@@ -50,7 +50,7 @@ layouts =
 -- {{{ Tags
 -- Define a tag table which will hold all screen tags.
 tags = {
-  names  = { "1:www ", "  2  ", "  3  ", "  4  ", "  5  ", "  6  ", "  7  ", "  8  ", "9:irc " },
+  names  = { "1:www", "2", "3", "4", "5", "6", "7", "8", "9" },
   layout = { layouts[2], layouts[2], layouts[2], layouts[2], layouts[2],
              layouts[2], layouts[2], layouts[2], layouts[2]
 }}
@@ -85,7 +85,7 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 gmailicon = widget({ type = "imagebox" })
 gmailicon.image = image("/home/uwe/.config/awesome/icons/icons_18x18/png/red/normal/001_02.png")
 gmailwidget = widget({ type = "textbox" })
-vicious.register(gmailwidget, vicious.widgets.gmail, "${count}", 260)
+vicious.register(gmailwidget, vicious.widgets.gmail, "<span color='#A50000' weight='bold'>${count}</span>", 260)
 
 -- -- Create a batwidget
 -- baticon = widget({ type = "imagebox" })
@@ -176,7 +176,7 @@ for s = 1, screen.count() do
                                           end, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s })
+    mywibox[s] = awful.wibox({ position = "top", height = "16", screen = s })
     -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
         {

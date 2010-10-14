@@ -13,6 +13,7 @@
   resize_left = None
   go_prev = None
   new_window = <Shift><Control>n
+  reset = <Shift><Control>k
   go_down = <Shift><Control>Down
   cycle_next = <Control>grave
   reset_clear = <Shift><Control>x
@@ -28,7 +29,6 @@
     scrollbar_position = hidden
     foreground_color = "#f8f8f2"
     scroll_on_output = False
-    icon_bell = False
     show_titlebar = False
     font = ProggyCleanTTSZBP 12
     background_color = "#272821"

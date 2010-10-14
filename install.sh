@@ -17,8 +17,6 @@ SRCITEMS=(
     mocp
     config!awesome
     config!terminator
-#   devilspie
-#   gconf
 )
 
 ## First, get all git submodules like .config/awesome/vicious and .emacs.d/distel
@@ -31,3 +29,6 @@ for SRCITEM in ${SRCITEMS[*]} ; do
     [ -e "$DESTDIR/.$DESTITEM" ] && mv "$DESTDIR/.$DESTITEM" "$DESTDIR/.$DESTITEM.bak"
     ln -s "$SRCDIR/dot-$SRCITEM" "$DESTDIR/.$DESTITEM"
 done
+
+## Create some symlinks
+sudo ln -s ~/.bin/p4v/bin/p4merge /usr/local/bin/p4merge
