@@ -160,4 +160,5 @@ r13b04
 [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] && \
      $HOME/Dropbox/Klarna/klarna_animation.sh 1
 
-cd $HOME/dev/klarna/kred
+[ -e $HOME/dev/klarna/kred ] && \
+  cd $HOME/dev/klarna/kred
