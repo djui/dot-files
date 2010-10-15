@@ -127,7 +127,7 @@ export TERM=xterm-256color
 ####################################################################
 
 # Added by autojump install.sh
-source /etc/profile.d/autojump.bash
+[ -e /etc/profile.d/autojump.bash ] && source /etc/profile.d/autojump.bash
 
 ####################################################################
 ## KLARNA/ERLANG STUFF #############################################
