@@ -20,5 +20,5 @@
         ignore = dirty
 [submodule "magit"]
 	path = dot-emacs.d/magit
-	url = git://github.com/visionmedia/git-extras.git
+	url = git://github.com/philjackson/magit.git
         ignore = dirty
