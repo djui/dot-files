@@ -179,6 +179,7 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Magit
+;; Will only work if you did "make && sudo make install" on it 
 (require 'magit)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

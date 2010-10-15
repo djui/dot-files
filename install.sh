@@ -19,10 +19,15 @@ SRCITEMS=(
     config!terminator
 )
 
-## First, get all git submodules like .config/awesome/vicious and .emacs.d/distel
-git submodule --quiet update --init
-
 mkdir -p $HOME/.config
+
+## First, get all git submodules like .config/awesome/vicious and .emacs.d/distel
+git submodule update --init
+
+## Some emacs modules need compilation
+cd $HOME/.emacs.d/distel && make
+cd $HOME/.emacs.d/magit && make
+cd $HOME
 
 for SRCITEM in ${SRCITEMS[*]} ; do 
     DESTITEM=$(echo $SRCITEM | tr '!' '/')
