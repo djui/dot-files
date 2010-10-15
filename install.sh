@@ -20,9 +20,9 @@ SRCITEMS=(
 )
 
 ## First, get all git submodules like .config/awesome/vicious and .emacs.d/distel
-git submodule update --init
+git submodule --quiet update --init
 
-mkdir $HOME/.config
+mkdir -p $HOME/.config
 
 for SRCITEM in ${SRCITEMS[*]} ; do 
     DESTITEM=$(echo $SRCITEM | tr '!' '/')
