@@ -8,6 +8,7 @@ SRCITEMS=(
     bin
     ssh
     xmodmap
+    xmodmap_laptop
     xinitrc
     screenrc
     emacs
@@ -24,11 +25,6 @@ mkdir -p $HOME/.config
 ## First, get all git submodules like .config/awesome/vicious and .emacs.d/distel
 git submodule update --init
 
-## Some emacs modules need compilation
-cd $HOME/.emacs.d/distel && make
-cd $HOME/.emacs.d/magit && make
-cd $HOME
-
 for SRCITEM in ${SRCITEMS[*]} ; do 
     DESTITEM=$(echo $SRCITEM | tr '!' '/')
     echo "Trying to link $DESTDIR/.$SRCITEM ..."
@@ -37,6 +33,15 @@ for SRCITEM in ${SRCITEMS[*]} ; do
     ln -s "$SRCDIR/dot-$SRCITEM" "$DESTDIR/.$DESTITEM"
 done
 
+## Some emacs modules need compilation
+cd $HOME/.emacs.d/distel && make
+cd $HOME/.emacs.d/magit && make
+cd $HOME
+
 ## Create some symlinks
 [ $(hostname) == "simpknot" ] && \
 sudo ln -s ~/.bin/p4v/bin/p4merge /usr/local/bin/p4merge
+
+## Initialize some scripts
+source $HOME/.bashrc
+xmodmap $HOME/.xmodmap
