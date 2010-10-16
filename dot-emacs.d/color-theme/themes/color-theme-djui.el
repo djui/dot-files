@@ -47,6 +47,10 @@
      (hl-line                          ((t (:background "#1A1A1A"))))                      ; black
      (region                           ((t (:background "#6DC5F1"))))                      ; bright blue
      (ido-subdir                       ((t (:foreground "#F1266F"))))                      ; bright pink
-     (linum                            ((t (:foreground "gray20"))))                         ; shadowed/gray
-     )))
+     (linum                            ((t (:foreground "gray20"))))                       ; shadowed/gray
+     (minibuffer-prompt                ((t (:foreground "#66D9EF"))))                      ; bright blue
+     (isearch                          ((t (:background "palevioletred2" :foreground "brown4"))))
+     (isearch-fail                     ((t (:background "red4"))))
+     (sh-quoted-exec                   ((t (:foreground "salmon"))))
+)))
 (provide 'color-theme-djui)
