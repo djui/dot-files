@@ -1,0 +1,67 @@
+#!/bin/sh
+
+basename()
+{
+  case ${BASH_VERSION+set} in
+    set ) echo "${1##*/}" ;;
+    *   ) echo "$1" | sed -e 's=.*/==';;
+  esac
+}
+
+dirname()
+{
+  case ${BASH_VERSION+set} in
+    set ) echo "${1%/*}" ;;
+    *   ) echo "$1" | sed -e 's=/[^/]*$==' ;;
+  esac
+}
+
+topdir()
+{
+  # If possible, handle the case that someone has created a symlink in
+  # /usr/local/bin back to this script in its original unpacked
+  # distribution directory.
+  thisfile=`{ readlink -f "$0" \
+              || { ls -ld "$0" | sed -n -e 's/.* -> //p'; }
+            } 2> /dev/null`
+  case $thisfile in
+    '' ) thisfile=$0 ;;
+  esac
+
+  progdir=`dirname "$thisfile"`
+  case $progdir in
+    . | '' | $thisfile ) progdir=`pwd` ;;
+  esac
+
+  case $progdir in
+    */bin ) topdir=`dirname "$progdir"` ;;
+    *     ) topdir=$progdir ;;
+  esac
+  echo "$topdir"
+}
+
+main()
+{
+  prefix=`topdir "$0"`
+  progname=`basename "$0"`
+
+  P4VRES=$prefix/lib/p4v/P4VResources
+  LD_LIBRARY_PATH=$prefix/lib/p4v/qt4/lib${LD_LIBRARY_PATH+:$LD_LIBRARY_PATH}
+  PATH=$prefix/bin:$PATH
+  export P4VRES LD_LIBRARY_PATH PATH
+
+  # Append sfw and openwin lib directories to shared library path on solaris
+  # for the benefit of the assistant, so it can find libXrender et al.
+  case `uname -s` in
+    SunOS ) LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/sfw/lib:/usr/openwin/lib ;;
+  esac
+
+  case $P4VLDD in
+    '' ) exec ${progname}.bin ${1+"$@"} ;;
+    *  ) exec ldd $prefix/bin/${progname}.bin ;;
+  esac
+}
+
+main ${1+"$@"}
+
+# eof

@@ -111,7 +111,7 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Assign mode to file (extensions)
 (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
-(add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-moede))
+(add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("README" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.html$" . html-helper-mode))
 (add-to-list 'auto-mode-alist '("\\.htm$" . html-helper-mode))
@@ -174,10 +174,13 @@
 ;(require 'font-lock)
 (add-to-list 'load-path "~/.emacs.d/color-theme")
 (require 'color-theme)
-;(load-file "~/.emacs.d/color-theme/themes/color-theme-almost-monokai.el")
-;(color-theme-almost-monokai)
-(load-file "~/.emacs.d/color-theme/themes/color-theme-eclips3media.el")
-(color-theme-eclips3media)
+(load-file "~/.emacs.d/color-theme/themes/color-theme-djui.el")
+(color-theme-djui)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Magit
+;; Will only work if you did "make && sudo make install" on it 
+(require 'magit)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
@@ -199,6 +202,9 @@
 (add-to-list 'load-path "~/.emacs.d/distel/elisp")
 (require 'distel)
 (distel-setup)
+; Nice new distel extension for Record and Macro lookup
+(setq erlookup-roots '("~/dev/klarna/kred/lib"
+                       "~/dev/OTP/otp/lib"))
 (setq erl-nodename-cache 'distel\@simpknot.hq.kred)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

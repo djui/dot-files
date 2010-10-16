@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+exec wine "C:\Program Files\Spotify\spotify.exe" /uri "$@"
+
+## Then do:
+gconftool-2 -t string -s /desktop/gnome/url-handlers/spotify/command "$HOME/.bin/openspotify %s"
+gconftool-2 -t bool -s /desktop/gnome/url-handlers/spotify/needs_terminal false
+gconftool-2 -t bool -s /desktop/gnome/url-handlers/spotify/enabled true

@@ -2,72 +2,86 @@
 shopt -s histappend
 shopt -s checkwinsize
 
+[ -f /etc/bash_completion ] && source /etc/bash_completion
+[ -f $HOME/.bin/git-completion.bash ] && source $HOME/.bin/git-completion.bash
+export GIT_PS1_SHOWDIRTYSTATE=true
+
 ####################################################################
 ## PROMPT SCRIPT ###################################################
 ####################################################################
 
-#PS1='\[\033[01;32m\]█ `dirs`$\[\033[00m\] '
-#PS1='\[\033[01;32m\]█ \[\033[01;33m\]`for ((i=1; $i < ${#DIRSTACK[*]}; i++)); do echo -n +; done` \[\033[01;32m\]\w$\[\033[00m\] '
-PS1='\[\033[01;33m\]`stack=$((${#DIRSTACK[*]}-1)) ; if [[ $stack -gt 0 ]] ; then echo -n $stack ; fi`\[\033[01;32m\]\w$\[\033[00m\] '
-#PS1="\[\033[01;32m\]█\D{%H:%M}$PS1"
-PS1="\[\033[01;32m\]◤$(hostname | cut -c 1) $PS1"
+#PS1='\[\033[01;33m\]`stack=$((${#DIRSTACK[*]}-1)) ; if [[ $stack -gt 0 ]] ; then echo -n $stack ; fi`\[\033[01;32m\]\w\[\033[00m\]'
+#PS1="\[\033[01;32m\]◤$(hostname | cut -c 1) $PS1$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]") "
+#PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+PS1='\[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]") '
+PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
 ####################################################################
-## ALIASES##########################################################
+## ALIASES #########################################################
 ####################################################################
 
-alias .='pwd'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias beep='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
-alias cd..='cd ..'
-alias diff='diff -u'
-alias dir='ls -ghp'
-alias dirs='dirs -l -v -p'
-alias erlgrep='grep *.erl'
-alias grep='grep -n --color=auto'
-alias locate='find / -wholename "/proc" -prune -o -iname'
-alias ls='ls --color=auto'
-alias lstree='tree -dL 2'
-alias open='xdg-open'
-alias notify='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
-alias pushd='pushd > /dev/null'
-alias popd='popd > /dev/null'
-alias whereis='find . -iname'
-
-#alias distel='erl -name distel -pa /home/uwe/Dev/kred/trunk/lib/*/ebin -pa /home/uwe/Dev/kred/trunk/test/shared/ebin -pa /home/uwe/Dev/distel/ebin'
-#alias gperf='erl -name gperf -run gperf -pa /home/uwe/Dev/kred/trunk/lib/eper/ebin -pa /usr/local/lib/erlang/lib/gtknode-0.30/ebin/'
-
-alias a=''
-alias b=''
-alias c=''
+#alias a=''
+alias b='emacsclient -nw -a "" ~/.bashrc'
+alias c='clear'
 alias d='git diff'
-alias e='emacs -nw'
+alias e='emacsclient -nw -a ""'
 alias f='find'
 alias g='grep'
 alias h='head'
-alias i=''
-#alias j='jumpstart'
-alias k=''
+alias i='hostname -I'
+##alias j='jumpstart'
+#alias k=''
 alias l='ls'
-alias m=''
-alias n=''
-alias o=''
-alias p='ps -aux'
-alias q=''
-alias r=''
-alias s=''
+#alias m=''
+#alias n=''
+##alias o=''
+alias p='ps aux'
+#alias q=''
+#alias r=''
+#alias s=''
 alias t='tail'
-alias u=''
-alias v=''
-alias w=''
-alias x=''
-alias y=''
-alias z=''
+#alias u=''
+#alias v=''
+#alias w=''
+#alias x=''
+#alias y=''
+#alias z=''
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias apt-search='apt-cache search'
+alias beep='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
+alias cd..='cd ..'
+alias diff='diff -u'
+alias dir='ls -lhp'
+alias dirs='dirs -l -v -p'
+alias erlgrep='find . -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
+alias locate='find / -mount -wholename "/proc" -prune -o -iname'
+alias la='ls -alhp'
+alias ls='ls --color=auto'
+alias lt='tree -dCL 2'
+alias notify='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
+alias md='mkdir'
+alias open='xdg-open'
+alias pushd='pushd > /dev/null'
+alias pd='pushd'
+alias popd='popd > /dev/null'
+alias whereis='find . -iname'
+
+alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/dev/klarna/kred/test/shared/ebin -pa $HOME/.emacs.d/distel/ebin'
+#alias gperf='erl -name gperf -run gperf -pa $HOME/dev/klarna/kred/lib/eper/ebin -pa /usr/local/lib/erlang/lib/gtknode-0.30/ebin/'
 
 ####################################################################
 ## FUNCTIONS #######################################################
 ####################################################################
+
+function o {
+    find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient
+}
+
+#function e {
+#    emacs $* &
+#}
 
 function google {
     w3m "http://www.google.com/search?q=$@"
@@ -108,41 +122,44 @@ export EDITOR="emacs -nw"
 # Also look here: http://www.xvx.ca/~awg/emacs-colors-howto.txt
 # sudo apt-get install ncurses-term
 export TERM=xterm-256color
-export NAME="Uwe Dauernheim"
-export MAIL="uwe@klarna.com"
-export ORGANIZATION="Klarna AB"
 
 ####################################################################
-## ERLANG STUFF ####################################################
-####################################################################
-
-export KRED_POLL=true
-export ORIG_PATH="${PATH}"
-
-function r13b03 {
-    export PATH="${HOME}/dev/otp/install/R13B03/bin:${ORIG_PATH}"
-    export DIALYZER_PLT="$HOME/dev/otp/install/R13B03/dialyzer.plt"
-}
-
-function r13b04 {
-    export PATH="$HOME/dev/otp/install/R13B04/bin:${ORIG_PATH}"
-    export DIALYZER_PLT="$HOME/dev/otp/install/R13B04/dialyzer.plt"
-}
-
-function interl {
-    r13b04
-}
-
-
-## Use latest Erlang version
-interl
-
-####################################################################
-####################################################################
+## AUTOJUMP ########################################################
 ####################################################################
 
 # Added by autojump install.sh
-source /etc/profile.d/autojump.bash
+[ -e /etc/profile.d/autojump.bash ] && source /etc/profile.d/autojump.bash
+
+####################################################################
+## KLARNA/ERLANG STUFF #############################################
+####################################################################
+
+export NAME="Uwe Dauernheim"
+export MAIL="uwe@klarna.com"
+export ORGANIZATION="Klarna AB"
+export KRED_POLL=true
+export ERL_INETRC=$HOME/.inetrc
+export ORIG_PATH="$PATH"
+
+function r13b04 {
+    export PATH="$HOME/dev/OTP/install/R13B04/bin:${ORIG_PATH}"
+    export DIALYZER_PLT="$HOME/dev/OTP/install/R13B04/dialyzer.plt"
+    echo "Erlang: " `which erl`
+}
+
+function stderl {
+    export PATH="${ORIG_PATH}"
+    echo "Erlang: " `which erl`
+}
+
+r13b04
+
+####################################################################
+####################################################################
+####################################################################
 
 [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] && \
      $HOME/Dropbox/Klarna/klarna_animation.sh 1
+
+[ -e $HOME/dev/klarna/kred ] && \
+  cd $HOME/dev/klarna/kred

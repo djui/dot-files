@@ -5,7 +5,7 @@ hardstatus alwayslastline "%{= kK}%-Lw%{= g}%n*$ %t%{= kK}%+Lw%=%H"
 startup_message off
 
 # Show visual bell e.g. on false inputs
-vbell on
+vbell off
 
 # Don't block output if e.g. SSH connection timesout
 nonblock on
@@ -16,8 +16,11 @@ termcapinfo xterm|xterms|xs|rxvt ti@:te@
 # Don't use C-a but C-z as screen meta key
 escape ^Zz
 
-#Activate UTF-8
+# Activate UTF-8
 defutf8 on
+
+# Extend scrollback buffer
+defscrollback 1000
 
 # terminfo and termcap for nice 256 color terminal
 # allow bold colors - necessary for some reason
