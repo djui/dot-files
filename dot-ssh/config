@@ -1,0 +1,4 @@
+Host github.com
+  IdentityFile ~/.ssh/github_rsa
+Host git.hq.kred
+  IdentityFile ~/.ssh/kit_rsa
