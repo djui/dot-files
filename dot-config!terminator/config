@@ -13,7 +13,7 @@
   resize_left = None
   go_prev = None
   new_window = <Shift><Control>n
-  reset = <Shift><Control>k
+  reset = None
   go_down = <Shift><Control>Down
   cycle_next = <Control>grave
   reset_clear = <Shift><Control>x

@@ -81,8 +81,10 @@
 (global-set-key (kbd "M-g")         'goto-line)
 (global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
 (global-set-key (kbd "C-t")         'transpose-lines)
-(global-set-key (kbd "C-S-k")       'backward-kill-line)
-(global-set-key (kbd "C-S-d")       'another-line)
+(global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
+(global-set-key (kbd "C-u")         'backward-kill-line)
+(global-set-key (kbd "M-k")         'whole-kill-line)
+(global-set-key (kbd "M-d")         'another-line)
 ;; Resize windows keyboard shortcuts
 (global-set-key (kbd "M-S-<left>")  'shrink-window-horizontally)
 (global-set-key (kbd "M-S-<right>") 'enlarge-window-horizontally)
@@ -115,7 +117,6 @@
 (add-to-list 'auto-mode-alist '("README" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.html$" . html-helper-mode))
 (add-to-list 'auto-mode-alist '("\\.htm$" . html-helper-mode))
-(add-to-list 'auto-mode-alist '("^COMMIT_EDITMSG$" . vc-git-log-view-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom functions
@@ -125,9 +126,16 @@
   ;;(while (string-match "^\*.*\*$" (buffer-name)) (next-buffer)))
   (if (string-match "^\*.*\*$" (buffer-name))
       (next-source-buffer)))
-(defun backward-kill-line (arg) 
-  (interactive "p") 
+(defun forward-kill-line ()
+  (interactive)
+  (delete-region (point) (line-end-position)))
+(defun backward-kill-line ()
+  (interactive)
+  (message "TEST")
   (kill-line 0))
+(defun whole-kill-line ()
+  (interactive)
+  (delete-region (line-beginning-position) (line-end-position)))
 (defun highlight-todo-hook ()
   (font-lock-add-keywords nil '(("\\(@todo\\|@fixme\\|XXX\\|TODO\\|FIXME\\)" 1
                                  font-lock-warning-face prepend))))
@@ -181,6 +189,7 @@
 ;; Magit
 ;; Will only work if you did "make && sudo make install" on it 
 (require 'magit)
+(add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . magit-commit-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
@@ -226,14 +235,14 @@
 ;; Lua Mode
 (add-to-list 'load-path "~/.emacs.d/lua-mode")
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-(setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown Mode
 (add-to-list 'load-path "~/.emacs.d/markdown-mode")
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
-(setq auto-mode-alist (append '(("\\.md" . markdown-mode)
-                                ("\\.markdown" . markdown-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.lmd$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yet Another Snippet plugin

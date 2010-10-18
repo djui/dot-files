@@ -1,3 +1,6 @@
+# Change screen's title to the bash's title
+shelltitle "$ |bash"
+
 # Simple but enough status formatting
 hardstatus alwayslastline "%{= kK}%-Lw%{= g}%n*$ %t%{= kK}%+Lw%=%H"
 

@@ -13,8 +13,10 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 #PS1='\[\033[01;33m\]`stack=$((${#DIRSTACK[*]}-1)) ; if [[ $stack -gt 0 ]] ; then echo -n $stack ; fi`\[\033[01;32m\]\w\[\033[00m\]'
 #PS1="\[\033[01;32m\]◤$(hostname | cut -c 1) $PS1$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]") "
 #PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-PS1='\[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]") '
-PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+case $TERM in
+    xterm*) PS1='\[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]")$ ' ;;
+    screen*) PS1='\[\033k\033\\\]\[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]")$ ' ;;
+esac
 
 ####################################################################
 ## ALIASES #########################################################
@@ -25,6 +27,8 @@ alias b='emacsclient -nw -a "" ~/.bashrc'
 alias c='clear'
 alias d='git diff'
 alias e='emacsclient -nw -a ""'
+alias ec='emacsclient -nw -c -a ""'
+alias en='emacsclient -nw -n -a ""'
 alias f='find'
 alias g='grep'
 alias h='head'
@@ -36,6 +40,7 @@ alias l='ls'
 #alias n=''
 ##alias o=''
 alias p='ps aux'
+alias pg='ps aux | grep -i'
 #alias q=''
 #alias r=''
 #alias s=''
@@ -97,7 +102,8 @@ function decrypt {
 }
 
 function title {
-    echo -ne "\033]0;"$@"\007"
+    echo -ne "\033]0;$*\007"
+    # echo -ne "\[\033k$*\033\\\]"
 }
 
 function 2sv {
