@@ -6,6 +6,7 @@
 (menu-bar-mode         -1) ; nil toggles
 (iswitchb-mode          t)
 (global-linum-mode      t)
+(global-hl-line-mode    t)
 (global-whitespace-mode t)
 (mouse-wheel-mode       t)
 ;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode

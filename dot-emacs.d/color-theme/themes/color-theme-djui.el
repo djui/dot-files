@@ -44,7 +44,7 @@
      (whitespace-line                  ((t (:background "gray20" :foreground "#D62E00")))) ; red
      (whitespace-tab                   ((t (:background "gray20"))))
      (whitespace-trailing              ((t (:background "red4"))))
-     (hl-line                          ((t (:background "#1A1A1A"))))                      ; black
+     (hl-line                          ((t (:background "gray20"))))
      (region                           ((t (:background "#6DC5F1"))))                      ; bright blue
      (ido-subdir                       ((t (:foreground "#F1266F"))))                      ; bright pink
      (linum                            ((t (:foreground "gray20"))))                       ; shadowed/gray
