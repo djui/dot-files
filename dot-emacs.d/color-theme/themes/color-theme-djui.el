@@ -44,6 +44,8 @@
      (font-lock-negation-char-face     ((t (:foreground "#FF0000" :bold))))                ; ???
      (highlight-80+                    ((t (:background "#D62E00"))))                      ; red
      (whitespace-line                  ((t (:background "gray20" :foreground "#D62E00")))) ; red
+     (whitespace-tab                   ((t (:background "gray20"))))
+     (whitespace-trailing              ((t (:background "red4"))))
      (hl-line                          ((t (:background "#1A1A1A"))))                      ; black
      (region                           ((t (:background "#6DC5F1"))))                      ; bright blue
      (ido-subdir                       ((t (:foreground "#F1266F"))))                      ; bright pink

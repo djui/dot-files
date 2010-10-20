@@ -1,12 +1,13 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Configurations
 ;; These do not work with setq(-default)
-(tool-bar-mode     -1) ; nil toggles
-(scroll-bar-mode   -1) ; nil toggles
-(menu-bar-mode     -1) ; nil toggles
-(iswitchb-mode      t)
-(global-linum-mode  t)
-(mouse-wheel-mode   t)
+(tool-bar-mode         -1) ; nil toggles
+(scroll-bar-mode       -1) ; nil toggles
+(menu-bar-mode         -1) ; nil toggles
+(iswitchb-mode          t)
+(global-linum-mode      t)
+(global-whitespace-mode t)
+(mouse-wheel-mode       t)
 ;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
 (setq-default user-full-name               "Uwe Dauernheim"
               user-mail-address            "uwe@klarna.com"
@@ -14,7 +15,7 @@
               inhibit-startup-echo-area-message t
               inhibit-startup-screen       t
               initial-scratch-message      nil
-              visible-bell                 t
+              visible-bell                 nil
               ;; Save session to reopen next time
               ;; desktop-save-mode         t
               ;; Compilation help
@@ -69,19 +70,21 @@
               frame-title-format (setq icon-title-format
                                        (format "%%b - %semacs" 
                                                (if (featurep 'xemacs) "x" "")))
+              show-trailing-whitespace     t
               ;; Highlight long lines
-              whitespace-style (quote (lines-tail)) whitespace-line-column 80
+              whitespace-style             (quote (tabs trailing lines-tail))
+              whitespace-line-column       80
               ;; Initial modes
               initial-major-mode 'erlang-mode)
               ;default-major-mode 'erlang-mode)
-
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
 (global-set-key (kbd "M-g")         'goto-line)
 (global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
 (global-set-key (kbd "C-t")         'transpose-lines)
-(global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
+;; FIXME: Doesn't delete empty lines...
+;(global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
 (global-set-key (kbd "C-u")         'backward-kill-line)
 (global-set-key (kbd "M-k")         'whole-kill-line)
 (global-set-key (kbd "M-d")         'another-line)
@@ -131,7 +134,6 @@
   (delete-region (point) (line-end-position)))
 (defun backward-kill-line ()
   (interactive)
-  (message "TEST")
   (kill-line 0))
 (defun whole-kill-line ()
   (interactive)
@@ -186,6 +188,10 @@
 (color-theme-djui)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Whitespace Mode
+(require 'whitespace)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Magit
 ;; Will only work if you did "make && sudo make install" on it 
 (require 'magit)
@@ -193,13 +199,9 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
-;(add-to-list 'load-path "~/OTP/install/R13B03/lib/erlang/lib/tools-2.6.5/emacs")
-;(add-to-list 'exec-path "~/OTP/install/R13B03/bin")
-;(setq erlang-root-dir "~/OTP/install/R13B03")
-
-(add-to-list 'load-path "/usr/lib/erlang/lib/tools-2.6.5/emacs")
-(add-to-list 'exec-path "/usr/bin")
-(setq erlang-root-dir "/usr")
+(add-to-list 'load-path "~/dev/OTP/install/R13B04/lib/erlang/lib/tools-2.6.5.1/emacs")
+(add-to-list 'exec-path "~/dev/OTP/install/R13B04/bin")
+(setq erlang-root-dir "~/dev/OTP/install/R13B04")
 
 (require 'erlang-start)
 (setq erlang-tab-mode nil)
