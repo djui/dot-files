@@ -1,4 +1,4 @@
-;; Description: A color theme based on eclips3.media and monokai. Some thing were added to cover 
+;; Description: A color theme based on eclips3.media and monokai. Some thing were added to cover
 ;; extensions, and some things were changed, similar to the color theme almost-monokai.
 ;; The theme needs a 256 colors terminal emulator to display colors propperly in the terminal.
 ;; Note, that even thennot all colors are mathing 100% must sufficient enough.
@@ -7,14 +7,12 @@
 ;; License: MIT License
 ;; Credits: http://github.com/lut4rp/almost-monokai
 ;; Credits: http://www.eclips3media.com/workshop/2007/12/06/eclips3media-eclm-textmate-theme
-;;
-;; Todo: Fix backtick operations in shell scripts, where color should be orange: c57b5d but is purple.
 
 (defun color-theme-djui ()
   (interactive)
   (color-theme-install
    '(color-theme-djui
-     ((foreground-color . "#F8F8F2") 
+     ((foreground-color . "#F8F8F2")
       (cursor-color . "#DAD085"))
      (default                          ((t (nil))))
      (modeline                         ((t (:background nil :foreground "white"))))
