@@ -116,8 +116,6 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Assign mode to file (extensions)
-(add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
-(add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("README" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.html$" . html-helper-mode))
 (add-to-list 'auto-mode-alist '("\\.htm$" . html-helper-mode))
@@ -200,7 +198,7 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
-(add-to-list 'load-path "~/dev/OTP/install/R13B04/lib/erlang/lib/tools-2.6.5.1/emacs")
+(add-to-list 'load-path "~/dev/OTP/otp/lib/tools/emacs")
 (add-to-list 'exec-path "~/dev/OTP/install/R13B04/bin")
 (setq erlang-root-dir "~/dev/OTP/install/R13B04")
 
@@ -208,6 +206,8 @@
 (setq erlang-tab-mode nil)
 (setq erlang-electric-commands t)
 (setq erlang-indent-level '2)
+(add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
+(add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Distel
@@ -244,7 +244,7 @@
 ;; Markdown Mode
 (add-to-list 'load-path "~/.emacs.d/markdown-mode")
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.lmd$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
