@@ -81,7 +81,7 @@ alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/d
 ####################################################################
 
 function o {
-    find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient
+    find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a ""
 }
 
 #function e {
