@@ -34,7 +34,6 @@
               transient-mark-mode          t
               ;; Line numbering mode
               global-visual-line-mode      t
-              global-whitespace-mode       t
               line-number-mode             t
               column-number-mode           t
               linum-format                 "%3d "
@@ -69,11 +68,12 @@
               vc-follow-symlinks           nil
               ;; Change frame title
               frame-title-format (setq icon-title-format
-                                       (format "%%b - %semacs" 
+                                       (format "%%b - %semacs"
                                                (if (featurep 'xemacs) "x" "")))
               show-trailing-whitespace     t
               ;; Highlight long lines
               whitespace-style             (quote (tabs trailing lines-tail))
+              whitespace-action            nil
               whitespace-line-column       80
               ;; Initial modes
               initial-major-mode 'erlang-mode)
@@ -140,7 +140,7 @@
 (defun highlight-todo-hook ()
   (font-lock-add-keywords nil '(("\\(@todo\\|@fixme\\|XXX\\|TODO\\|FIXME\\)" 1
                                  font-lock-warning-face prepend))))
-(defun python-compile () 
+(defun python-compile ()
   (interactive) (compile (concat "python " (buffer-name))))
 (defun duplicate-line ()
   (interactive)
@@ -192,7 +192,7 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Magit
-;; Will only work if you did "make && sudo make install" on it 
+;; Will only work if you did "make && sudo make install" on it
 (require 'magit)
 (add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . magit-commit-mode))
 
@@ -294,4 +294,4 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc
 ;; Do a recompile once in a while to make startup faster
-;(byte-recompile-directory "~/.emacs.d") 
+;(byte-recompile-directory "~/.emacs.d")

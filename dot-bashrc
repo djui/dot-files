@@ -26,7 +26,7 @@ esac
 alias b='emacsclient -nw -a "" ~/.bashrc'
 alias c='clear'
 alias d='git diff'
-alias e='emacsclient -nw -a ""'
+#alias e='emacsclient -nw -a ""'
 alias ec='emacsclient -nw -c -a ""'
 alias en='emacsclient -nw -n -a ""'
 alias f='find'
@@ -81,6 +81,14 @@ alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/d
 ####################################################################
 ## FUNCTIONS #######################################################
 ####################################################################
+
+function e {
+    if [ -e $SSH_TTY ] ; then
+        emacsclient -nw -c -a "" $*
+    else
+        emacsclient -a "" $*
+    fi
+}
 
 function o {
     find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a ""
