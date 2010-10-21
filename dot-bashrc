@@ -94,10 +94,6 @@ function o {
     find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a ""
 }
 
-#function e {
-#    emacs $* &
-#}
-
 function google {
     w3m "http://www.google.com/search?q=$@"
 }
@@ -132,7 +128,7 @@ function 2en {
 ## EXPORTS #########################################################
 ####################################################################
 
-export PATH="$PATH:${HOME}/.bin"
+export PATH="$HOME/.bin:/sbin:$PATH"
 export EDITOR="emacs -nw"
 # Allow 256 colors in terminal
 # Also look here: http://www.xvx.ca/~awg/emacs-colors-howto.txt
