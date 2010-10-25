@@ -40,6 +40,7 @@
               ;; Syntax-, region mark-, parentals-Highlighting
               global-font-lock-mode        t
               font-lock-maximum-decoration t
+              show-paren-mode              t
               ;; Default tab width
               tab-width                    2
               c-basisc-indent              2
@@ -191,6 +192,11 @@
 (require 'whitespace)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Parentheses Mode
+(load-file "~/.emacs.d/highlight-parentheses.el")
+(require 'highlight-parentheses)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Magit
 ;; Will only work if you did "make && sudo make install" on it
 (require 'magit)
@@ -198,7 +204,7 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
-(add-to-list 'load-path "~/dev/OTP/otp/lib/tools/emacs")
+(add-to-list 'load-path "~/dev/OTP/src/R13B04/lib/tools/emacs")
 (add-to-list 'exec-path "~/dev/OTP/install/R13B04/bin")
 (setq erlang-root-dir "~/dev/OTP/install/R13B04")
 

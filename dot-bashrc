@@ -153,6 +153,11 @@ export KRED_POLL=true
 export ERL_INETRC=$HOME/.inetrc
 export ORIG_PATH="$PATH"
 
+function r12b5 {
+    export PATH="$HOME/dev/OTP/install/R12B5/bin:${ORIG_PATH}"
+    echo "Erlang: " `which erl`
+}
+
 function r13b04 {
     export PATH="$HOME/dev/OTP/install/R13B04/bin:${ORIG_PATH}"
     export DIALYZER_PLT="$HOME/dev/OTP/install/R13B04/dialyzer.plt"
@@ -173,5 +178,4 @@ r13b04
 [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] && \
      $HOME/Dropbox/Klarna/klarna_animation.sh 1
 
-[ -e $HOME/dev/klarna/kred ] && \
-  cd $HOME/dev/klarna/kred
+cd $HOME/dev
