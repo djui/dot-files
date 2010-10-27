@@ -140,7 +140,8 @@ export TERM=xterm-256color
 ####################################################################
 
 # Added by autojump install.sh
-[ -e /etc/profile.d/autojump.bash ] && source /etc/profile.d/autojump.bash
+[ -e /etc/profile.d/autojump.bash ] && \
+    source /etc/profile.d/autojump.bash
 
 ####################################################################
 ## KLARNA/ERLANG STUFF #############################################
@@ -176,6 +177,6 @@ r13b04
 ####################################################################
 
 [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] && \
-     $HOME/Dropbox/Klarna/klarna_animation.sh 1
+    $HOME/Dropbox/Klarna/klarna_animation.sh 1
 
 cd $HOME/dev

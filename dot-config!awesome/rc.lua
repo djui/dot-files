@@ -15,7 +15,7 @@ require("debian.menu")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
--- beautiful.init(aweful.util.getdir("config") .. "/themes/djui/theme.lua")
+theme.border_width = "1"
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
@@ -50,7 +50,7 @@ layouts =
 -- {{{ Tags
 -- Define a tag table which will hold all screen tags.
 tags = {
-  names  = { "1:www", "2", "3", "4", "5", "6", "7", "8", "9" },
+  names  = { "1:www", "2", "3", "4", "5", "6", "7", "8", "9:X" },
   layout = { layouts[2], layouts[2], layouts[2], layouts[2], layouts[2],
              layouts[2], layouts[2], layouts[2], layouts[2]
 }}
