@@ -25,13 +25,17 @@
 [profiles]
   [[default]]
     use_system_font = False
+    font = Terminus Medium 12
     background_darkness = 0.83
+    urgent_bell = True
     scrollbar_position = hidden
     foreground_color = "#f8f8f2"
     scroll_on_output = False
+    icon_bell = False
     show_titlebar = False
-    font = ProggyCleanTTSZBP 12
+    copy_on_selection = True
     background_color = "#272821"
+    audible_bell = True
     scrollback_infinite = True
 [layouts]
   [[default]]

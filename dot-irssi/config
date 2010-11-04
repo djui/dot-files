@@ -30,7 +30,7 @@ servers = (
   { address = "silc.silcnet.org"; chatnet = "SILC"; port = "706"; },
   {
     address = "irc.hq.kred";
-    chatnet = "Klarna";
+    chatnet = "klarna";
     port = "6667";
     use_ssl = "no";
     ssl_verify = "no";
@@ -108,8 +108,8 @@ chatnets = {
 channels = (
   { name = "#irssi"; chatnet = "ircnet"; autojoin = "No"; },
   { name = "silc"; chatnet = "silc"; autojoin = "No"; },
-  { name = "#tech"; chatnet = "Klarna"; autojoin = "yes"; },
-  { name = "#kong"; chatnet = "Klarna"; autojoin = "yes"; }
+  { name = "#tech"; chatnet = "klarna"; autojoin = "yes"; },
+  { name = "#kong"; chatnet = "klarna"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -283,6 +283,9 @@ settings = {
   "fe-text" = { actlist_sort = "refnum"; };
   "fe-common/core" = {
     beep_msg_level = "MSGS NOTICES INVITES DCC DCCMSGS HILIGHT";
+    bell_beeps = "yes";
+    theme = "rolle";
+    autolog = "yes";
   };
 };
 hilights = (
@@ -290,3 +293,30 @@ hilights = (
   { text = "djui"; nick = "yes"; word = "yes"; },
   { text = "dauer"; nick = "yes"; word = "yes"; }
 );
+windows = {
+  1 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#tech";
+        tag = "Klarna";
+      }
+    );
+    sticky = "yes";
+  };
+  2 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#kong";
+        tag = "Klarna";
+      }
+    );
+  };
+};
+mainwindows = {
+  2 = { first_line = "44"; lines = "42"; };
+  1 = { first_line = "1"; lines = "43"; };
+};

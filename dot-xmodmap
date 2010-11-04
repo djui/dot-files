@@ -1,9 +1,13 @@
+!!! Reset these changes using: setxkbmap
+
+!!! Not needed to assign these keys anymore if you run your Linux as a VM in OSX
 !! Make the key left of the 'z' the grave/asciitilde key
-keycode 94 = grave asciitilde
-
+!keycode 94 = grave asciitilde
 !! Make the key left of the '1' the section/plusminus key
-keycode 49 = section plusminus
+!keycode 49 = section plusminus
 
+!!! Don't wanna remap Super/Mod4 anymore. USe caps lock purely
+!!! and Super/Mod4 for Awesome.
 !! Switch left Control and left Mod4/Win key
 !remove Mod4 = Super_L
 !remove Control = Control_L

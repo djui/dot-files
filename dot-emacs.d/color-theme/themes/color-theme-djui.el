@@ -9,10 +9,10 @@
 ;; Credits: http://www.eclips3media.com/workshop/2007/12/06/eclips3media-eclm-textmate-theme
 
 (defun color-theme-djui ()
-  (interactive)
-  (color-theme-install
-   '(color-theme-djui
-     ((foreground-color . "#F8F8F2")
+                          (interactive)
+                            (color-theme-install
+                            '(color-theme-djui
+                                ((foreground-color . "#F8F8F2")
       (cursor-color . "#DAD085"))
      (default                          ((t (nil))))
      (modeline                         ((t (:background nil :foreground "white"))))
@@ -52,5 +52,13 @@
      (isearch                          ((t (:background "palevioletred2" :foreground "brown4"))))
      (isearch-fail                     ((t (:background "red4"))))
      (sh-quoted-exec                   ((t (:foreground "salmon"))))
+     (diff-added                       ((t (:foreground "green"))))
+     (diff-changed                     ((t (:foreground "yellow"))))
+     (diff-removed                     ((t (:foreground "red"))))
+     (diff-indicator-added             ((t (:foreground "green" :bold t))))
+     (diff-indicator-changed           ((t (:foreground "yellow" :bold t))))
+     (diff-indicator-removed           ((t (:foreground "red" :bold t))))
+     (flymake-errline                  ((t (:background "FireBrick4"))))
+     (flymake-warnline                 ((t (:background "DarkOrange"))))
 )))
 (provide 'color-theme-djui)

@@ -15,7 +15,10 @@ require("debian.menu")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
--- beautiful.init(aweful.util.getdir("config") .. "/themes/djui/theme.lua")
+theme.border_width = "1"
+theme.border_focus  = "#6F0000"
+theme.fg_urgent = "#6F0000"
+
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
@@ -32,27 +35,26 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
+    awful.layout.suit.tile.top,
+    awful.layout.suit.tile,
+    awful.layout.suit.max,
 --  awful.layout.suit.floating,
 --  awful.layout.suit.fair,
 --  awful.layout.suit.fair.horizontal,
-    awful.layout.suit.tile,
 --  awful.layout.suit.tile.left,
 --  awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
 --  awful.layout.suit.spiral,
 --  awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
 --  awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier
+--  awful.layout.suit.magnifier
 }
 -- }}}
 
 -- {{{ Tags
 -- Define a tag table which will hold all screen tags.
 tags = {
-  names  = { "1:www", "2", "3", "4", "5", "6", "7", "8", "9" },
-  layout = { layouts[2], layouts[2], layouts[2], layouts[2], layouts[2],
-             layouts[2], layouts[2], layouts[2], layouts[2]
+  names  = { "1:www", "2:    ", "3:    ", "4:irc" },
+  layout = { layouts[2], layouts[2], layouts[2], layouts[2]
 }}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
@@ -243,10 +245,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
-    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
+    awful.key({ modkey,           }, "g",     function () awful.tag.incmwfact(-0.05)    end),
+    awful.key({ modkey, "Shift"   }, "g",     function () awful.tag.incnmaster( 1)      end),
     awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
+    awful.key({ modkey, "Control" }, "g",     function () awful.tag.incncol( 1)         end),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),

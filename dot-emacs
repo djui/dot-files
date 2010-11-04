@@ -9,6 +9,7 @@
 (global-hl-line-mode    t)
 (global-whitespace-mode t)
 (mouse-wheel-mode       t)
+  
 ;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
 (setq-default user-full-name               "Uwe Dauernheim"
               user-mail-address            "uwe@klarna.com"
@@ -71,14 +72,14 @@
               frame-title-format (setq icon-title-format
                                        (format "%%b - %semacs"
                                                (if (featurep 'xemacs) "x" "")))
-              show-trailing-whitespace     t
               ;; Highlight long lines
-              whitespace-style             (quote (tabs trailing lines-tail))
+              whitespace-style             (quote (tabs lines-tail))
               whitespace-action            nil
               whitespace-line-column       80
               ;; Initial modes
               initial-major-mode 'erlang-mode)
               ;default-major-mode 'erlang-mode)
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
@@ -95,7 +96,8 @@
 (global-set-key (kbd "M-S-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "M-S-<down>")  'shrink-window)
 (global-set-key (kbd "M-S-<up>")    'enlarge-window)
-(global-set-key (kbd "M-<tab>")     'next-source-buffer)
+(global-set-key (kbd "M-<left>")    'previous-source-buffer)
+(global-set-key (kbd "M-<right>")   'next-source-buffer)
 (global-set-key (kbd "C-/")         'comment-or-uncomment-region)
 ;; Format Erlang code like Eclipse
 (global-set-key (kbd "C-f")         'erlang-indent-function)
@@ -126,9 +128,13 @@
 (defun next-source-buffer ()
   (interactive)
   (next-buffer)
-  ;;(while (string-match "^\*.*\*$" (buffer-name)) (next-buffer)))
   (if (string-match "^\*.*\*$" (buffer-name))
       (next-source-buffer)))
+(defun previous-source-buffer ()
+  (interactive)
+  (previous-buffer)
+  (if (string-match "^\*.*\*$" (buffer-name))
+      (previous-source-buffer)))
 (defun forward-kill-line ()
   (interactive)
   (delete-region (point) (line-end-position)))
@@ -223,7 +229,26 @@
 ; Nice new distel extension for Record and Macro lookup
 (setq erlookup-roots '("~/dev/klarna/kred/lib"
                        "~/dev/OTP/otp/lib"))
-(setq erl-nodename-cache 'distel\@simpknot.hq.kred)
+(setq erl-nodename-cache 'distel\@simpknot)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Flymake
+(require 'flymake)
+
+(defun flymake-erlang-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                     'flymake-create-temp-inplace))
+         (local-file (file-relative-name temp-file
+                                         (file-name-directory buffer-file-name))))
+    (list "~/.emacs.d/flymake/eflymake" (list local-file))))
+
+(add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
+
+(defun my-erlang-mode-hook ()
+  (flymake-mode t))
+; Somehow there is a bug, that causes Emacs not to start correctly. Error:
+; flymake-get-file-name-mode-and-masks: Invalid file-name
+; add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Efene/Ifene Mode

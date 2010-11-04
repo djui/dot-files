@@ -1,3 +1,5 @@
+Host *
+  VisualHostKey yes
 Host github.com
   IdentityFile ~/.ssh/github_rsa
 Host git.hq.kred

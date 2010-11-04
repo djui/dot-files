@@ -62,6 +62,7 @@ alias diff='diff -u'
 alias dir='ls -lhp'
 alias dirs='dirs -l -v -p'
 alias erlgrep='find . -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
+alias irc='screen -md -S irssi irssi && screen -r'
 alias locate='find / -mount -wholename "/proc" -prune -o -iname'
 alias la='ls -alhp'
 alias ls='ls --color=auto'
@@ -73,9 +74,10 @@ alias open='xdg-open'
 alias pushd='pushd > /dev/null'
 alias pd='pushd'
 alias popd='popd > /dev/null'
+alias ports='lsof -i -P' # -n
 alias whereis='find . -iname'
 
-alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/dev/klarna/kred/test/shared/ebin -pa $HOME/.emacs.d/distel/ebin'
+alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/dev/klarna/kred/test/shared/ebin -pa $HOME/.emacs.d/distel/ebin -pa $HOME/dev/riak_core/ebin'
 #alias gperf='erl -name gperf -run gperf -pa $HOME/dev/klarna/kred/lib/eper/ebin -pa /usr/local/lib/erlang/lib/gtknode-0.30/ebin/'
 
 ####################################################################
@@ -136,13 +138,6 @@ export EDITOR="emacs -nw"
 export TERM=xterm-256color
 
 ####################################################################
-## AUTOJUMP ########################################################
-####################################################################
-
-# Added by autojump install.sh
-[ -e /etc/profile.d/autojump.bash ] && source /etc/profile.d/autojump.bash
-
-####################################################################
 ## KLARNA/ERLANG STUFF #############################################
 ####################################################################
 
@@ -179,3 +174,10 @@ r13b04
      $HOME/Dropbox/Klarna/klarna_animation.sh 1
 
 cd $HOME/dev
+
+####################################################################
+## AUTOJUMP ########################################################
+####################################################################
+
+# Added by autojump install.sh
+[ -e /etc/profile.d/autojump.bash ] && source /etc/profile.d/autojump.bash
