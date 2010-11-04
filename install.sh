@@ -35,12 +35,7 @@ done
 
 ## Some emacs modules need compilation
 cd $HOME/.emacs.d/distel && make
-cd $HOME/.emacs.d/magit && make
 cd $HOME
-
-## Create some symlinks
-[ $(hostname) == "simpknot" ] && \
-sudo ln -s ~/.bin/p4v/bin/p4merge /usr/local/bin/p4merge
 
 ## Initialize some scripts
 source $HOME/.bashrc
