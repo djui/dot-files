@@ -98,7 +98,8 @@
 (global-set-key (kbd "M-S-<up>")    'enlarge-window)
 (global-set-key (kbd "M-<left>")    'previous-source-buffer)
 (global-set-key (kbd "M-<right>")   'next-source-buffer)
-(global-set-key (kbd "C-/")         'comment-or-uncomment-region)
+(global-set-key (kbd "C-x /")       'comment-or-uncomment-region)
+
 ;; Format Erlang code like Eclipse
 (global-set-key (kbd "C-f")         'erlang-indent-function)
 (global-set-key (kbd "C-S-f")       'erlang-indent-current-buffer)

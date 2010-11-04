@@ -28,7 +28,9 @@ sub notify {
     $title =~ s/([\Q$replacement_string\E])/$replacements{$1}/g;
     $text =~ s/([\Q$replacement_string\E])/$replacements{$1}/g;
 
-    system("notify-send -t 7500 \"<span color='#ffffff'>".$title."</span>\""." \"".$text."\"");
+    # system("notify-send -t 7500 \"<span color='#ffffff'>".$title."</span>\""." \"".$text."\"");
+    # Changed for using Growl on OSX. Don't forget to add the ssh pub key to ~/.ssh/authorized_keys
+    system("echo ".$text." | ssh simpknot.local growlnotify -s -a Colloquy -t \"".$title."\" 2> /dev/null");
 }
 
 

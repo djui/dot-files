@@ -293,6 +293,13 @@ hilights = (
   { text = "djui"; nick = "yes"; word = "yes"; },
   { text = "dauer"; nick = "yes"; word = "yes"; }
 );
+logs = { };
+ignores = (
+  { 
+    level = "JOINS PARTS QUITS NICKS";
+    channels = ( "#tech", "#kong" );
+  }
+);
 windows = {
   1 = {
     items = (

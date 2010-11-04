@@ -1,7 +1,5 @@
 # name: doc
 # --
 %%% @doc ${1:TODO}
-%%% @version ${2:1.0}
-%%% @since ${3:1.0}
--spec( -> )
+-spec( -> ).
 $0
