@@ -138,6 +138,17 @@ export EDITOR="emacs -nw"
 export TERM=xterm-256color
 
 ####################################################################
+<<<<<<< HEAD
+=======
+## AUTOJUMP ########################################################
+####################################################################
+
+# Added by autojump install.sh
+[ -e /etc/profile.d/autojump.bash ] && \
+    source /etc/profile.d/autojump.bash
+
+####################################################################
+>>>>>>> fdb45315b26be7f478cf7be502754cb94ffdb74a
 ## KLARNA/ERLANG STUFF #############################################
 ####################################################################
 
@@ -171,7 +182,7 @@ r13b04
 ####################################################################
 
 [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] && \
-     $HOME/Dropbox/Klarna/klarna_animation.sh 1
+    $HOME/Dropbox/Klarna/klarna_animation.sh 1
 
 cd $HOME/dev
 

@@ -19,7 +19,6 @@ theme.border_width = "1"
 theme.border_focus  = "#6F0000"
 theme.fg_urgent = "#6F0000"
 
-
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
 editor = os.getenv("EDITOR") or "emacs -nw"
