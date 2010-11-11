@@ -18,8 +18,11 @@
               inhibit-startup-screen       t
               initial-scratch-message      nil
               visible-bell                 nil
+              ;; Show date and time
+              display-time-day-and-date    t
+              display-time-24hr-format     t
               ;; Save session to reopen next time
-              ;; desktop-save-mode         t
+              desktop-save-mode            t
               ;; Compilation help
               byte-compile-warnings        nil
               compilation-scroll-output    t
@@ -79,6 +82,8 @@
               ;; Initial modes
               initial-major-mode 'erlang-mode)
               ;default-major-mode 'erlang-mode)
+
+(display-time)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings

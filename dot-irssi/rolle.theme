@@ -238,6 +238,14 @@ formats = {
     part = "{channick $0} {chanhost $1} left {channel $2} {reason $3}";
     kick = "{channick $0} was kicked from {channel $1} by {nick $2} {reason $3}";
     quit = "{channick $0} {chanhost $1} quit {reason $2}";
+    own_msg = "{ownmsgnick $2 {ownnick $[-9]0}}$1";
+    own_msg_channel = "{ownmsgnick $3 {ownnick $[-9]0}{msgchannel $1}}$2";
+    pubmsg_me = "{pubmsgmenick $2 {menick $[-9]0}}$1";
+    pubmsg_me_channel = "{pubmsgmenick $3 {menick $[-9]0}{msgchannel $1}}$2";
+    pubmsg_hilight = "{pubmsghinick $0 $3 $[-9]1}$2";
+    pubmsg_hilight_channel = "{pubmsghinick $0 $4 $[-9]1{msgchannel $2}}$3";
+    pubmsg = "{pubmsgnick $2 {pubnick $[-9]0}}$1";
+    pubmsg_channel = "{pubmsgnick $3 {pubnick $[-9]0}{msgchannel $1}}$2";
   };
   "fe-common/irc" = {
     chanmode_change = "%M~%n {nick $2} set {mode $1} on {channel $0}";
