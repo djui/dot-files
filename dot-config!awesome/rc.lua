@@ -15,7 +15,7 @@ require("debian.menu")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
-theme.border_width = "1"
+theme.border_width = "0"
 theme.border_focus  = "#6F0000"
 theme.fg_urgent = "#6F0000"
 
@@ -53,7 +53,7 @@ layouts =
 -- Define a tag table which will hold all screen tags.
 tags = {
   names  = { "1:www", "2:    ", "3:    ", "4:irc" },
-  layout = { layouts[2], layouts[2], layouts[2], layouts[2]
+  layout = { layouts[1], layouts[1], layouts[1], layouts[1]
 }}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
@@ -177,24 +177,24 @@ for s = 1, screen.count() do
                                           end, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", height = "16", screen = s })
-    -- Add widgets to the wibox - order matters
-    mywibox[s].widgets = {
-        {
-            mylauncher,
-            mytaglist[s],
-            mypromptbox[s],
-            layout = awful.widget.layout.horizontal.leftright
-        },
-        mylayoutbox[s],
-        mytextclock,
-        gmailwidget, spacer, gmailicon, spacer,
-        -- Doesn't work:
-        -- batwidget, spacer,
-        s == 1 and mysystray or nil,
-        mytasklist[s],
-        layout = awful.widget.layout.horizontal.rightleft
-    }
+--    mywibox[s] = awful.wibox({ position = "top", height = "16", screen = s })
+--    -- Add widgets to the wibox - order matters
+--    mywibox[s].widgets = {
+--        {
+--            mylauncher,
+--            mytaglist[s],
+--            mypromptbox[s],
+--            layout = awful.widget.layout.horizontal.leftright
+--        },
+--        mylayoutbox[s],
+--        mytextclock,
+--        -- gmailwidget, spacer, gmailicon, spacer,
+--        -- Doesn't work:
+--        -- batwidget, spacer,
+--        s == 1 and mysystray or nil,
+--        mytasklist[s],
+--        layout = awful.widget.layout.horizontal.rightleft
+--    }
 end
 -- }}}
 
@@ -222,7 +222,7 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
+    awful.key({ modkey, "Shift"   }, "w", function () mymainmenu:show({keygrabber=true}) end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),

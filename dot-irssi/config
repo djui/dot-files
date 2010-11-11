@@ -202,7 +202,6 @@ statusbar = {
     # the "default statusbar" to be displayed at the bottom of the window.
     # contains all the normal items.
     window = {
-      disabled = "no";
 
       # window, root
       type = "window";
@@ -271,6 +270,7 @@ statusbar = {
         topicbarend = { priority = "100"; alignment = "right"; };
       };
     };
+    unwindow = { disabled = "yes"; };
   };
 };
 settings = {
@@ -312,18 +312,5 @@ windows = {
     );
     sticky = "yes";
   };
-  2 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#kong";
-        tag = "Klarna";
-      }
-    );
-  };
 };
-mainwindows = {
-  2 = { first_line = "44"; lines = "42"; };
-  1 = { first_line = "1"; lines = "43"; };
-};
+mainwindows = { 1 = { first_line = "1"; lines = "87"; }; };
