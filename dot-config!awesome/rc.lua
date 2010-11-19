@@ -52,7 +52,7 @@ layouts =
 -- {{{ Tags
 -- Define a tag table which will hold all screen tags.
 tags = {
-  names  = { "1:www", "2:    ", "3:    ", "4:irc" },
+  names  = { "1:www", "2: code", "3:    " },
   layout = { layouts[1], layouts[1], layouts[1], layouts[1]
 }}
 for s = 1, screen.count() do

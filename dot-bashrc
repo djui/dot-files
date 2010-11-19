@@ -13,10 +13,7 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 #PS1='\[\033[01;33m\]`stack=$((${#DIRSTACK[*]}-1)) ; if [[ $stack -gt 0 ]] ; then echo -n $stack ; fi`\[\033[01;32m\]\w\[\033[00m\]'
 #PS1="\[\033[01;32m\]◤$(hostname | cut -c 1) $PS1$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]") "
 #PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-case $TERM in
-    xterm*) PS1='\[\033[01;34m\]\h\[\033[00m\] \[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]")$ ' ;;
-    screen*) PS1='\[\033k\033\\\]\[\033[01;34m\]\h\[\033[00m\] \[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]")$ ' ;;
-esac
+PS1='\[\033[01;34m\]\h\[\033[00m\] \[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]")$ '
 
 ####################################################################
 ## ALIASES #########################################################
@@ -63,6 +60,7 @@ alias dir='ls -lhp'
 alias dirs='dirs -l -v -p'
 alias erlgrep='find . -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
 alias irc='tmux -c irssi'
+alias lines='wc -l'
 alias locate='find / -mount -wholename "/proc" -prune -o -iname'
 alias la='ls -alhp'
 alias ls='ls --color=auto'

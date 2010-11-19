@@ -4,7 +4,6 @@
 (tool-bar-mode         -1) ; nil toggles
 (scroll-bar-mode       -1) ; nil toggles
 (menu-bar-mode         -1) ; nil toggles
-(iswitchb-mode          t)
 (global-linum-mode      t)
 (global-hl-line-mode    t)
 (global-whitespace-mode t)
@@ -200,6 +199,12 @@
 (color-theme-djui)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; IDo-Mode, better than iswitch mode
+(require 'ido)
+(ido-mode t)
+(setq ido-enable-flex-matching t) 
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Whitespace Mode
 (require 'whitespace)
 
@@ -291,6 +296,10 @@
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/yasnippet/snippets")
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ERC - Emacs IRC
+(setq erc-keywords '("\\buwe\\b" "\\bdjui\\b"))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Delete old backup files

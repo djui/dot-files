@@ -8,6 +8,7 @@
 [keybindings]
   cycle_prev = <Shift><Control>asciitilde
   toggle_zoom = <Shift><Control>g
+  search = <Shift><Control>s
   go_up = <Shift><Control>Up
   resize_up = None
   resize_left = None
@@ -22,6 +23,7 @@
   go_left = <Shift><Control>Left
   resize_right = None
   resize_down = None
+  toggle_scrollbar = <Shift><Control><Alt>s
 [profiles]
   [[default]]
     use_system_font = False
