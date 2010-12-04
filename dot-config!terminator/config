@@ -1,5 +1,6 @@
 [global_config]
   handle_size = 0
+  enabled_plugins = ,
   borderless = True
   geometry_hinting = False
   title_transmit_bg_color = "#272821"
@@ -26,18 +27,19 @@
   toggle_scrollbar = <Shift><Control><Alt>s
 [profiles]
   [[default]]
-    use_system_font = False
+    scrollbar_position = hidden
+    audible_bell = True
     font = Terminus Medium 12
     background_darkness = 0.83
     urgent_bell = True
-    scrollbar_position = hidden
+    use_system_font = False
     foreground_color = "#f8f8f2"
     scroll_on_output = False
     icon_bell = False
     show_titlebar = False
     copy_on_selection = True
     background_color = "#272821"
-    audible_bell = True
+    cursor_blink = False
     scrollback_infinite = True
 [layouts]
   [[default]]

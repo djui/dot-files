@@ -8,23 +8,26 @@
 (global-hl-line-mode    t)
 (global-whitespace-mode t)
 (mouse-wheel-mode       t)
-  
+
 ;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
 (setq-default user-full-name               "Uwe Dauernheim"
               user-mail-address            "uwe@klarna.com"
               ;; Annoying stuff
               inhibit-startup-echo-area-message t
               inhibit-startup-screen       t
+              inhibit-startup-message      t
               initial-scratch-message      nil
               visible-bell                 nil
               ;; Show date and time
-              display-time-day-and-date    t
+              ;; Not needed at the moment due to tmux
+              display-time-day-and-date    nil
               display-time-24hr-format     t
               ;; Save session to reopen next time
               desktop-save-mode            t
               ;; Compilation help
               byte-compile-warnings        nil
               compilation-scroll-output    t
+              compilation-window-height    10
               ;; Combine killring and X clipboard
               x-select-enable-clipboard    t
               interprogram-paste-function  'x-cut-buffer-or-selection-value
@@ -71,18 +74,21 @@
               ;; Version control
               vc-follow-symlinks           nil
               ;; Change frame title
-              frame-title-format (setq icon-title-format
-                                       (format "%%b - %semacs"
-                                               (if (featurep 'xemacs) "x" "")))
+              frame-title-format           (setq icon-title-format
+                                                 (format "%%b - %semacs"
+                                                         (if (featurep 'xemacs) "x" "")))
               ;; Highlight long lines
               whitespace-style             (quote (tabs lines-tail))
               whitespace-action            nil
               whitespace-line-column       80
               ;; Initial modes
-              initial-major-mode 'erlang-mode)
-              ;default-major-mode 'erlang-mode)
+              ;;initial-major-mode          'erlang-mode
+              ;;default-major-mode          'erlang-mode
+              )
 
-(display-time)
+;; Display time (next to date)
+;; Not needed at the moment due to tmux
+;; (display-time)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
@@ -90,25 +96,23 @@
 (global-set-key (kbd "M-g")         'goto-line)
 (global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
 (global-set-key (kbd "C-t")         'transpose-lines)
-;; FIXME: Doesn't delete empty lines...
-;(global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
-(global-set-key (kbd "C-u")         'backward-kill-line)
-(global-set-key (kbd "M-k")         'whole-kill-line)
+(global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
+(global-set-key (kbd "M-k")         'backward-kill-line)
+(global-set-key (kbd "C-M-k")       'whole-kill-line)
 (global-set-key (kbd "M-d")         'another-line)
 ;; Resize windows keyboard shortcuts
-(global-set-key (kbd "M-S-<left>")  'shrink-window-horizontally)
-(global-set-key (kbd "M-S-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "M-S-<down>")  'shrink-window)
-(global-set-key (kbd "M-S-<up>")    'enlarge-window)
-(global-set-key (kbd "M-<left>")    'previous-source-buffer)
-(global-set-key (kbd "M-<right>")   'next-source-buffer)
-(global-set-key (kbd "C-x /")       'comment-or-uncomment-region)
+;;(global-set-key (kbd "M-<left>")   'shrink-window-horizontally) ; doesn't work in emacs -nw
+;;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
+(global-set-key (kbd "\e <up>")      'shrink-window) ; \e because only works like that in emacs -nw
+(global-set-key (kbd "\e <down>")    'enlarge-window) ; \e because only works like that in emacs -nw
+
+;;(global-set-key (kbd "\e\t")         'previous-source-buffer)
+;;(global-set-key (kbd "\e <left>")  'next-source-buffer)
+(global-set-key (kbd "C-/")          'comment-or-uncomment-region) ; doesn't work in emacs -nw
 
 ;; Format Erlang code like Eclipse
 (global-set-key (kbd "C-f")         'erlang-indent-function)
-(global-set-key (kbd "C-S-f")       'erlang-indent-current-buffer)
-;; Auto-Completition
-(global-set-key (kbd "C-<esc>")     'dabbrev-expand)
+;;(global-set-key (kbd "C-M-f")       'erlang-indent-current-buffer)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
@@ -118,7 +122,7 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hooks
-(add-hook 'erlang-mode-hook 'highlight-todo-hook)
+(add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
 (add-hook 'python-mode-hook (local-set-key "\C-c\C-c" 'python-compile))
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
@@ -142,14 +146,16 @@
       (previous-source-buffer)))
 (defun forward-kill-line ()
   (interactive)
-  (delete-region (point) (line-end-position)))
+  (if (looking-at "^$")
+      (delete-char 1)
+    (delete-region (point) (line-end-position))))
 (defun backward-kill-line ()
   (interactive)
   (kill-line 0))
 (defun whole-kill-line ()
   (interactive)
   (delete-region (line-beginning-position) (line-end-position)))
-(defun highlight-todo-hook ()
+(defun highlight-todo ()
   (font-lock-add-keywords nil '(("\\(@todo\\|@fixme\\|XXX\\|TODO\\|FIXME\\)" 1
                                  font-lock-warning-face prepend))))
 (defun python-compile ()
@@ -202,7 +208,12 @@
 ;; IDo-Mode, better than iswitch mode
 (require 'ido)
 (ido-mode t)
-(setq ido-enable-flex-matching t) 
+(setq ido-enable-flex-matching t
+      max-mini-window-height 0.25
+      ido-max-prospects 100)
+(add-hook 'ido-setup-hook 
+          (lambda () 
+            (define-key ido-completion-map [tab] 'ido-complete)))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Whitespace Mode
@@ -212,12 +223,15 @@
 ;; Parentheses Mode
 (load-file "~/.emacs.d/highlight-parentheses.el")
 (require 'highlight-parentheses)
+(highlight-parentheses-mode t)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Magit
 ;; Will only work if you did "make && sudo make install" on it
-(require 'magit)
-(add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . magit-commit-mode))
+;; Deactivated at the moment. It brings error during commit message edits
+;; and I don't see its use case yet.
+;; (require 'magit)
+;; (add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . magit-commit-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
@@ -256,10 +270,10 @@
 (add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
 
 (defun my-erlang-mode-hook ()
-  (flymake-mode t))
+;;  (flymake-mode t)
+  (highlight-todo))
 ; Somehow there is a bug, that causes Emacs not to start correctly. Error:
 ; flymake-get-file-name-mode-and-masks: Invalid file-name
-; add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Efene/Ifene Mode
@@ -298,8 +312,46 @@
 (yas/load-directory "~/.emacs.d/yasnippet/snippets")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ERC - Emacs IRC
-(setq erc-keywords '("\\buwe\\b" "\\bdjui\\b"))
+;; RCIRC - Emacs IRC
+(require 'rcirc)
+;; rcirc-color doesn't work yet: Wrong type argument: "Wrong type argument: number-or-marker-p, nil"
+;; (load-file "~/.emacs.d/rcirc-color.el")
+;; (eval-after-load 'rcirc '(require 'rcirc-color))
+(load-file "~/.emacs.d/rcirc-notify.el")
+(eval-after-load 'rcirc '(require 'rcirc-notify))
+;; (rcirc-track-minor-mode 1)
+(add-hook 'rcirc-mode-hook
+          (lambda ()
+            (rcirc-track-minor-mode 1)))
+
+(setq rcirc-default-nick "uwe"
+      rcirc-default-user-name "uwe"
+      rcirc-default-full-name "Uwe Dauernheim"
+      rcirc-decode-coding-system 'undecided
+      rcirc-time-format "%H:%M:%S "
+      rcirc-startup-channels-alist '(("#tech" "#kong"))
+      rcirc-prompt "%t %n> "
+      rcirc-fill-prefix "      "
+      rcirc-fill-column 65
+      rcirc-log-flag t
+      rcirc-buffer-maximum-lines 10000
+      rcirc-bright-nicks (quote ("happi" "uwiger" "hansn"))
+      rcirc-keywords (quote ("uwe" "happi" "jakob"))
+      rcirc-server-alist '(("irc.hq.kred" :channels ("#tech" "#kong")))
+      rcirc-ignore-list '()
+      rcirc-omit-responses '("JOIN" "PART" "QUIT")) ;; "NICK" "AWAY"))
+
+;; Change the color of my own nickname
+(set-face-foreground 'rcirc-my-nick "gray" nil)
+
+;; Wrap long lines according to the width of the window
+(add-hook 'window-configuration-change-hook
+          '(lambda ()
+             (setq rcirc-fill-column (- (window-width) 2))))
+
+(defun rcirc-kill-all-buffers ()
+  (interactive)
+  (kill-all-mode-buffers 'rcirc-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Delete old backup files

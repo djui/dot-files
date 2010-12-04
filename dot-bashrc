@@ -13,7 +13,11 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 #PS1='\[\033[01;33m\]`stack=$((${#DIRSTACK[*]}-1)) ; if [[ $stack -gt 0 ]] ; then echo -n $stack ; fi`\[\033[01;32m\]\w\[\033[00m\]'
 #PS1="\[\033[01;32m\]◤$(hostname | cut -c 1) $PS1$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]") "
 #PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-PS1='\[\033[01;34m\]\h\[\033[00m\] \[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]")$ '
+if [ $INSIDE_EMACS ] ; then
+    PS1='\h \w$(__git_ps1 " %s")$ '
+else
+    PS1='\[\033[01;34m\]\h\[\033[00m\] \[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]")$ '
+fi
 
 ####################################################################
 ## ALIASES #########################################################
@@ -23,7 +27,7 @@ PS1='\[\033[01;34m\]\h\[\033[00m\] \[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[
 alias b='emacsclient -nw -a "" ~/.bashrc'
 alias c='clear'
 alias d='git diff'
-#alias e='emacsclient -nw -a ""'
+#alias e='emacsclient -nw -a ""' ## See e() function
 alias ec='emacsclient -nw -c -a ""'
 alias en='emacsclient -nw -n -a ""'
 alias f='find'
@@ -83,7 +87,7 @@ alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/d
 ####################################################################
 
 function e {
-    if [ -e $SSH_TTY ] ; then
+    if [ $SSH_TTY ] ; then
         emacsclient -nw -c -a "" $*
     else
         emacsclient -a "" $*
@@ -162,8 +166,6 @@ function stderl {
     echo "Erlang: " `which erl`
 }
 
-r13b04
-
 ####################################################################
 ####################################################################
 ####################################################################
@@ -171,7 +173,9 @@ r13b04
 [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] && \
     $HOME/Dropbox/Klarna/klarna_animation.sh 1
 
-cd $HOME/dev
+r13b04
+
+[ $HOME = $PWD ] && cd $HOME/dev
 
 ####################################################################
 ## AUTOJUMP ########################################################

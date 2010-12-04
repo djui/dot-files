@@ -9,13 +9,12 @@
 ;; Credits: http://www.eclips3media.com/workshop/2007/12/06/eclips3media-eclm-textmate-theme
 
 (defun color-theme-djui ()
-                          (interactive)
-                            (color-theme-install
-                            '(color-theme-djui
-                                ((foreground-color . "#F8F8F2")
-      (cursor-color . "#DAD085"))
+  (interactive)
+  (color-theme-install
+   '(color-theme-djui
+     ((foreground-color . "#F8F8F2") (cursor-color . "#DAD085"))
      (default                          ((t (nil))))
-     (modeline                         ((t (:background nil :foreground "white"))))
+     (modeline                         ((t (:background "white" :foreground "black"))))
      (modeline-inactive                ((t (:background nil :foreground "dark gray"))))
      ;; Erlang applied vars
      (font-lock-variable-name-face     ((t (:foreground "#A6E22A"))))                      ; bright green
@@ -60,5 +59,12 @@
      (diff-indicator-removed           ((t (:foreground "red" :bold t))))
      (flymake-errline                  ((t (:background "FireBrick4"))))
      (flymake-warnline                 ((t (:background "DarkOrange"))))
+
+     (rcirc-my-nick-face               ((t (:foreground "#6DC5F1"))))
+     (rcirc-other-nick-face            ((t (:foreground "#F1266F"))))
+     (rcirc-server-face                ((t (:foreground "gray20"))))
+     (rcirc-nick-in-message-face       ((t (:foreground "cyan"))))
+     (rcirc-prompt-face                ((t (:foreground "#65B042"))))
+     (rcirc-mode-line-nick-face        ((t (:background "red" :foreground "#DFD874"))))
 )))
 (provide 'color-theme-djui)

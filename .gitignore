@@ -1,5 +1,6 @@
-/dot-emacs.d/auto-save-list
-/dot-emacs.d/backups
+/dot-emacs.d/auto-save-list/
+/dot-emacs.d/backups/
+/dot-emacs.d/rcirc-log/
 *~
 \#*
 /dot-ssh/*
