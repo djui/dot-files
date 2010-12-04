@@ -11,6 +11,7 @@ SRCITEMS=(
     xmodmap_laptop
     xinitrc
     screenrc
+    tmux.conf
     emacs
     emacs.d
     gitconfig
