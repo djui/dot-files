@@ -81,9 +81,11 @@
               whitespace-style             (quote (tabs lines-tail))
               whitespace-action            nil
               whitespace-line-column       80
+              ;; Mac specific options
+              mac-command-modifier         'meta
               ;; Initial modes
-              ;;initial-major-mode          'erlang-mode
-              ;;default-major-mode          'erlang-mode
+              ;;initial-major-mode         'erlang-mode
+              ;;default-major-mode         'erlang-mode
               )
 
 ;; Display time (next to date)

@@ -1,10 +1,6 @@
-[submodule "vicious"]
-	path = dot-config!awesome/vicious
-	url = http://git.sysphere.org/vicious
-  ignore = dirty
 [submodule "distel"]
 	path = dot-emacs.d/distel
-	url = git://github.com/rost/distel.git
+	url = git://github.com/djui/distel.git
   ignore = dirty
 [submodule "markdown"]
 	path = dot-emacs.d/markdown-mode
@@ -18,7 +14,4 @@
 	path = dot-bin/git-extras
 	url = git://github.com/visionmedia/git-extras.git
   ignore = dirty
-[submodule "magit"]
-	path = dot-emacs.d/magit
-	url = git://github.com/philjackson/magit.git
-  ignore = dirty
+
