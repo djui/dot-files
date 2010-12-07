@@ -89,7 +89,7 @@ function e {
     if [ $SSH_TTY ] ; then
         emacsclient -nw -c -a "" $*
     else
-        emacsclient -a "" $*
+        emacsclient -nw -a "" $*
     fi
 }
 

@@ -1,13 +1,16 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Configurations
 ;; These do not work with setq(-default)
-(tool-bar-mode         -1) ; nil toggles
-(scroll-bar-mode       -1) ; nil toggles
-(menu-bar-mode         -1) ; nil toggles
+(if window-system
+    (progn
+      (tool-bar-mode    -1) ; nil would only toggle
+      (scroll-bar-mode  -1) ; nil would only toggle
+      (mouse-wheel-mode t)))
+(menu-bar-mode          -1) ; nil would only toggle
+
 (global-linum-mode      t)
 (global-hl-line-mode    t)
 (global-whitespace-mode t)
-(mouse-wheel-mode       t)
 
 ;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
 (setq-default user-full-name               "Uwe Dauernheim"
@@ -29,12 +32,13 @@
               compilation-scroll-output    t
               compilation-window-height    10
               ;; Combine killring and X clipboard
-              x-select-enable-clipboard    t
-              interprogram-paste-function  'x-cut-buffer-or-selection-value
+              ;; We don't want this if we don't really need X
+              ; x-select-enable-clipboard    t
+              ; interprogram-paste-function  'x-cut-buffer-or-selection-value
               ;; Completion
               completion-ignore-case       t
               pcomplete-ignore-case        t
-              ;; Selection mode
+              ;; Selection mode - note: doesn't work in emacs -nw
               shift-select-mode            t
               delete-selection-mode        t
               transient-mark-mode          t
@@ -148,7 +152,7 @@
       (previous-source-buffer)))
 (defun forward-kill-line ()
   (interactive)
-  (if (looking-at "^$")
+  (if (looking-at "$")
       (delete-char 1)
     (delete-region (point) (line-end-position))))
 (defun backward-kill-line ()
@@ -356,16 +360,21 @@
   (kill-all-mode-buffers 'rcirc-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Delete old backup files
-(message "Deleting old backup files...")
-(let ((week (* 60 60 24 7))
-      (current (float-time (current-time))))
-  (dolist (file (directory-files temporary-file-directory t))
-    (when (and (backup-file-name-p file)
-               (> (- current (float-time (fifth (file-attributes file))))
-                  week))
-      (message file)
-      (delete-file file))))
+;; Misc - Delete old backup files
+; (message "Deleting old backup files...")
+; (let ((week (* 60 60 24 7))
+;       (current (float-time (current-time))))
+;   (dolist (file (directory-files temporary-file-directory t))
+;     (when (and (backup-file-name-p file)
+;                (> (- current (float-time (fifth (file-attributes file))))
+;                   week))
+;       (message file)
+;       (delete-file file))))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Misc - Recompile
+;; Do a recompile once in a while to make startup faster
+; (byte-recompile-directory "~/.emacs.d")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom set variables
@@ -390,8 +399,3 @@
      '(mode-line ((t (:box nil))))
      '(mode-line-inactive ((t (:box nil))))
      '(whitespace-line ((t (:background "gray20" :foreground "#D62E00"))))))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Misc
-;; Do a recompile once in a while to make startup faster
-;(byte-recompile-directory "~/.emacs.d")
