@@ -36,9 +36,9 @@
      (font-lock-doc-string-face        ((t (:foreground "#FF0000"))))                      ; ???
      (font-lock-string-face            ((t (:foreground "#DFD874"))))                      ; dirty  beige
      (font-lock-reference-face         ((t (:foreground "#FF0000"))))                      ; ???
-     ;;(font-lock-warning-face           ((t (:foreground "#89BDFF" :bold t))))             ; bright purple
+     ;;(font-lock-warning-face           ((t (:foreground "#89BDFF" :bold t))))            ; bright purple
      (font-lock-warning-face           ((t (:foreground "red" :bold t))))                  ; red (FIXME, TODO, ...)
-     (font-lock-negation-char-face     ((t (:foreground "#FF0000" :bold))))                ; ???
+     (font-lock-negation-char-face     ((t (:foreground "#FF0000" :bold nil))))            ; ???
      (highlight-80+                    ((t (:background "#D62E00"))))                      ; red
      (whitespace-line                  ((t (:background "gray15" :foreground "#D62E00")))) ; red
      (whitespace-tab                   ((t (:background "gray15"))))
@@ -46,7 +46,7 @@
      (hl-line                          ((t (:background "gray15"))))
      (region                           ((t (:background "#6DC5F1"))))                      ; bright blue
      (ido-subdir                       ((t (:foreground "#F1266F"))))                      ; bright pink
-     (linum                            ((t (:foreground "gray20"))))                       ; shadowed/gray
+     (linum                            ((t (:foreground "gray20" :bold nil))))             ; shadowed/gray
      (minibuffer-prompt                ((t (:foreground "#66D9EF"))))                      ; bright blue
      (isearch                          ((t (:background "palevioletred2" :foreground "brown4"))))
      (isearch-fail                     ((t (:background "red4"))))

@@ -106,6 +106,7 @@
 (global-set-key (kbd "M-k")         'backward-kill-line)
 (global-set-key (kbd "C-M-k")       'whole-kill-line)
 (global-set-key (kbd "M-d")         'another-line)
+(global-set-key (kbd "M-s")         'isearch-forward-at-point)
 ;; Resize windows keyboard shortcuts
 ;;(global-set-key (kbd "M-<left>")   'shrink-window-horizontally) ; doesn't work in emacs -nw
 ;;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
@@ -196,6 +197,23 @@
     (goto-char bol)
     (insert line "\n")
     (move-to-column col)))
+;; Original source: http://platypope.org/blog/2007/8/5/a-compendium-of-awesomeness
+(defvar isearch-initial-string nil)
+(defun isearch-set-initial-string ()
+  (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
+  (setq isearch-string isearch-initial-string)
+  (isearch-search-and-update))
+(defun isearch-forward-at-point (&optional regexp-p no-recursive-edit)
+  "Interactive search forward for the symbol at point."
+  (interactive "P\np")
+  (if regexp-p (isearch-forward regexp-p no-recursive-edit)
+    (let* ((end (progn (skip-syntax-forward "w_") (point)))
+           (begin (progn (skip-syntax-backward "w_") (point))))
+      (if (eq begin end)
+          (isearch-forward regexp-p no-recursive-edit)
+        (setq isearch-initial-string (buffer-substring begin end))
+        (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
+        (isearch-forward regexp-p no-recursive-edit)))))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom aliases
@@ -259,8 +277,8 @@
 (distel-setup)
 ; Nice new distel extension for Record and Macro lookup
 (setq erlookup-roots '("~/dev/klarna/kred/lib"
-                       "~/dev/OTP/otp/lib"))
-(setq erl-nodename-cache 'distel\@simpknot)
+                       "~/dev/OTP/src/R13B04/lib"))
+(setq erl-nodename-cache 'distel\@simpknot-2)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Flymake
@@ -328,7 +346,8 @@
 ;; (rcirc-track-minor-mode 1)
 (add-hook 'rcirc-mode-hook
           (lambda ()
-            (rcirc-track-minor-mode 1)))
+            (rcirc-track-minor-mode 1)
+            (rcirc-omit-mode)))
 
 (setq rcirc-default-nick "uwe"
       rcirc-default-user-name "uwe"
@@ -345,7 +364,7 @@
       rcirc-keywords (quote ("uwe" "happi" "jakob"))
       rcirc-server-alist '(("irc.hq.kred" :channels ("#tech" "#kong")))
       rcirc-ignore-list '()
-      rcirc-omit-responses '("JOIN" "PART" "QUIT")) ;; "NICK" "AWAY"))
+      rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
 
 ;; Change the color of my own nickname
 (set-face-foreground 'rcirc-my-nick "gray" nil)
