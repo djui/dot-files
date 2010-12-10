@@ -13,9 +13,23 @@
   (color-theme-install
    '(color-theme-djui
      ((foreground-color . "#F8F8F2") (cursor-color . "#DAD085"))
+
      (default                          ((t (nil))))
      (modeline                         ((t (:background "white" :foreground "black"))))
      (modeline-inactive                ((t (:background nil :foreground "dark gray"))))
+     (minibuffer-prompt                ((t (:foreground "#66D9EF"))))                      ; bright blue
+
+     (highlight-80+                    ((t (:background "#D62E00"))))                      ; red
+     (hl-line                          ((t (:background "gray15"))))
+     (linum                            ((t (:foreground "gray20" :bold nil))))             ; shadowed/gray
+     (region                           ((t (:background "#6DC5F1"))))                      ; bright blue
+     (ido-subdir                       ((t (:foreground "#F1266F"))))                      ; bright pink
+
+     (isearch                          ((t (:background "palevioletred2" :foreground "brown4"))))
+     (isearch-fail                     ((t (:background "red4"))))
+
+     (sh-quoted-exec                   ((t (:foreground "salmon"))))
+
      ;; Erlang applied vars
      (font-lock-variable-name-face     ((t (:foreground "#A6E22A"))))                      ; bright green
      ;; function-header, arrow
@@ -36,27 +50,20 @@
      (font-lock-doc-string-face        ((t (:foreground "#FF0000"))))                      ; ???
      (font-lock-string-face            ((t (:foreground "#DFD874"))))                      ; dirty  beige
      (font-lock-reference-face         ((t (:foreground "#FF0000"))))                      ; ???
-     ;;(font-lock-warning-face           ((t (:foreground "#89BDFF" :bold t))))            ; bright purple
      (font-lock-warning-face           ((t (:foreground "red" :bold t))))                  ; red (FIXME, TODO, ...)
      (font-lock-negation-char-face     ((t (:foreground "#FF0000" :bold nil))))            ; ???
-     (highlight-80+                    ((t (:background "#D62E00"))))                      ; red
+
      (whitespace-line                  ((t (:background "gray15" :foreground "#D62E00")))) ; red
      (whitespace-tab                   ((t (:background "gray15"))))
      (whitespace-trailing              ((t (:background "red4"))))
-     (hl-line                          ((t (:background "gray15"))))
-     (region                           ((t (:background "#6DC5F1"))))                      ; bright blue
-     (ido-subdir                       ((t (:foreground "#F1266F"))))                      ; bright pink
-     (linum                            ((t (:foreground "gray20" :bold nil))))             ; shadowed/gray
-     (minibuffer-prompt                ((t (:foreground "#66D9EF"))))                      ; bright blue
-     (isearch                          ((t (:background "palevioletred2" :foreground "brown4"))))
-     (isearch-fail                     ((t (:background "red4"))))
-     (sh-quoted-exec                   ((t (:foreground "salmon"))))
+
      (diff-added                       ((t (:foreground "green"))))
      (diff-changed                     ((t (:foreground "yellow"))))
      (diff-removed                     ((t (:foreground "red"))))
      (diff-indicator-added             ((t (:foreground "green" :bold t))))
      (diff-indicator-changed           ((t (:foreground "yellow" :bold t))))
      (diff-indicator-removed           ((t (:foreground "red" :bold t))))
+
      (flymake-errline                  ((t (:background "FireBrick4"))))
      (flymake-warnline                 ((t (:background "DarkOrange"))))
 
@@ -66,5 +73,10 @@
      (rcirc-nick-in-message-face       ((t (:foreground "cyan"))))
      (rcirc-prompt-face                ((t (:foreground "#65B042"))))
      (rcirc-mode-line-nick-face        ((t (:background "red" :foreground "#DFD874"))))
+
+     (markdown-header-face-1           ((t (:inherit markdown-header-face))))
+     (markdown-header-face-2           ((t (:inherit markdown-header-face :foreground "#E72E71"))))
+     (markdown-header-face-3           ((t (:inherit markdown-header-face-1 :weight normal))))
+     (markdown-header-face-4           ((t (:inherit markdown-header-face-2 :weight normal))))
 )))
 (provide 'color-theme-djui)
