@@ -1,8 +1,8 @@
 [user]
-	name = Uwe Dauernheim
-	email = uwe@klarna.com
+  name = Uwe Dauernheim
+  email = uwe@klarna.com
 [core]
-	editor = emacs -nw
+  editor = emacs -nw
 [alias]
   glog  = log --graph --abbrev-commit --pretty=oneline
   lol   = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -30,35 +30,38 @@
   # Remove a file from the index: git unstage <file>
   unstage = reset HEAD --
   last = log -1 HEAD
-  whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"     
-  who = "!git shortlog -s -- | sort -n -k1"                                                             
-  aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"   
+  whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+  who = "!git shortlog -s -- | sort -n -k1"
+  aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"
   swap = checkout "@{-1}"
+  pull-request = "!branch=$(git name-rev --name-only HEAD) ; echo \"git pull $(git remote) $branch\n\n $(git log -1 HEAD --stat)\" | mail -s \"Pull request: $branch\" $(git config pull-request.group)"
+[pull-request]
+  group = uwe@klarna.com
 [color]
-	branch = auto
-	diff = auto
-	interactive = auto
-	status = auto
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
 [gui]
-	recentrepo = /home/uwe/dev
-	recentrepo = /home/uwe/dot-files
+  recentrepo = /home/uwe/dev
+  recentrepo = /home/uwe/dot-files
 [merge]
   summary = true
-	tool = meld
+  tool = meld
 [mergetool "meld"]
-	keepbackup = false
-	trustexitcode = false
-	cmd = meld "$PWD/$LOCAL" "$PWD/$REMOTE"
+  keepbackup = false
+  trustexitcode = false
+  cmd = meld "$PWD/$LOCAL" "$PWD/$REMOTE"
 [mergetool "p4merge"]
   keepBackup = false
   trustExitCode = false
   cmd = p4merge "$PWD/$BASE" "$PWD/$LOCAL" "$PWD/$REMOTE" "$PWD/$MERGED" 
 [guitool "Ignore file"]
-	cmd = echo "$FILENAME" >> .gitignore
-	needsfile = yes
+  cmd = echo "$FILENAME" >> .gitignore
+  needsfile = yes
 [guitool "Delete file"]
-	cmd = git rm $FILENAME
-	needsfile = yes
+  cmd = git rm $FILENAME
+  needsfile = yes
 [push]
   # instead of pushing all branches with git push, you only push the current one.
   default = current
@@ -66,7 +69,7 @@
   # global per user gitignore file
   excludesfile = "~/.gitignore"
 [github]
-	user = uwe@dauernheim.net
-	token = c7a71dca362884293fbfadda4ae71d05
+  user = uwe@dauernheim.net
+  token = c7a71dca362884293fbfadda4ae71d05
 [diff]
-#	external = meld
+#  external = meld

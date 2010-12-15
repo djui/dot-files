@@ -347,7 +347,8 @@
 (add-hook 'rcirc-mode-hook
           (lambda ()
             (rcirc-track-minor-mode 1)
-            (rcirc-omit-mode)))
+            (rcirc-omit-mode)
+            (linum-mode nil)))
 
 (setq rcirc-default-nick "uwe"
       rcirc-default-user-name "uwe"
