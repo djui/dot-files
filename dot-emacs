@@ -158,15 +158,20 @@
     (delete-region (point) (line-end-position))))
 (defun backward-kill-line ()
   (interactive)
-  (kill-line 0))
+  (if (looking-at "^")
+      (delete-backward-char 1)
+    (kill-line 0)))
 (defun whole-kill-line ()
   (interactive)
-  (delete-region (line-beginning-position) (line-end-position)))
+  (if (looking-at "^$")
+      (delete-char 1)
+    (delete-region (line-beginning-position) (line-end-position))))
 (defun highlight-todo ()
   (font-lock-add-keywords nil '(("\\(@todo\\|@fixme\\|XXX\\|TODO\\|FIXME\\)" 1
                                  font-lock-warning-face prepend))))
 (defun python-compile ()
-  (interactive) (compile (concat "python " (buffer-name))))
+  (interactive)
+  (compile (concat "python " (buffer-name))))
 (defun duplicate-line ()
   (interactive)
   (move-beginning-of-line 1)
@@ -278,7 +283,19 @@
 ; Nice new distel extension for Record and Macro lookup
 (setq erlookup-roots '("~/dev/klarna/kred/lib"
                        "~/dev/OTP/src/R13B04/lib"))
-(setq erl-nodename-cache 'distel\@simpknot-2)
+(setq erl-nodename-cache 'distel\@simpknot)
+
+(defun distel ()
+  (interactive)
+  (set 'cmd (concat "erl -sname distel "
+                    "-pa $HOME/.emacs.d/distel/ebin "
+                    "-pa $HOME/dev/klarna/kred/lib/*/ebin "
+                    "-pa $HOME/dev/klarna/kred/test/shared/ebin "
+                    "-pa $HOME/dev/riak_core/ebin"))
+  (async-shell-command cmd)
+  (other-window 1)
+  (delete-window)
+  (message "Started Distel Erlang node."))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Flymake
