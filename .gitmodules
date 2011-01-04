@@ -14,4 +14,7 @@
 	path = dot-bin/git-extras
 	url = git://github.com/visionmedia/git-extras.git
   ignore = dirty
-
+[submodule "twittering"]
+	path = dot-emacs.d/twittering-mode
+	url = git://github.com/hayamiz/twittering-mode.git
+  ignore = dirty
