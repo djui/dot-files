@@ -29,7 +29,7 @@
   [[default]]
     scrollbar_position = hidden
     audible_bell = True
-    font = Terminus Medium 12
+    font = ProggyCleanTTSZBP 12
     background_darkness = 0.83
     urgent_bell = True
     use_system_font = False
@@ -37,6 +37,7 @@
     scroll_on_output = False
     icon_bell = False
     show_titlebar = False
+    antialias = False
     copy_on_selection = True
     background_color = "#272821"
     cursor_blink = False
