@@ -176,25 +176,25 @@ for s = 1, screen.count() do
                                               return awful.widget.tasklist.label.currenttags(c, s)
                                           end, mytasklist.buttons)
 
---  -- Create the wibox
---  mywibox[s] = awful.wibox({ position = "bottom", height = "8", screen = s })
---  -- Add widgets to the wibox - order matters
---  mywibox[s].widgets = {
---      {
---          mylauncher,
---          mytaglist[s],
---          mypromptbox[s],
---          layout = awful.widget.layout.horizontal.leftright
---      },
---        mylayoutbox[s],
---        mytextclock,
---        -- gmailwidget, spacer, gmailicon, spacer,
---        -- Doesn't work:
---        -- batwidget, spacer,
---    s == 1 and mysystray or nil,
---    mytasklist[s],
---    layout = awful.widget.layout.horizontal.rightleft
---  }
+-- Create the wibox
+mywibox[s] = awful.wibox({ position = "top", height = "16", screen = s })
+-- Add widgets to the wibox - order matters
+mywibox[s].widgets = {
+    {
+        mylauncher,
+        mytaglist[s],
+        mypromptbox[s],
+        layout = awful.widget.layout.horizontal.leftright
+    },
+      mylayoutbox[s],
+      mytextclock,
+      -- gmailwidget, spacer, gmailicon, spacer,
+      -- Doesn't work:
+      -- batwidget, spacer,
+      s == 1 and mysystray or nil,
+      mytasklist[s],
+      layout = awful.widget.layout.horizontal.rightleft
+}
 end
 -- }}}
 

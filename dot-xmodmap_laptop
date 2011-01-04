@@ -3,11 +3,3 @@ keycode 94 = grave asciitilde
 
 !! Make the key left of the '1' the section/plusminus key
 keycode 49 = section plusminus
-
-!! Switch left Alt and Ctrl keys
-remove control = Control_L
-remove mod1 = Alt_L
-keycode 64 = Control_L
-keycode 37 = Alt_L
-add control = Control_L
-add mod1 = Alt_L

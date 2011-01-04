@@ -5,18 +5,3 @@
 !keycode 94 = grave asciitilde
 !! Make the key left of the '1' the section/plusminus key
 !keycode 49 = section plusminus
-
-!!! Don't wanna remap Super/Mod4 anymore. USe caps lock purely
-!!! and Super/Mod4 for Awesome.
-!! Switch left Control and left Mod4/Win key
-!remove Mod4 = Super_L
-!remove Control = Control_L
-!keycode 133 = Super_L
-!keycode 37 = Control_L
-!add Mod4 = Control_L
-!add Control = Super_L
-
-!! Assign Control to CapsLock
-!remove Lock = Caps_Lock
-!keycode 66 = Control_L
-!add Lock = Control_L
