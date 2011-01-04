@@ -3,6 +3,7 @@
 /dot-emacs.d/rcirc-log/
 *~
 \#*
+.DS_Store
 /dot-ssh/*
 !/dot-ssh/config
 !/dot-ssh/github_rsa.pub

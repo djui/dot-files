@@ -34,7 +34,24 @@
   who = "!git shortlog -s -- | sort -n -k1"
   aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"
   swap = checkout "@{-1}"
-  pull-request = "!branch=$(git name-rev --name-only HEAD) ; echo \"git pull $(git remote) $branch\n\n $(git log -1 HEAD --stat)\" | mail -s \"Pull request: $branch\" $(git config pull-request.group)"
+  push-pull-request = "!sh -c 'hash=$(git rev-parse HEAD) ; \
+                               git push $* && echo $hash >> .git/PUSH_COMMITS' - " 
+  pull-request = "!sh -c 'if [ $1 ] ; then \
+                              amount=$1 ; \
+                          elif [ -f .git/PUSH_COMMITS ] ; then \
+                              lastpushcommit=$(tail -n 1 .git/PUSH_COMMITS) ; \
+                              amount=-$(git log --oneline $lastpushcommit.. | wc -l | tr -d \" \") ; \
+                          else \
+                              amount=-1 ; \
+                          fi ; \
+                          branch=$(git name-rev --name-only HEAD) ; \
+                          remote=$(git config --local branch.$branch.remote) ; \
+                          ctexts=$(git log $amount HEAD --stat) ; \
+                          echo \"git pull $remote $branch\" ; \
+                          echo ; \
+                          echo \"$ctexts\"' - "
+  send-pull-request = "!git pull-request | \
+                        mail -s \"Pull request: $branch\" $(git config pull-request.group)"
 [pull-request]
   group = uwe@klarna.com
 [color]
@@ -43,8 +60,6 @@
   interactive = auto
   status = auto
 [gui]
-  recentrepo = /home/uwe/dev
-  recentrepo = /home/uwe/dot-files
 [merge]
   summary = true
   tool = meld

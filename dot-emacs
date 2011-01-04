@@ -121,6 +121,9 @@
 (global-set-key (kbd "C-f")         'erlang-indent-function)
 ;;(global-set-key (kbd "C-M-f")       'erlang-indent-current-buffer)
 
+;; Remap Version Control Annotation (actually blame)
+(global-set-key (kbd "C-x v b")     'vc-annotate)
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
 (set-terminal-coding-system 'utf-8)

@@ -16,7 +16,7 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 if [ $INSIDE_EMACS ] ; then
     PS1='\h \w$(__git_ps1 " %s")$ '
 else
-    PS1='\[\033[01;34m\]\h\[\033[00m\] \[\033[01;32m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]")$ '
+    PS1='\[\033[01;44m\]\h\[\033[00m\] \[\033[01;42m\]\w\[\033[00m\]$(__git_ps1 " \[\033[01;41m\]%s\[\033[00m\]")$ '
 fi
 
 ####################################################################
@@ -65,7 +65,8 @@ alias dirs='dirs -l -v -p'
 alias erlgrep='find . -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
 alias imac='vpn ; ssh 10.17.102.23'
 alias lines='wc -l'
-alias locate='find / -mount -wholename "/proc" -prune -o -iname'
+[ $(uname) = "Darwin" ] && alias locate='mdfind -name'
+[ $(uname) = "Linux" ] && alias locate='find / -mount -wholename "/proc" -prune -o -iname'
 alias la='ls -alhp'
 alias ll='ls -lh'
 [ $(uname) = "Darwin" ] && alias ls='ls -G'
@@ -133,12 +134,16 @@ function 2en {
 ## EXPORTS #########################################################
 ####################################################################
 
-export PATH="$HOME/.bin:/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
+export PATH="$HOME/.bin:/usr/local/bin:/usr/local/sbin:$PATH"
 export EDITOR="emacs -nw"
 # Allow 256 colors in terminal
 # Also look here: http://www.xvx.ca/~awg/emacs-colors-howto.txt
 # sudo apt-get install ncurses-term
 export TERM=xterm-256color
+
+## Make the special character like Umlauts work through SSH on a Mac from Linux
+export LANG=en_US.utf-8
+export LC_ALL=en_US.utf-8
 
 ####################################################################
 ## KLARNA/ERLANG STUFF #############################################
@@ -178,7 +183,7 @@ function stderl {
 
 r13b04
 
-[ $HOME = $PWD ] && cd $HOME/dev
+[ $HOME = "$PWD" ] && cd $HOME/dev
 
 ####################################################################
 ## AUTOJUMP ########################################################
