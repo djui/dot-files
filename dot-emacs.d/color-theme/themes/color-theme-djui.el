@@ -78,5 +78,6 @@
      (markdown-header-face-2           ((t (:inherit markdown-header-face :foreground "#E72E71"))))
      (markdown-header-face-3           ((t (:inherit markdown-header-face-1 :weight normal))))
      (markdown-header-face-4           ((t (:inherit markdown-header-face-2 :weight normal))))
+     (twittering-username-face         ((t (:bold t))))
 )))
 (provide 'color-theme-djui)

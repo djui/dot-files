@@ -14,6 +14,8 @@ SRCITEMS=(
     tmux.conf
     emacs
     emacs.d
+    vimrc
+    vim
     gitconfig
     irssi
     mocp

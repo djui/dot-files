@@ -1,20 +1,20 @@
 [submodule "distel"]
-	path = dot-emacs.d/distel
-	url = git://github.com/djui/distel.git
+  path = dot-emacs.d/distel
+  url = git://github.com/djui/distel.git
   ignore = dirty
 [submodule "markdown"]
-	path = dot-emacs.d/markdown-mode
-	url = git://jblevins.org/git/markdown-mode.git
+  path = dot-emacs.d/markdown-mode
+  url = git://jblevins.org/git/markdown-mode.git
   ignore = dirty
 [submodule "autojump"]
-	path = dot-bin/autojump
-	url = git://github.com/joelthelion/autojump.git
+  path = dot-bin/autojump
+  url = git://github.com/joelthelion/autojump.git
   ignore = dirty
 [submodule "git-extras"]
-	path = dot-bin/git-extras
-	url = git://github.com/visionmedia/git-extras.git
+  path = dot-bin/git-extras
+  url = git://github.com/visionmedia/git-extras.git
   ignore = dirty
 [submodule "twittering"]
-	path = dot-emacs.d/twittering-mode
-	url = git://github.com/hayamiz/twittering-mode.git
+  path = dot-emacs.d/twittering-mode
+  url = git://github.com/hayamiz/twittering-mode.git
   ignore = dirty

@@ -72,7 +72,8 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Ubuntu", debian.menu.Debian_menu.Debian },
-                                    { "Terminal", terminal }
+                                    { "Terminal", terminal },
+                                    { "Run" , function() mypromptbox[mouse.screen]:run() end }
                                   }
                         })
 

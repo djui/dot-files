@@ -87,9 +87,12 @@
               whitespace-line-column       80
               ;; Mac specific options
               mac-command-modifier         'meta
+              ;; Use Chromium as default browser for links instead of Firefox
+              browse-url-browser-function  'browse-url-generic
+              browse-url-generic-program   "chromium-browser"
               ;; Initial modes
-              ;;initial-major-mode         'erlang-mode
-              ;;default-major-mode         'erlang-mode
+              ;; initial-major-mode        'erlang-mode
+              ;; default-major-mode        'erlang-mode
               )
 
 ;; Display time (next to date)
@@ -272,9 +275,14 @@
 (setq erlang-root-dir "~/dev/OTP/install/R13B04")
 
 (require 'erlang-start)
-(setq erlang-tab-mode nil)
-(setq erlang-electric-commands t)
-(setq erlang-indent-level '2)
+(setq erlang-tab-mode          nil
+      erlang-indent-level      '2
+      erlang-electric-commands '(erlang-electric-semicolon
+                                 erlang-electric-comma
+                                 erlang-electric-arrow
+                                 erlang-electric-newline
+                               ; erlang-electric-gt        ; ...annoying
+                                 erlang-electric-lt))
 (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
 
@@ -284,9 +292,9 @@
 (require 'distel)
 (distel-setup)
 ; Nice new distel extension for Record and Macro lookup
-(setq erlookup-roots '("~/dev/klarna/kred/lib"
-                       "~/dev/OTP/src/R13B04/lib"))
-(setq erl-nodename-cache 'distel\@simpknot)
+(setq erlookup-roots     '("~/dev/klarna/kred/lib"
+                           "~/dev/OTP/src/R13B04/lib")
+      erl-nodename-cache 'distel\@simpknot)
 
 (defun distel ()
   (interactive)
@@ -322,7 +330,7 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Efene/Ifene Mode
 (add-to-list 'load-path "~/.emacs.d/efene-mode")
-(require 'ifene)
+;(require 'ifene)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Scala Mode
@@ -364,40 +372,53 @@
 (load-file "~/.emacs.d/rcirc-notify.el")
 (eval-after-load 'rcirc '(require 'rcirc-notify))
 ;; (rcirc-track-minor-mode 1)
-(add-hook 'rcirc-mode-hook
-          (lambda ()
-            (rcirc-track-minor-mode 1)
-            (rcirc-omit-mode)
-            (linum-mode nil)))
+(add-hook 'rcirc-mode-hook (lambda ()
+                             (rcirc-track-minor-mode 1)
+                             (rcirc-omit-mode)
+                             (linum-mode nil)))
 
-(setq rcirc-default-nick "uwe"
-      rcirc-default-user-name "uwe"
-      rcirc-default-full-name "Uwe Dauernheim"
-      rcirc-decode-coding-system 'undecided
-      rcirc-time-format "%H:%M:%S "
+(setq rcirc-default-nick           "uwe"
+      rcirc-default-user-name      "uwe"
+      rcirc-default-full-name      "Uwe Dauernheim"
+      rcirc-decode-coding-system   'undecided
+      rcirc-time-format            "%H:%M:%S "
       rcirc-startup-channels-alist '(("#tech" "#kong"))
-      rcirc-prompt "%t %n> "
-      rcirc-fill-prefix "      "
-      rcirc-fill-column 65
-      rcirc-log-flag t
-      rcirc-buffer-maximum-lines 10000
-      rcirc-bright-nicks (quote ("happi" "uwiger" "hansn"))
-      rcirc-keywords (quote ("uwe" "happi" "jakob"))
-      rcirc-server-alist '(("irc.hq.kred" :channels ("#tech" "#kong")))
-      rcirc-ignore-list '()
-      rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
+      rcirc-prompt                 "%t %n> "
+      rcirc-fill-prefix            "      "
+      rcirc-fill-column            65
+      rcirc-log-flag               t
+      rcirc-buffer-maximum-lines   10000
+      rcirc-bright-nicks           (quote ("happi" "uwiger" "hansn"))
+      rcirc-keywords               (quote ("uwe" "happi" "jakob"))
+      rcirc-server-alist           '(("irc.hq.kred" :channels ("#tech" "#kong")))
+      rcirc-ignore-list            '()
+      rcirc-omit-responses         '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
 
 ;; Change the color of my own nickname
 (set-face-foreground 'rcirc-my-nick "gray" nil)
 
 ;; Wrap long lines according to the width of the window
-(add-hook 'window-configuration-change-hook
-          '(lambda ()
-             (setq rcirc-fill-column (- (window-width) 2))))
+(add-hook 'window-configuration-change-hook '(lambda ()
+                                               (setq rcirc-fill-column (- (window-width) 2))))
 
 (defun rcirc-kill-all-buffers ()
   (interactive)
   (kill-all-mode-buffers 'rcirc-mode))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Twittering Mode
+(add-to-list 'load-path "~/.emacs.d/twittering-mode")
+(require 'twittering-mode)
+(setq twittering-update-status-function    'twittering-update-status-from-minibuffer
+      twittering-status-format             "%S %@%R\n%FILL[  ]{%t}\n"
+      twittering-retweet-format            "RT: %t ~@%s"
+      twittering-use-native-retweet        t
+      twittering-display-connection-method nil
+      twittering-icon-mode                 nil)
+(add-hook 'twittering-mode-hook (lambda ()
+                                  (interactive)
+                                  (linum-mode) ; Disable the line number mode
+                                  (twittering-enable-unread-status-notifier)))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc - Delete old backup files
