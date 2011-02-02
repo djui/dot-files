@@ -19,9 +19,10 @@
      (modeline-inactive                ((t (:background nil :foreground "dark gray"))))
      (minibuffer-prompt                ((t (:foreground "#66D9EF"))))                      ; bright blue
 
+     (link                             ((t (:foreground nil :underline t))))
      (highlight-80+                    ((t (:background "#D62E00"))))                      ; red
      (hl-line                          ((t (:background "gray15"))))
-     (linum                            ((t (:foreground "gray20" :bold nil))))             ; shadowed/gray
+     (linum                            ((t (:foreground "gray20" :background nil :bold nil))))             ; shadowed/gray
      (region                           ((t (:background "#6DC5F1"))))                      ; bright blue
      (ido-subdir                       ((t (:foreground "#F1266F"))))                      ; bright pink
 
