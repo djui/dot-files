@@ -1,0 +1,3 @@
+#name : debug as error_logger:msg / io:format()
+# --
+error_logger:info_msg("$1: ~p~n", [$1]),$0
