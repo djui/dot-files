@@ -52,7 +52,7 @@
               font-lock-maximum-decoration t
               show-paren-mode              t
               ;; Default tab width
-              tab-width                    2
+              tab-width                    4 ; to show old style correctly
               c-basisc-indent              2
               c-basic-offset               2
               py-indent-offset             2
@@ -88,11 +88,11 @@
               ;; Mac specific options
               mac-command-modifier         'meta
               ;; Use Chromium as default browser for links instead of Firefox
-              browse-url-browser-function  'browse-url-generic
-              browse-url-generic-program   "chromium-browser"
+              ; browse-url-browser-function  'browse-url-generic
+              ; browse-url-generic-program   "chromium-browser"
               ;; Initial modes
-              ;; initial-major-mode        'erlang-mode
-              ;; default-major-mode        'erlang-mode
+              ; initial-major-mode        'erlang-mode
+              ; default-major-mode        'erlang-mode
               )
 
 ;; Display time (next to date)
@@ -110,6 +110,7 @@
 (global-set-key (kbd "C-M-k")       'whole-kill-line)
 (global-set-key (kbd "M-d")         'another-line)
 (global-set-key (kbd "M-s")         'isearch-forward-at-point)
+(global-set-key (kbd "C-c o")       'occur) ;; Because of --^ 'M-s o' is unavailable
 ;; Resize windows keyboard shortcuts
 ;;(global-set-key (kbd "M-<left>")   'shrink-window-horizontally) ; doesn't work in emacs -nw
 ;;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
@@ -121,7 +122,9 @@
 (global-set-key (kbd "C-/")          'comment-or-uncomment-region) ; doesn't work in emacs -nw
 
 ;; Format Erlang code like Eclipse
-(global-set-key (kbd "C-f")         'erlang-indent-function)
+;; Overwrites the needed cursor movement (forward)
+;;(global-set-key (kbd "C-f")         'erlang-indent-function)
+;; Does not get recognized in Terminal mode
 ;;(global-set-key (kbd "C-M-f")       'erlang-indent-current-buffer)
 
 ;; Remap Version Control Annotation (actually blame)
@@ -384,7 +387,7 @@
       rcirc-time-format            "%H:%M:%S "
       rcirc-startup-channels-alist '(("#tech" "#kong"))
       rcirc-prompt                 "%t %n> "
-      rcirc-fill-prefix            "      "
+      rcirc-fill-prefix            "         "
       rcirc-fill-column            65
       rcirc-log-flag               t
       rcirc-buffer-maximum-lines   10000
@@ -419,6 +422,29 @@
                                   (interactive)
                                   (linum-mode) ; Disable the line number mode
                                   (twittering-enable-unread-status-notifier)))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Email (SMTP/SSL)
+;; You need to install the starttls/gnutls package
+;; $ sudo apt-get install gnutls
+;; $ brew install gnutls
+
+(setq imap-ssl-program             "gnutls-cli --port %p %s"
+      gnus-select-method           '(nnimap "gmail" (nnimap-address "imap.gmail.com")
+                                                    (nnimap-server-port 993)
+                                                    (nnimap-authinfo-file "~/.authinfo")
+                                                    (nnimap-stream tls))
+      starttls-use-gnutls           t
+      send-mail-function            'smtpmail-send-it
+      message-send-mail-function    'smtpmail-send-it
+      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+      smtpmail-auth-credentials     (expand-file-name "~/.authinfo")
+      smtpmail-default-smtp-server  "smtp.gmail.com"
+      smtpmail-smtp-server          "smtp.gmail.com"
+      smtpmail-smtp-service         587
+      message-signature-file        (expand-file-name "~/.emacs.d/signature")
+      smtpmail-debug-info           t)
+(require 'smtpmail)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc - Delete old backup files
