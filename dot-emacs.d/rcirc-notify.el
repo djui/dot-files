@@ -69,6 +69,7 @@ notification.")
 same person.")
 
 (defun my-page-me (msg)
+  (write-string-to-file msg "/tmp/tmux")
   (cond
     ((executable-find "notify-send")
      (start-process "page-me" nil
@@ -77,7 +78,7 @@ same person.")
                     "-t" "8640000" "rcirc"
                     msg))
     ((executable-find "growlnotify")
-     (start-process "page-me" nil "growlnotify" "-a" "Emacs" "-m" msg))
+     (start-process "page-me" nil "growlnotify" "-t" "IRC" "-a" "Colloquy" "-m" msg))
     ((executable-find "osascript")
      (apply 'start-process `("page-me" nil
 			     "osascript"
@@ -89,16 +90,14 @@ same person.")
     (t (error "No method available to page you."))))
 
 (defun my-rcirc-notify (sender)
-  (when window-system
     ;; Set default dir to appease the notification gods
     (let ((default-directory "~/"))
-      (my-page-me (format my-rcirc-notify-message sender)))))
+      (my-page-me (format my-rcirc-notify-message sender))))
 
 (defun my-rcirc-notify-private (sender)
-  (when window-system
     ;; Set default dir to appease the notification gods
     (let ((default-directory "~/"))
-      (my-page-me (format my-rcirc-notify-message-private sender)))))
+      (my-page-me (format my-rcirc-notify-message-private sender))))
 
 (defun my-rcirc-notify-allowed (nick &optional delay)
   "Return non-nil if a notification should be made for NICK.
@@ -137,6 +136,12 @@ to them."
              (my-rcirc-notify-allowed sender))
 
     (my-rcirc-notify-private sender)))
+
+(defun write-string-to-file (string file)
+  (message string)
+  (with-temp-buffer
+    (insert string)
+    (write-region (point-min) (point-max) file)))
 
 (add-hook 'rcirc-print-hooks 'my-rcirc-notify-privmsg)
 (add-hook 'rcirc-print-hooks 'my-rcirc-notify-me)
