@@ -69,7 +69,7 @@ notification.")
 same person.")
 
 (defun my-page-me (msg)
-  (write-string-to-file msg "/tmp/tmux")
+  (start-process "rcirc-notify" "rcirc-notify" "tmux" "set-option" "status-left" (concat "#[fg=yellow,bright]" msg))
   (cond
     ((executable-find "notify-send")
      (start-process "page-me" nil
@@ -136,12 +136,6 @@ to them."
              (my-rcirc-notify-allowed sender))
 
     (my-rcirc-notify-private sender)))
-
-(defun write-string-to-file (string file)
-  (message string)
-  (with-temp-buffer
-    (insert string)
-    (write-region (point-min) (point-max) file)))
 
 (add-hook 'rcirc-print-hooks 'my-rcirc-notify-privmsg)
 (add-hook 'rcirc-print-hooks 'my-rcirc-notify-me)
