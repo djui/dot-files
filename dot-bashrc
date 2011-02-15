@@ -32,6 +32,10 @@ alias ec='emacsclient -nw -c -a ""'
 alias en='emacsclient -nw -n -a ""'
 alias f='find'
 alias g='grep'
+alias gitc='git commit'
+alias gitd='git diff'
+alias gitl='git log'
+alias gits='git status'
 alias h='head'
 alias i='hostname -I'
 ##alias j='jumpstart'
@@ -168,6 +172,12 @@ function r13b04 {
     echo "Erlang: " `which erl`
 }
 
+function r14b01 {
+    export PATH="$HOME/dev/OTP/install/R14B01/bin:${ORIG_PATH}"
+    export DIALYZER_PLT="$HOME/dev/OTP/install/R14B01/dialyzer.plt"
+    echo "Erlang: " `which erl`
+}
+
 function stderl {
     export PATH="${ORIG_PATH}"
     echo "Erlang: " `which erl`
@@ -182,7 +192,7 @@ function stderl {
 [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] && \
     $HOME/Dropbox/Klarna/klarna_animation.sh 1
 
-r13b04
+r14b01
 
 [ $HOME = "$PWD" ] && cd $HOME/dev
 
