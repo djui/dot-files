@@ -116,8 +116,8 @@
 ;;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
 (global-set-key (kbd "\e <up>")      'shrink-window) ; \e because only works like that in emacs -nw
 (global-set-key (kbd "\e <down>")    'enlarge-window) ; \e because only works like that in emacs -nw
-
-;;(global-set-key (kbd "\e\t")         'previous-source-buffer)
+(global-set-key (kbd "C-x =")        'balance-windows)
+;;(global-set-key (kbd "\e\t")       'previous-source-buffer)
 ;;(global-set-key (kbd "\e <left>")  'next-source-buffer)
 (global-set-key (kbd "C-/")          'comment-or-uncomment-region) ; doesn't work in emacs -nw
 
@@ -325,8 +325,11 @@
 (add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
 
 (defun my-erlang-mode-hook ()
-;;  (flymake-mode t)
-  (highlight-todo))
+  (highlight-todo)
+  (highlight-parentheses-mode t)
+  ;; (flymake-mode t)
+  )
+
 ; Somehow there is a bug, that causes Emacs not to start correctly. Error:
 ; flymake-get-file-name-mode-and-masks: Invalid file-name
 
