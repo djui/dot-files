@@ -371,11 +371,9 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; RCIRC - Emacs IRC
-(require 'rcirc)
-;; rcirc-color doesn't work yet: Wrong type argument: "Wrong type argument: number-or-marker-p, nil"
-;; (load-file "~/.emacs.d/rcirc-color.el")
-;; (eval-after-load 'rcirc '(require 'rcirc-color))
+(load-file "~/.emacs.d/rcirc.el")
 (load-file "~/.emacs.d/rcirc-notify.el")
+(require 'rcirc)
 (eval-after-load 'rcirc '(require 'rcirc-notify))
 ;; (rcirc-track-minor-mode 1)
 (add-hook 'rcirc-mode-hook (lambda ()

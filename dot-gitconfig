@@ -75,15 +75,7 @@
 [gui]
 [merge]
   summary = true
-  tool = meld
-[mergetool "meld"]
-  keepbackup = false
-  trustexitcode = false
-  cmd = meld "$PWD/$LOCAL" "$PWD/$REMOTE"
-[mergetool "p4merge"]
-  keepBackup = false
-  trustExitCode = false
-  cmd = p4merge "$PWD/$BASE" "$PWD/$LOCAL" "$PWD/$REMOTE" "$PWD/$MERGED" 
+  tool = 
 [guitool "Ignore file"]
   cmd = echo "$FILENAME" >> .gitignore
   needsfile = yes
