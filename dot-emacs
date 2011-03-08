@@ -108,7 +108,7 @@
 (global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
 (global-set-key (kbd "M-k")         'backward-kill-line)
 (global-set-key (kbd "C-M-k")       'whole-kill-line)
-(global-set-key (kbd "M-d")         'another-line)
+(global-set-key (kbd "C-c C-d")     'another-line)
 (global-set-key (kbd "M-s")         'isearch-forward-at-point)
 (global-set-key (kbd "C-c o")       'occur) ;; Because of --^ 'M-s o' is unavailable
 ;; Resize windows keyboard shortcuts
@@ -116,16 +116,15 @@
 ;;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
 (global-set-key (kbd "\e <up>")      'shrink-window) ; \e because only works like that in emacs -nw
 (global-set-key (kbd "\e <down>")    'enlarge-window) ; \e because only works like that in emacs -nw
-(global-set-key (kbd "C-x =")        'balance-windows)
+(global-set-key (kbd "C-x =")        'balance-windows) ; usually on "C-x +"
 ;;(global-set-key (kbd "\e\t")       'previous-source-buffer)
 ;;(global-set-key (kbd "\e <left>")  'next-source-buffer)
 (global-set-key (kbd "C-/")          'comment-or-uncomment-region) ; doesn't work in emacs -nw
 
 ;; Format Erlang code like Eclipse
-;; Overwrites the needed cursor movement (forward)
-;;(global-set-key (kbd "C-f")         'erlang-indent-function)
+(global-set-key (kbd "C-c C-f")         'erlang-indent-function)
 ;; Does not get recognized in Terminal mode
-;;(global-set-key (kbd "C-M-f")       'erlang-indent-current-buffer)
+(global-set-key (kbd "C-c C-M-f")       'erlang-indent-current-buffer)
 
 ;; Remap Version Control Annotation (actually blame)
 (global-set-key (kbd "C-x v b")     'vc-annotate)

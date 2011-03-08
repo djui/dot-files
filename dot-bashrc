@@ -32,10 +32,12 @@ alias ec='emacsclient -nw -c -a ""'
 alias en='emacsclient -nw -n -a ""'
 alias f='find'
 alias g='grep'
-alias gitc='git commit'
-alias gitd='git diff'
-alias gitl='git log'
-alias gits='git status'
+alias gc='git commit'
+alias gd='git diff'
+alias gl='git log'
+alias gs='git status'
+alias gg='git gui'
+alias gx='gitx'
 alias h='head'
 alias i='hostname -I'
 ##alias j='jumpstart'
@@ -71,11 +73,18 @@ alias imac='ssh -Y 10.20.8.55'
 alias lines='wc -l'
 [ $(uname) = "Darwin" ] && alias locate='mdfind -name'
 [ $(uname) = "Linux" ] && alias locate='find / -mount -wholename "/proc" -prune -o -iname'
+function locate2 {
+    case $(uname) in
+        "Darwin") mdfind -name $* | grep "^$(pwd)" ;;
+        "Linux" ) find / -mount -wholename "/proc" -prune -o -iname $* | grep "^$(pwd)" ;;
+    esac
+}
 alias la='ls -alhp'
+#alias ll='if [ "$_" = "-lh" ] ; then echo -e "\033[01;30mBored, nervous or unconcentrated?\033[00m" ; else ls -lh ; fi'
 alias ll='ls -lh'
 [ $(uname) = "Darwin" ] && alias ls='ls -G'
 [ $(uname) = "Linux" ] && alias ls='ls --color=auto'
-alias lt='tree -dCL 2'
+alias lt='tree -dCL 3'
 alias md='mkdir'
 alias mem='grep -o ^MemTotal.* /proc/meminfo'
 alias notify='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
@@ -187,18 +196,13 @@ function stderl {
 ####################################################################
 ####################################################################
 
-[ ! -x $HOME/Dropbox/Klarna/klarna_animation.sh ] && \
-    chmod +x $HOME/Dropbox/Klarna/klarna_animation.sh
-[ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] && \
+if [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] ; then
+    if [ ! -x $HOME/Dropbox/Klarna/klarna_animation.sh ] ; then
+        chmod +x $HOME/Dropbox/Klarna/klarna_animation.sh
+    fi
     $HOME/Dropbox/Klarna/klarna_animation.sh 1
+fi
 
 r14b01
 
 [ $HOME = "$PWD" ] && cd $HOME/dev
-
-####################################################################
-## AUTOJUMP ########################################################
-####################################################################
-
-# Added by autojump install.sh
-[ -e /etc/profile.d/autojump.bash ] && source /etc/profile.d/autojump.bash
