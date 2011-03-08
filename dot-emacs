@@ -287,6 +287,7 @@
                                  erlang-electric-lt))
 (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
+(add-to-list 'interpreter-mode-alist '("escript" . erlang-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Distel
@@ -295,7 +296,7 @@
 (distel-setup)
 ; Nice new distel extension for Record and Macro lookup
 (setq erlookup-roots     '("~/dev/klarna/kred/lib"
-                           "~/dev/OTP/src/R13B04/lib")
+                           "~/dev/OTP/src/otp_r14b01_klarna/lib")
       erl-nodename-cache 'distel\@simpknot)
 
 (defun distel ()

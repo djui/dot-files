@@ -1,0 +1,109 @@
+#!/usr/bin/env escript
+%% -#*- erlang -*-
+%%% @doc Stores and restores a tmux session.
+%%% @author Uwe Dauernheim <uwe@dauernheim.net>
+%%% @todo Store and restore all open/stored sessions
+%%% @todo Also restore the panes
+%%% @fixme tmux new-window -k doesn't seem to work
+%%-module(tmux-session).
+-author("Uwe Dauernheim <uwe@dauernheim.net>").
+-export([main/1]).
+
+-compile(nowarn_unused_function).
+
+-define(CONFIGFILE_PATH, "~/.tmux_session").
+
+main(["store"]) ->
+  Session = get_session(),
+  Windows = get_windows(),
+  WindowPanes = get_panes(Windows),
+  unconsult(absolute_path(?CONFIGFILE_PATH), [{name, Session, WindowPanes}]);
+main(["restore"]) ->
+  {ok, [Session]} = file:consult(absolute_path(?CONFIGFILE_PATH)),
+  reconstruct_session(Session);
+main(_) -> exit2(1, "usage: tmux-session [store|restore]").
+
+get_session() ->
+  {0, Sessions} = tmux("list-sessions", true),
+  CurrentSession = hd(Sessions),
+  [Name|_] = string:tokens(CurrentSession, " "),
+  cuttail(1, Name).
+
+get_windows() ->
+  {0, Windows} = tmux("list-windows", true),
+  get_windowspecs(Windows).
+
+get_windowspecs(Windows) -> get_windowspecs_(Windows, []).
+get_windowspecs_([], Windows) -> Windows;
+get_windowspecs_([H,_|T], Windows) ->
+  [N|NameCoord] = string:tokens(H, " "),
+  {N2, _} = string:to_integer(N),
+  Name = string:join(cuttail(1, NameCoord), " "),
+  get_windowspecs_(T, Windows ++ [{N2, Name}]).
+
+get_panes(WindowSpecs) ->
+  lists:foldl(fun({N, Name}, Panes) ->
+                    Cmd = fmt("list-panes -t ~w", [N]),
+                    {0, Ps} = tmux(Cmd, true),
+                    Ps2 = get_panespecs(Ps),
+                    Panes ++ [{N, Name, Ps2}]
+                end, [], WindowSpecs).
+
+get_panespecs(Panes) -> get_panespecs_(Panes, []).
+get_panespecs_([], Panes) -> Panes;
+get_panespecs_([H|T], Panes) ->
+  [N|Coords] = string:tokens(H, " "),
+  {N2, _} = string:to_integer(N),
+  Coords2 = coords(hd(Coords)),
+  get_panespecs_(T, Panes ++ [{N2, Coords2}]).
+
+coords(Coords) ->
+  {match, [_, {X, XN}, {Y, YN}]} = re:run(Coords, "\\[([0-9]+)x([0-9]+)\\]"),
+  {string:substr(Coords, X+1, XN), string:substr(Coords, Y+1, YN)}.
+
+reconstruct_session({name, Name, WindowPanes}) ->
+  {0, _} = tmux(fmt("new-session -d -s \"~s\"", [Name])),
+  ok = reconstruct_windows(WindowPanes),
+  exit2(fmt("Done. Attach to session using 'tmux attach -t \"~s\"'.", [Name])).
+
+reconstruct_windows([])                    -> ok;
+reconstruct_windows([{N, Name, _Panes}|T]) ->
+  {0, _} = tmux(fmt("new-window -d -k -n \"~s\" -t ~w", [Name, N])),
+  reconstruct_windows(T).
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+cuttail(N, L) -> lists:reverse(lists:nthtail(N, lists:reverse(L))).
+
+absolute_path([$~,$/|T]) -> absolute_path(os:getenv("HOME") ++ "/" ++ T);
+absolute_path(Filename)  -> filename:absname(Filename).
+
+unconsult(File, L) ->
+  {ok, FD} = file:open(File, write),
+  lists:foreach(fun(X) -> io:format(FD, "~p.~n", [X]) end, L),
+  file:close(FD).
+
+tmux(Str) -> tmux(Str, false).
+tmux(Str, Split) -> cmd("tmux " ++ Str, Split).
+
+fmt(Format, Data) -> lists:flatten(io_lib:format(Format, Data)).
+
+cmd(Str) -> cmd(Str, false).
+cmd(Str, Split) when is_boolean(Split) ->
+  Output = os:cmd(Str ++ " ; echo $?"),
+  Lines = string:tokens(Output, "\n"),
+  [Code|ROutput] = lists:reverse(Lines),
+  {Code2, _} = string:to_integer(Code),
+  RROutput = lists:reverse(ROutput),
+  case Split of
+    true  -> {Code2, RROutput};
+    false -> {Code2, string:join(RROutput, "\n")}
+  end.
+
+cmd2(Str) -> %% Note: This can only be applied on idempotent operations!
+  Code0 = os:cmd(Str ++ " > /dev/null 2>&1 ; echo $?"),
+  {Code, _} = string:to_integer(Code0),
+  {Code, os:cmd(Str)}.
+
+exit2(S) -> exit2(0, S).
+exit2(C, S) -> io:format("~s~n", [S]), halt(C).
