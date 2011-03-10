@@ -111,23 +111,29 @@
 (global-set-key (kbd "C-c C-d")     'another-line)
 (global-set-key (kbd "M-s")         'isearch-forward-at-point)
 (global-set-key (kbd "C-c o")       'occur) ;; Because of --^ 'M-s o' is unavailable
+(global-set-key (kbd "M-d")         'kill-current-word)
+(global-set-key (kbd "C-w")         'smart-backwards-kill)
+
 ;; Resize windows keyboard shortcuts
 ;;(global-set-key (kbd "M-<left>")   'shrink-window-horizontally) ; doesn't work in emacs -nw
 ;;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
-(global-set-key (kbd "\e <up>")      'shrink-window) ; \e because only works like that in emacs -nw
-(global-set-key (kbd "\e <down>")    'enlarge-window) ; \e because only works like that in emacs -nw
-(global-set-key (kbd "C-x =")        'balance-windows) ; usually on "C-x +"
+(global-set-key (kbd "\e <up>")     'shrink-window) ; \e because only works like that in emacs -nw
+(global-set-key (kbd "\e <down>")   'enlarge-window) ; \e because only works like that in emacs -nw
+(global-set-key (kbd "C-x =")       'balance-windows) ; usually on "C-x +"
 ;;(global-set-key (kbd "\e\t")       'previous-source-buffer)
 ;;(global-set-key (kbd "\e <left>")  'next-source-buffer)
-(global-set-key (kbd "C-/")          'comment-or-uncomment-region) ; doesn't work in emacs -nw
+(global-set-key (kbd "C-/")         'comment-or-uncomment-region) ; doesn't work in emacs -nw
 
 ;; Format Erlang code like Eclipse
-(global-set-key (kbd "C-c C-f")         'erlang-indent-function)
+(global-set-key (kbd "C-c C-f")     'erlang-indent-function)
 ;; Does not get recognized in Terminal mode
-(global-set-key (kbd "C-c C-M-f")       'erlang-indent-current-buffer)
+(global-set-key (kbd "C-c C-M-f")   'erlang-indent-current-buffer)
 
 ;; Remap Version Control Annotation (actually blame)
 (global-set-key (kbd "C-x v b")     'vc-annotate)
+
+;; Find recently opened files
+(global-set-key (kbd "C-x f")       'recentf-ido-find-file)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
@@ -228,6 +234,79 @@
         (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
         (isearch-forward regexp-p no-recursive-edit)))))
 
+;; Delete current word under cursor
+(defun mark-current-word ()
+  "Put point at beginning of current word, set mark at end."
+  (interactive)
+  (let* ((opoint (point))
+         (word (current-word))
+         (word-length (length word)))
+    (if (save-excursion
+          ;; Avoid signaling error when moving beyond buffer.
+          (if (> (point-min)  (- (point) word-length))
+              (beginning-of-buffer)
+            (forward-char (- (length word))))
+          (search-forward word (+ opoint (length word))
+                          'noerror))
+        (progn (push-mark (match-end 0) nil t)
+               (goto-char (match-beginning 0)))
+      (error "No word at point" word))))
+
+(defun kill-current-word ()
+  (interactive)
+  (save-excursion (kill-word 1) (backward-kill-word 1)))
+
+;; Kill word or cut region
+;; Courtesty to Robin "Rost" for this snippet.
+(defun smart-backward-kill-word (arg)
+  "Special version of backward-kill-word that swallows spaces
+and newlines separate from words. This way a C-w at
+beginning-of-line will not chew its way halfway through a word on
+the line above.
+
+Is this correct now? It now chews its way through words and
+whitespace, anything else get chewed one character at a time."
+  (interactive "p")
+  (cond ((looking-back "\\s-+")
+         (kill-region (point) (progn (re-search-backward "\\S-")
+                                     (forward-char 1) (point))))
+        ((looking-back "[^a-z0-9A-Z]") (backward-delete-char 1))
+        (t (backward-kill-word arg))))
+
+(defun smart-backwards-kill ()
+  "`kill-region' if the mark is active, else `backward-kill-word'."
+  (interactive)
+  (if mark-active
+      (call-interactively 'kill-region)
+    (call-interactively 'smart-backward-kill-word)))
+
+;; It can restore recently used files easily.
+;; Courtesty to Robin "Rost" for this snippet.
+(defun recentf-ido-find-file ()
+  "Find a recent file using Ido."
+  (interactive)
+  (let* ((file-assoc-list
+          (mapcar (lambda (x)
+                    (cons (file-name-nondirectory x)
+                          x))
+                  recentf-list))
+         (filename-list
+          (remove-duplicates (mapcar #'car file-assoc-list)
+                             :test #'string=))
+         (filename (ido-completing-read "Choose recent file: "
+                                        filename-list
+                                        nil
+                                        t)))
+    (when filename
+      (find-file (cdr (assoc filename
+                             file-assoc-list))))))
+
+(recentf-mode t)
+(setq recentf-auto-cleanup 300)
+(setq recentf-exclude '("^.+\\.ede" "TAGS$"))
+(setq recentf-max-saved-items 1000)
+(setq recentf-max-menu-items 100)
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom aliases
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -272,9 +351,9 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
-(add-to-list 'load-path "~/dev/OTP/src/R13B04/lib/tools/emacs")
-(add-to-list 'exec-path "~/dev/OTP/install/R13B04/bin")
-(setq erlang-root-dir "~/dev/OTP/install/R13B04")
+(add-to-list 'load-path "~/dev/OTP/install/R14B01/lib/erlang/lib/tools-2.6.6.2/emacs")
+(add-to-list 'exec-path "~/dev/OTP/install/R14B01/bin")
+(setq erlang-root-dir "~/dev/OTP/install/R14B01")
 
 (require 'erlang-start)
 (setq erlang-tab-mode          nil
