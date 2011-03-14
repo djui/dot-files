@@ -18,6 +18,7 @@ set expandtab
 set number
 set numberwidth=4
 set wildmode=list:longest 
+set t_Co=256
 
 if &t_Co > 2
   syntax on
@@ -42,5 +43,5 @@ map <M-Right> :bnext<CR>
 map <c-a> ggVG
 
 let g:molokai_original=1 " does not work in tty
-colorscheme molokai
-
+"colorscheme molokai
+colorscheme djui

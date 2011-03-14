@@ -111,6 +111,7 @@
 (global-set-key (kbd "C-c C-d")     'another-line)
 (global-set-key (kbd "M-s")         'isearch-forward-at-point)
 (global-set-key (kbd "C-c o")       'occur) ;; Because of --^ 'M-s o' is unavailable
+(global-set-key (kbd "C-c j")       'join-lines)
 (global-set-key (kbd "M-d")         'kill-current-word)
 (global-set-key (kbd "C-w")         'smart-backwards-kill)
 
@@ -306,6 +307,36 @@ whitespace, anything else get chewed one character at a time."
 (setq recentf-exclude '("^.+\\.ede" "TAGS$"))
 (setq recentf-max-saved-items 1000)
 (setq recentf-max-menu-items 100)
+
+(defun join-lines ()
+  (interactive)
+  (if mark-active
+      (let ((fill-column 999999)) ;; <-t Not working yet!
+        (fill-paragraph nil))     ;;   |
+    (join-line)))
+
+(defun count-lines (start end)
+  "Return number of lines between START and END.            
+This is usually the number of newlines between them,        
+but can be one more if START is not equal to END            
+and the greater of them is not at the start of a line."
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (if (eq selective-display t)
+          (save-match-data
+            (let ((done 0))
+              (while (re-search-forward "[\n\C-m]" nil t 40)
+                (setq done (+ 40 done)))
+              (while (re-search-forward "[\n\C-m]" nil t 1)
+                (setq done (+ 1 done)))
+              (goto-char (point-max))
+              (if (and (/= start end)
+                       (not (bolp)))
+                  (1+ done)
+                done)))
+        (- (buffer-size) (forward-line (buffer-size)))))))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom aliases

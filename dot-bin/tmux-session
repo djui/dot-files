@@ -17,10 +17,12 @@ main(["store"]) ->
   Session = get_session(),
   Windows = get_windows(),
   WindowPanes = get_panes(Windows),
-  unconsult(absolute_path(?CONFIGFILE_PATH), [{name, Session, WindowPanes}]);
+  ok = unconsult(absolute_path(?CONFIGFILE_PATH), [{name, Session, WindowPanes}]),
+  tmux("display-message \"Session stored.\"");
 main(["restore"]) ->
   {ok, [Session]} = file:consult(absolute_path(?CONFIGFILE_PATH)),
-  reconstruct_session(Session);
+  ok = reconstruct_session(Session),
+  tmux("display-message \"Session restored.\"");
 main(_) -> exit2(1, "usage: tmux-session [store|restore]").
 
 get_session() ->
