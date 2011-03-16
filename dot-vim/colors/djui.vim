@@ -1,11 +1,20 @@
-" Vim color file
+" Vim colour file
 "
+" Note: Based on the Monokai and eclip3media theme for Textmate
 " Author: Uwe Dauernheim <uwe@dauernheim.net>
-" Note: Based on the Monokai them for Textmate
-
-hi clear
+" Maintainer: Uwe Dauernheim <uwe@dauernheim.net>
+" Credits:
+" Homepage: http://github.com/djui/dot-files/dot-vim/colors/djui.vim
 
 set background=dark
+if version > 580
+	" no guarantees for version 5.8 and below, but this makes it stop
+	" complaining
+	hi clear
+	if exists("syntax_on")
+		syntax reset
+	endif
+endif
 let g:colors_name="djui"
 
 " Basics/Editor
@@ -43,19 +52,21 @@ hi PmenuSbar       ctermfg=1                          " ???
 hi PmenuThumb      ctermfg=1                          " ???
 
 " Diff
-hi DiffAdd                     ctermbg=24             " ???
-hi DiffChange      ctermfg=181 ctermbg=239            " ???
-hi DiffDelete      ctermfg=162 ctermbg=53             " ???
-hi DiffText                    ctermbg=102 cterm=bold " ???
+hi DiffAdd                     ctermbg=22             "dark green
+hi DiffChange                  ctermbg=130            "dark yellow
+hi DiffDelete                  ctermbg=88             "dark red
+hi DiffText                    ctermbg=3              " ???
 
 hi Title           ctermfg=1                          " ???
 hi Question        ctermfg=1                          " ???
 hi MoreMsg         ctermfg=255             cterm=bold "white
 hi WarningMsg      ctermfg=1                          " ???
 hi Error           ctermfg=1                          " ???
-hi ErrorMsg        ctermfg=1  ctermbg=none            "red
+hi ErrorMsg        ctermfg=1   ctermbg=none           "red
 hi Exception       ctermfg=1                          " ???
 hi Ignore          ctermfg=242             cterm=bold "grey
+hi TrailingSpaces              ctermbg=1              "red
+hi LongLine        ctermfg=1               cterm=none "red
 
 " Data types
 hi Boolean         ctermfg=186                        "#D7D787
