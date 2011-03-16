@@ -112,7 +112,7 @@
 (global-set-key (kbd "M-s")         'isearch-forward-at-point)
 (global-set-key (kbd "C-c o")       'occur) ;; Because of --^ 'M-s o' is unavailable
 (global-set-key (kbd "C-c j")       'join-lines)
-(global-set-key (kbd "M-d")         'kill-current-word)
+;(global-set-key (kbd "M-d")         'kill-current-word) ;; A bit too strong
 (global-set-key (kbd "C-w")         'smart-backwards-kill)
 
 ;; Resize windows keyboard shortcuts
