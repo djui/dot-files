@@ -48,18 +48,18 @@ __git_repo_is_modified() {
 
 precmd() {
     vcs_info 'prompt'
-    [ -n vcs_info_msg_0_ ] && RPS1="%B%F{red}${vcs_info_msg_1_} $(__git_repo_is_modified)%f %F{green}%~%f %F{blue}%m%f%b"
+    [ -n vcs_info_msg_0_ ] && RPS1="%B%F{red}${vcs_info_msg_1_} $(__git_repo_is_modified)%f %F{green}%m%f%b"
 }
 
-PS1="%B%F{white}>%f%b "
-RPS1="%F{green}%~%f %F{blue}%m%f"
+PS1="%B%F{blue}%~%f%F{white}»%f%b "
+RPS1="%F{green}%m%f"
 
 ####################################################################
 ## ALIASES #########################################################
 ####################################################################
 
 #alias a=''
-alias b='emacsclient -nw -a "" ~/.bashrc'
+alias b='vim ~/.bashrc ; source ~/.bashrc'
 alias c='clear'
 alias d='git diff'
 #alias e='emacsclient -nw -a ""' ## See e() function
@@ -86,7 +86,7 @@ alias t='tail'
 #alias w=''
 #alias x=''
 #alias y=''
-#alias z=''
+alias z='vim ~/.zshrc ; source ~/.zshrc'
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -123,6 +123,8 @@ alias ll='ls -lh'
 [ $(uname) = "Darwin" ] && alias ls='ls -G'
 [ $(uname) = "Linux" ] && alias ls='ls --color=auto'
 alias lt='tree -dCL 3'
+alias matrix='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS
+conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
 alias md='mkdir'
 alias mem='grep -o ^MemTotal.* /proc/meminfo'
 alias notify='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
@@ -140,43 +142,24 @@ alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/d
 ## FUNCTIONS #######################################################
 ####################################################################
 
-function e {
-    if [ $SSH_TTY ] ; then
-        emacsclient -nw -c -a "" $*
-    else
-        emacsclient -nw -a "" $*
-    fi
-}
-
-function o {
-    find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a ""
-}
-
-function google {
-    w3m "http://www.google.com/search?q=$@"
-}
-
-function encrypt {
-    openssl aes-256-cbc -a -salt -in "$1" -out "$1.aes"
-    shred --remove "$1"
-}
-
-function decrypt {
-    openssl aes-256-cbc -d -a -salt -in "$1.aes" -out "$1"
-}
-
-function title {
-    echo -ne "\033]0;$*\007"
-    # echo -ne "\[\033k$*\033\\\]"
-}
-
-function 2sv {
+e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a
+      "" $* ; fi }
+o() { find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a "" }
+rtfm() { help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@"; }
+cmdfu(){ curl "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ |
+openssl base64)/plaintext"; }
+google() { w3m "http://www.google.com/search?q=$@" }
+encrypt() { openssl aes-256-cbc -a -salt -in "$1" -out "$1.aes" ; shred --remove "$1" }
+decrypt() { openssl aes-256-cbc -d -a -salt -in "$1.aes" -out "$1" }
+title() { echo -ne "\033]0;$*\007" }
+colortable() { for c in {0..255} ; do echo -e "\e[38;05;${c}m $c: Test" ; done }
+2sv() {
     urlenctext="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$@")"
     transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Csv" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
     echo {${transtext#*:}
 }
 
-function 2en {
+2en() {
     urlenctext="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$@")"
     transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Cen" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
     echo {${transtext#*:}
