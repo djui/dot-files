@@ -2,7 +2,7 @@ HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 setopt APPEND_HISTORY      # Share history between sessions
-setopt SHARE_HISTORY       # Share history between processes
+#setopt SHARE_HISTORY       # Share history between processes
 setopt INC_APPEND_HISTORY  # ?
 setopt EXTENDED_GLOB       # Use extended globbing ("**")
 setopt PROMPT_SUBST        # Substitute the prompt with given commands
@@ -15,11 +15,12 @@ setopt CORRECT             # Correct spelling mistakes
 setopt AUTO_LIST           # Automatically list tab-completion hits
 #setopt ALWAYS_TO_END       # After tab completion always move to end
 
-zstyle :compinstall filename '/Users/uwe/.zshrc'
-
 autoload -Uz compinit && compinit
 autoload -U colors && colors
 autoload -Uz vcs_info
+
+zstyle :compinstall filename '/Users/uwe/.zshrc'
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 unlimit
 
@@ -28,7 +29,7 @@ bindkey -e # emacs key bindings
 bindkey ' ' magic-space # also do history expansion on space
 
 ####################################################################
-## GIT COMPLETION ##################################################
+## AUTO COMPLETION #################################################
 ####################################################################
 
 [ -f $HOME/.bin/git-completion.zsh ] && source $HOME/.bin/git-completion.zsh
