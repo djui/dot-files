@@ -52,11 +52,12 @@
               font-lock-maximum-decoration t
               show-paren-mode              t
               ;; Default tab width
+              indent-tabs-mode             nil
               tab-width                    4 ; to show old style correctly
               c-basisc-indent              2
               c-basic-offset               2
               py-indent-offset             2
-              indent-tabs-mode             nil
+              js-indent-level              2
               ;; Have a border above and below the cursor while scrolling
               scroll-margin                5
               ;; Only scroll by 1 line a time
@@ -93,6 +94,7 @@
               ;; Initial modes
               ; initial-major-mode        'erlang-mode
               ; default-major-mode        'erlang-mode
+              fill-column                  80
               )
 
 ;; Display time (next to date)
@@ -102,16 +104,22 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
-(global-set-key (kbd "M-g")         'goto-line)
+(global-set-key (kbd "C-c g")       'goto-line)
+(global-set-key (kbd "C-c t")       'forward-transpose-lines)
+(global-set-key (kbd "C-c T")       'backward-transpose-lines)
+(global-set-key (kbd "C-c d")       'forward-duplicate-line)
+(global-set-key (kbd "C-c D")       'backward-duplicate-line)
+(global-set-key (kbd "C-c j")       'join-next-line)
+(global-set-key (kbd "C-c J")       'join-previous-line)
+(global-set-key (kbd "C-c o")       'occur)
+(global-set-key (kbd "C-c r")       'replace-string)
+(global-set-key (kbd "C-c R")       'replace-regexp)
+
 (global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
-(global-set-key (kbd "C-t")         'transpose-lines)
 (global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
 (global-set-key (kbd "M-k")         'backward-kill-line)
 (global-set-key (kbd "C-M-k")       'whole-kill-line)
-(global-set-key (kbd "C-c C-d")     'another-line)
 (global-set-key (kbd "M-s")         'isearch-forward-at-point)
-(global-set-key (kbd "C-c o")       'occur) ;; Because of --^ 'M-s o' is unavailable
-(global-set-key (kbd "C-c j")       'join-lines)
 ;(global-set-key (kbd "M-d")         'kill-current-word) ;; A bit too strong
 (global-set-key (kbd "C-w")         'smart-backwards-kill)
 
@@ -136,6 +144,16 @@
 ;; Find recently opened files
 (global-set-key (kbd "C-x f")       'recentf-ido-find-file)
 
+;; Toggle some bindings
+(global-set-key (kbd "C-a")         'back-to-indentation)
+(global-set-key (kbd "M-m")         'move-beginning-of-line)
+(global-set-key (kbd "C-f")         'forward-beginning-word)
+(global-set-key (kbd "M-f")         'forward-char)
+(global-set-key (kbd "C-b")         'backward-word)
+(global-set-key (kbd "M-b")         'backward-char)
+(global-set-key (kbd "C-d")         'kill-word)
+(global-set-key (kbd "M-d")         'delete-char)
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
 (set-terminal-coding-system 'utf-8)
@@ -156,6 +174,69 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom functions
+(defun forward-transpose-lines ()
+  (interactive)
+  (let ((col (current-column)))
+    (save-excursion
+      (kill-whole-line)
+      (next-line 1)
+      (move-beginning-of-line 1)
+      (yank))
+    (next-line 1)
+    (move-to-column col)))
+(defun backward-transpose-lines ()
+  (interactive)
+  (let ((col (current-column)))
+    (save-excursion
+      (kill-whole-line)
+      (previous-line 1)
+      (move-beginning-of-line 1)
+      (yank))
+    (previous-line 2)
+    (move-to-column col)))
+
+(defun forward-duplicate-line ()
+  (interactive)
+  (let ((col (current-column)))
+    (save-excursion
+      (move-beginning-of-line 1)
+      (kill-line)
+      (yank)
+      (open-line 1)
+      (next-line 1)
+      (yank))
+    (next-line 1)
+    (move-to-column col)))
+(defun backward-duplicate-line ()
+  (interactive)
+  (let ((col (current-column)))
+    (save-excursion
+      (move-beginning-of-line 1)
+      (kill-line)
+      (yank)
+      (previous-line 1)
+      (open-line 1)
+      (next-line 1)
+      (yank))
+    (previous-line 1)
+    (move-to-column col)))
+
+(defun join-next-line ()
+  (interactive)
+  (let ((col (current-column)))
+    (next-line 1)
+    (if mark-active ;; Not really working
+        (let ((fill-column 999999))
+          (fill-paragraph nil))
+      (join-line))
+    (move-to-column col)))
+(defun join-previous-line ()
+  (interactive)
+  (if mark-active ;; Not really working
+      (let ((fill-column 999999))
+        (fill-paragraph nil))
+    (join-line)))
+
 (defun next-source-buffer ()
   (interactive)
   (next-buffer)
@@ -166,6 +247,7 @@
   (previous-buffer)
   (if (string-match "^\*.*\*$" (buffer-name))
       (previous-source-buffer)))
+
 (defun forward-kill-line ()
   (interactive)
   (if (looking-at "$")
@@ -178,23 +260,15 @@
     (kill-line 0)))
 (defun whole-kill-line ()
   (interactive)
-  (if (looking-at "^$")
-      (delete-char 1)
-    (delete-region (line-beginning-position) (line-end-position))))
+  (save-excursion
+    (kill-whole-line)))
+
 (defun highlight-todo ()
   (font-lock-add-keywords nil '(("\\(@todo\\|@fixme\\|XXX\\|TODO\\|FIXME\\)" 1
                                  font-lock-warning-face prepend))))
 (defun python-compile ()
   (interactive)
   (compile (concat "python " (buffer-name))))
-(defun duplicate-line ()
-  (interactive)
-  (move-beginning-of-line 1)
-  (kill-line)
-  (yank)
-  (open-line 1)
-  (next-line 1)
-  (yank))
 ;;; Original author: ttn at netcom dot com, 28-Jan-1996
 ;;; Modified for multiple lines: Eric
 ;;; http://curiousprogrammer.wordpress.com/2009/02/11/simple-emacs-shortcut/
@@ -253,6 +327,11 @@
                (goto-char (match-beginning 0)))
       (error "No word at point" word))))
 
+(defun forward-beginning-word ()
+  (interactive)
+  (forward-word 2)
+  (backward-word 1))
+
 (defun kill-current-word ()
   (interactive)
   (save-excursion (kill-word 1) (backward-kill-word 1)))
@@ -307,13 +386,6 @@ whitespace, anything else get chewed one character at a time."
 (setq recentf-exclude '("^.+\\.ede" "TAGS$"))
 (setq recentf-max-saved-items 1000)
 (setq recentf-max-menu-items 100)
-
-(defun join-lines ()
-  (interactive)
-  (if mark-active
-      (let ((fill-column 999999)) ;; <-t Not working yet!
-        (fill-paragraph nil))     ;;   |
-    (join-line)))
 
 (defun count-lines (start end)
   "Return number of lines between START and END.            
@@ -382,9 +454,9 @@ and the greater of them is not at the start of a line."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
-(add-to-list 'load-path "~/dev/OTP/install/R14B01/lib/erlang/lib/tools-2.6.6.2/emacs")
-(add-to-list 'exec-path "~/dev/OTP/install/R14B01/bin")
-(setq erlang-root-dir "~/dev/OTP/install/R14B01")
+(add-to-list 'load-path "~/dev/OTP/install/R14B02/lib/erlang/lib/tools-2.6.6.3/emacs")
+(add-to-list 'exec-path "~/dev/OTP/install/R14B02/bin")
+(setq erlang-root-dir "~/dev/OTP/install/R14B02")
 
 (require 'erlang-start)
 (setq erlang-tab-mode          nil
@@ -406,7 +478,7 @@ and the greater of them is not at the start of a line."
 (distel-setup)
 ; Nice new distel extension for Record and Macro lookup
 (setq erlookup-roots     '("~/dev/klarna/kred/lib"
-                           "~/dev/OTP/src/otp_r14b01_klarna/lib")
+                           "~/dev/OTP/src/otp_r14b02_klarna/lib")
       erl-nodename-cache 'distel\@simpknot)
 
 (defun distel ()
@@ -450,19 +522,19 @@ and the greater of them is not at the start of a line."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Scala Mode
-(add-to-list 'load-path "~/.emacs.d/scala-mode")
-(require 'scala-mode-auto)
+;(add-to-list 'load-path "~/.emacs.d/scala-mode")
+;(require 'scala-mode-auto)
 
 ;; Ensime for Scala Mode
-(add-to-list 'load-path "~/.emacs.d/ensime/elisp")
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+;(add-to-list 'load-path "~/.emacs.d/ensime/elisp")
+;(require 'ensime)
+;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Lua Mode
-(add-to-list 'load-path "~/.emacs.d/lua-mode")
-(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+;(add-to-list 'load-path "~/.emacs.d/lua-mode")
+;(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+;(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown Mode
@@ -521,18 +593,18 @@ and the greater of them is not at the start of a line."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Twittering Mode
-(add-to-list 'load-path "~/.emacs.d/twittering-mode")
-(require 'twittering-mode)
-(setq twittering-update-status-function    'twittering-update-status-from-minibuffer
-      twittering-status-format             "%S %@%R\n%FILL[  ]{%t}\n"
-      twittering-retweet-format            "RT: %t ~@%s"
-      twittering-use-native-retweet        t
-      twittering-display-connection-method nil
-      twittering-icon-mode                 nil)
-(add-hook 'twittering-mode-hook (lambda ()
-                                  (interactive)
-                                  (linum-mode) ; Disable the line number mode
-                                  (twittering-enable-unread-status-notifier)))
+;(add-to-list 'load-path "~/.emacs.d/twittering-mode")
+;(require 'twittering-mode)
+;(setq twittering-update-status-function    'twittering-update-status-from-minibuffer
+;      twittering-status-format             "%S %@%R\n%FILL[  ]{%t}\n"
+;      twittering-retweet-format            "RT: %t ~@%s"
+;      twittering-use-native-retweet        t
+;      twittering-display-connection-method nil
+;      twittering-icon-mode                 nil)
+;(add-hook 'twittering-mode-hook (lambda ()
+;                                  (interactive)
+;                                  (linum-mode) ; Disable the line number mode
+;                                  (twittering-enable-unread-status-notifier)))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Email (SMTP/SSL)
@@ -540,22 +612,22 @@ and the greater of them is not at the start of a line."
 ;; $ sudo apt-get install gnutls
 ;; $ brew install gnutls
 
-(setq imap-ssl-program             "gnutls-cli --port %p %s"
-      gnus-select-method           '(nnimap "gmail" (nnimap-address "imap.gmail.com")
-                                                    (nnimap-server-port 993)
-                                                    (nnimap-authinfo-file "~/.authinfo")
-                                                    (nnimap-stream tls))
-      starttls-use-gnutls           t
-      send-mail-function            'smtpmail-send-it
-      message-send-mail-function    'smtpmail-send-it
-      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-      smtpmail-auth-credentials     (expand-file-name "~/.authinfo")
-      smtpmail-default-smtp-server  "smtp.gmail.com"
-      smtpmail-smtp-server          "smtp.gmail.com"
-      smtpmail-smtp-service         587
-      message-signature-file        (expand-file-name "~/.emacs.d/signature")
-      smtpmail-debug-info           t)
-(require 'smtpmail)
+;(setq imap-ssl-program             "gnutls-cli --port %p %s"
+;      gnus-select-method           '(nnimap "gmail" (nnimap-address "imap.gmail.com")
+;                                                    (nnimap-server-port 993)
+;                                                    (nnimap-authinfo-file "~/.authinfo")
+;                                                    (nnimap-stream tls))
+;      starttls-use-gnutls           t
+;      send-mail-function            'smtpmail-send-it
+;      message-send-mail-function    'smtpmail-send-it
+;      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+;      smtpmail-auth-credentials     (expand-file-name "~/.authinfo")
+;      smtpmail-default-smtp-server  "smtp.gmail.com"
+;      smtpmail-smtp-server          "smtp.gmail.com"
+;      smtpmail-smtp-service         587
+;      message-signature-file        (expand-file-name "~/.emacs.d/signature")
+;      smtpmail-debug-info           t)
+;(require 'smtpmail)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc - Delete old backup files

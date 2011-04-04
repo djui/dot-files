@@ -49,10 +49,10 @@ __git_repo_is_modified() {
 
 precmd() {
     vcs_info 'prompt'
-    [ -n vcs_info_msg_0_ ] && RPS1="%B%F{red}${vcs_info_msg_1_} $(__git_repo_is_modified)%f %F{green}%m%f%b"
+    [ -n vcs_info_msg_0_ ] && RPS1="%B%F{red}${vcs_info_msg_1_} $(__git_repo_is_modified)%f %F{blue}%~%f %F{green}%m%f%b"
 }
 
-PS1="%B%F{blue}%~%f%F{white}»%f%b "
+PS1="%B%F{white}»%f%b "
 RPS1="%F{green}%m%f"
 
 ####################################################################
@@ -60,7 +60,7 @@ RPS1="%F{green}%m%f"
 ####################################################################
 
 #alias a=''
-alias b='vim ~/.bashrc ; source ~/.bashrc'
+alias b='emacs -nw ~/.bashrc ; source ~/.bashrc'
 alias c='clear'
 alias d='git diff'
 #alias e='emacsclient -nw -a ""' ## See e() function
@@ -87,7 +87,7 @@ alias t='tail'
 #alias w=''
 #alias x=''
 #alias y=''
-alias z='vim ~/.zshrc ; source ~/.zshrc'
+alias z='emacs -nw ~/.zshrc ; source ~/.zshrc'
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -98,17 +98,20 @@ alias cpu='grep -c ^processor /proc/cpuinfo ; grep "^model name" /proc/cpuinfo |
 alias diff='diff -u'
 alias dir='echo "It is time to let MS-DOS go and is Linux."'
 alias dirs='dirs -l -v -p'
+alias edit='$EDITOR'
 alias erlgrep='find . -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
-alias erlinstall='./otp_build setup --prefix=`pwd`/../../install/R14B01 force_linux_pthread_rwlocks=yes && make install'
+alias erlinstall='./otp_build setup --prefix=`pwd`/../../install/R14B02 force_linux_pthread_rwlocks=yes && make install'
 alias gb='git branch'
 alias gc='git commit'
 alias gd='git diff'
+alias gh='git lola'
 alias gl='git log'
 alias gs='git status'
 alias gg='git gui'
 alias gr='git remote'
 alias gx='gitx'
 alias imac='ssh -Y 10.20.9.110'
+alias joyent='ssh node@djui.no.de' # node@72.2.126.155
 alias lines='wc -l'
 [ $(uname) = "Darwin" ] && alias locate='mdfind -name'
 [ $(uname) = "Linux" ] && alias locate='find / -mount -wholename "/proc" -prune -o -iname'
@@ -143,8 +146,7 @@ alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/d
 ## FUNCTIONS #######################################################
 ####################################################################
 
-e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a
-      "" $* ; fi }
+e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a "" $* ; fi }
 o() { find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a "" }
 rtfm() { help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@"; }
 cmdfu(){ curl "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ |
@@ -170,7 +172,7 @@ colortable() { for c in {0..255} ; do echo -e "\e[38;05;${c}m $c: Test" ; done }
 ## EXPORTS #########################################################
 ####################################################################
 
-export PATH="$HOME/.bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/.bin:$HOME/.cabal/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 export EDITOR="emacs -nw"
 # Allow 256 colors in terminal
 # Also look here: http://www.xvx.ca/~awg/emacs-colors-howto.txt
@@ -209,6 +211,12 @@ function r14b01 {
     echo "Erlang: " `which erl`
 }
 
+function r14b02 {
+    export PATH="$HOME/dev/OTP/install/R14B02/bin:${ORIG_PATH}"
+    export DIALYZER_PLT="$HOME/dev/OTP/install/R14B02/dialyzer.plt"
+    echo "Erlang: " `which erl`
+}
+
 function stderl {
     export PATH="${ORIG_PATH}"
     echo "Erlang: " `which erl`
@@ -218,7 +226,7 @@ function stderl {
 ####################################################################
 ####################################################################
 
-r14b01
+r14b02
 
 if [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] ; then
     if [ ! -x $HOME/Dropbox/Klarna/klarna_animation.sh ] ; then
