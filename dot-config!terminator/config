@@ -1,7 +1,6 @@
 [global_config]
   handle_size = 0
   enabled_plugins = ,
-  borderless = True
   geometry_hinting = False
   title_transmit_bg_color = "#272821"
   tab_position = bottom
@@ -10,12 +9,13 @@
   cycle_prev = <Shift><Control>asciitilde
   toggle_zoom = <Shift><Control>g
   search = <Shift><Control>s
+  reset = None
   go_up = <Shift><Control>Up
   resize_up = None
   resize_left = None
-  go_prev = None
+  full_screen = <Super>Return
   new_window = <Shift><Control>n
-  reset = None
+  go_prev = None
   go_down = <Shift><Control>Down
   cycle_next = <Control>grave
   reset_clear = <Shift><Control>x
@@ -28,8 +28,7 @@
 [profiles]
   [[default]]
     scrollbar_position = hidden
-    audible_bell = True
-    font = ProggyCleanTTSZBP 12
+    palette = "#000000:#cd0000:#00cd00:#cdcd00:#1e90ff:#cd00cd:#00cdcd:#e5e5e5:#4c4c4c:#ff0000:#00ff00:#ffff00:#4682b4:#ff00ff:#00ffff:#ffffff"
     background_darkness = 0.83
     urgent_bell = True
     use_system_font = False
@@ -38,9 +37,8 @@
     icon_bell = False
     show_titlebar = False
     antialias = False
-    copy_on_selection = True
+    font = Terminus Medium 12
     background_color = "#272821"
-    cursor_blink = False
     scrollback_infinite = True
 [layouts]
   [[default]]

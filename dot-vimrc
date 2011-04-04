@@ -1,7 +1,7 @@
 set nocompatible
 set modeline
 set ruler
-set statusline=%f\ [%{&ff}]%y%(\[%M%R%H]%)%=\ %4l,%02c%2V\ %P%*
+set statusline=[%n]\ %t\ %y[%{&ff}]%(\[%M%R%H]%)%=\ %4l,%02c%2V\ %P%*
 set laststatus=2
 set ignorecase
 set smartcase
@@ -22,6 +22,11 @@ set wildmode=list:longest
 if &t_Co > 2
   syntax on
   set hlsearch
+endif
+
+if &term =~ "xterm"
+  let &t_SI = "\<Esc>]12;purple\x7"
+  let &t_EI = "\<Esc>]12;blue\x7"
 endif
 
 set encoding=utf8

@@ -1,5 +1,8 @@
 Host *
   VisualHostKey yes
+  ServerAliveInterval 240
+Host djui.no.de
+  IdentityFile ~/.ssh/joyent_rsa
 Host github.com
   IdentityFile ~/.ssh/github_rsa
 Host git.hq.kred
