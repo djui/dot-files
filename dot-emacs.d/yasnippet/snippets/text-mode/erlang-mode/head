@@ -1,7 +1,7 @@
 # name: head
 # --
 %%% @doc ${1:TODO}
-%%% @copyright 2010 ${2:Klarna AB}
+%%% @copyright 2011 ${2:Klarna AB}
 %%% @author ${3:Uwe Dauernheim <uwe@klarna.com>}
 -module(${4:`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`}).
 

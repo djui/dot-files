@@ -1,0 +1,18 @@
+account         klarna.com
+host            smtp.gmail.com
+port            587
+from            uwe@klarna.com
+user            uwe@klarna.com
+auth            on
+tls             on
+tls_starttls    on
+tls_certcheck   off
+#tls_trust_file  ~/.ssh/Equifax Secure Certificate Authority.crt
+
+account         klarna.test
+from            uwe@klarna.com
+host            smtp.hq.kred
+port            25
+
+account default : klarna.com
+

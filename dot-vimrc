@@ -1,3 +1,6 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 set modeline
 set ruler
@@ -9,6 +12,7 @@ set incsearch
 set showmatch
 set wrap
 set linebreak
+set textwidth=80
 set autoindent
 set smartindent
 set shiftwidth=2
@@ -17,8 +21,17 @@ set tabstop=2
 set expandtab
 set number
 set numberwidth=4
-set wildmode=list:longest 
+set wildmode=list:longest
+set scrolloff=8
+set lazyredraw
+set wildmenu
+set mouse=a
+set ttymouse=xterm
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Colering and Syntax highlighting
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Only show colors if terminal supports colors
 if &t_Co > 2
   syntax on
   set hlsearch
@@ -29,6 +42,24 @@ if &term =~ "xterm"
   let &t_EI = "\<Esc>]12;blue\x7"
 endif
 
+if &term =~ "xterm\\|rxvt"
+  " Change the cursor shape when switching modes
+  "let &t_SI="\033]50;CursorShape=1\007"
+  "let &t_EI="\033]50;CursorShape=0\007"
+  " Change the cursor color when switching modes
+  :silent !echo -ne "\033]12;white\007"
+  let &t_SI="\033]12;orange\007"
+  let &t_EI="\033]12;white\007"
+  autocmd VimLeave * :!echo -ne "\033]12;white\007"
+endif
+
+colorscheme djui
+"colorscheme default
+"colorscheme pablo
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Encoding
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set encoding=utf8
 set fileencoding=utf8
 "set listchars=tab:>,trail:_,precedes:<,extends:>
@@ -41,11 +72,40 @@ endtry
 
 set ffs=unix,dos,mac
 
+" Where to look for ctags file. Start with current, then traverse upwards
+set tags=tags;/
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Key bindings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Save current buffer
 map <c-s> :w
+" Switch to next/previous buffer
 map <M-Left> :bprevious<CR>
 map <M-Right> :bnext<CR>
+" Select all
 map <c-a> ggVG
+" Alt-right/left to navigate forward/backward in the tags stack
+"map <C-[> <C-T> " Doesn't work properly
+map <M-.> <C-]>
+map <M-,> <C-T>
 
-let g:molokai_original=1 " does not work in tty
-colorscheme molokai
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Omni completion
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"filetype plugin on
+set ofu=syntaxcomplete#Complete
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Auto commands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("autocmd")
+ " Highlight everything over 80 chars in lines
+  autocmd BufWinEnter * let w:m1=matchadd('LongLine', '\%>80v.\+', -1)
+  " Highlight spaces at the end of line
+  autocmd BufWinEnter * let w:m2=matchadd('TrailingSpaces', '\s\+$', -1)
+endif
+
+let g:erl_author="Uwe Dauernheim"
+let g:erl_company="Klarna AB"
 

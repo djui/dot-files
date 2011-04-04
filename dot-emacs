@@ -52,11 +52,12 @@
               font-lock-maximum-decoration t
               show-paren-mode              t
               ;; Default tab width
-              tab-width                    2
+              indent-tabs-mode             nil
+              tab-width                    4 ; to show old style correctly
               c-basisc-indent              2
               c-basic-offset               2
               py-indent-offset             2
-              indent-tabs-mode             nil
+              js-indent-level              2
               ;; Have a border above and below the cursor while scrolling
               scroll-margin                5
               ;; Only scroll by 1 line a time
@@ -88,11 +89,12 @@
               ;; Mac specific options
               mac-command-modifier         'meta
               ;; Use Chromium as default browser for links instead of Firefox
-              browse-url-browser-function  'browse-url-generic
-              browse-url-generic-program   "chromium-browser"
+              ; browse-url-browser-function  'browse-url-generic
+              ; browse-url-generic-program   "chromium-browser"
               ;; Initial modes
-              ;; initial-major-mode        'erlang-mode
-              ;; default-major-mode        'erlang-mode
+              ; initial-major-mode        'erlang-mode
+              ; default-major-mode        'erlang-mode
+              fill-column                  80
               )
 
 ;; Display time (next to date)
@@ -102,30 +104,55 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
-(global-set-key (kbd "M-g")         'goto-line)
+(global-set-key (kbd "C-c g")       'goto-line)
+(global-set-key (kbd "C-c t")       'forward-transpose-lines)
+(global-set-key (kbd "C-c T")       'backward-transpose-lines)
+(global-set-key (kbd "C-c d")       'forward-duplicate-line)
+(global-set-key (kbd "C-c D")       'backward-duplicate-line)
+(global-set-key (kbd "C-c j")       'join-next-line)
+(global-set-key (kbd "C-c J")       'join-previous-line)
+(global-set-key (kbd "C-c o")       'occur)
+(global-set-key (kbd "C-c r")       'replace-string)
+(global-set-key (kbd "C-c R")       'replace-regexp)
+
 (global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
-(global-set-key (kbd "C-t")         'transpose-lines)
 (global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
 (global-set-key (kbd "M-k")         'backward-kill-line)
 (global-set-key (kbd "C-M-k")       'whole-kill-line)
-(global-set-key (kbd "M-d")         'another-line)
 (global-set-key (kbd "M-s")         'isearch-forward-at-point)
+;(global-set-key (kbd "M-d")         'kill-current-word) ;; A bit too strong
+(global-set-key (kbd "C-w")         'smart-backwards-kill)
+
 ;; Resize windows keyboard shortcuts
 ;;(global-set-key (kbd "M-<left>")   'shrink-window-horizontally) ; doesn't work in emacs -nw
 ;;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
-(global-set-key (kbd "\e <up>")      'shrink-window) ; \e because only works like that in emacs -nw
-(global-set-key (kbd "\e <down>")    'enlarge-window) ; \e because only works like that in emacs -nw
-
-;;(global-set-key (kbd "\e\t")         'previous-source-buffer)
+(global-set-key (kbd "\e <up>")     'shrink-window) ; \e because only works like that in emacs -nw
+(global-set-key (kbd "\e <down>")   'enlarge-window) ; \e because only works like that in emacs -nw
+(global-set-key (kbd "C-x =")       'balance-windows) ; usually on "C-x +"
+;;(global-set-key (kbd "\e\t")       'previous-source-buffer)
 ;;(global-set-key (kbd "\e <left>")  'next-source-buffer)
-(global-set-key (kbd "C-/")          'comment-or-uncomment-region) ; doesn't work in emacs -nw
+(global-set-key (kbd "C-/")         'comment-or-uncomment-region) ; doesn't work in emacs -nw
 
 ;; Format Erlang code like Eclipse
-(global-set-key (kbd "C-f")         'erlang-indent-function)
-;;(global-set-key (kbd "C-M-f")       'erlang-indent-current-buffer)
+(global-set-key (kbd "C-c C-f")     'erlang-indent-function)
+;; Does not get recognized in Terminal mode
+(global-set-key (kbd "C-c C-M-f")   'erlang-indent-current-buffer)
 
 ;; Remap Version Control Annotation (actually blame)
 (global-set-key (kbd "C-x v b")     'vc-annotate)
+
+;; Find recently opened files
+(global-set-key (kbd "C-x f")       'recentf-ido-find-file)
+
+;; Toggle some bindings
+(global-set-key (kbd "C-a")         'back-to-indentation)
+(global-set-key (kbd "M-m")         'move-beginning-of-line)
+(global-set-key (kbd "C-f")         'forward-beginning-word)
+(global-set-key (kbd "M-f")         'forward-char)
+(global-set-key (kbd "C-b")         'backward-word)
+(global-set-key (kbd "M-b")         'backward-char)
+(global-set-key (kbd "C-d")         'kill-word)
+(global-set-key (kbd "M-d")         'delete-char)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
@@ -147,6 +174,69 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom functions
+(defun forward-transpose-lines ()
+  (interactive)
+  (let ((col (current-column)))
+    (save-excursion
+      (kill-whole-line)
+      (next-line 1)
+      (move-beginning-of-line 1)
+      (yank))
+    (next-line 1)
+    (move-to-column col)))
+(defun backward-transpose-lines ()
+  (interactive)
+  (let ((col (current-column)))
+    (save-excursion
+      (kill-whole-line)
+      (previous-line 1)
+      (move-beginning-of-line 1)
+      (yank))
+    (previous-line 2)
+    (move-to-column col)))
+
+(defun forward-duplicate-line ()
+  (interactive)
+  (let ((col (current-column)))
+    (save-excursion
+      (move-beginning-of-line 1)
+      (kill-line)
+      (yank)
+      (open-line 1)
+      (next-line 1)
+      (yank))
+    (next-line 1)
+    (move-to-column col)))
+(defun backward-duplicate-line ()
+  (interactive)
+  (let ((col (current-column)))
+    (save-excursion
+      (move-beginning-of-line 1)
+      (kill-line)
+      (yank)
+      (previous-line 1)
+      (open-line 1)
+      (next-line 1)
+      (yank))
+    (previous-line 1)
+    (move-to-column col)))
+
+(defun join-next-line ()
+  (interactive)
+  (let ((col (current-column)))
+    (next-line 1)
+    (if mark-active ;; Not really working
+        (let ((fill-column 999999))
+          (fill-paragraph nil))
+      (join-line))
+    (move-to-column col)))
+(defun join-previous-line ()
+  (interactive)
+  (if mark-active ;; Not really working
+      (let ((fill-column 999999))
+        (fill-paragraph nil))
+    (join-line)))
+
 (defun next-source-buffer ()
   (interactive)
   (next-buffer)
@@ -157,6 +247,7 @@
   (previous-buffer)
   (if (string-match "^\*.*\*$" (buffer-name))
       (previous-source-buffer)))
+
 (defun forward-kill-line ()
   (interactive)
   (if (looking-at "$")
@@ -169,23 +260,15 @@
     (kill-line 0)))
 (defun whole-kill-line ()
   (interactive)
-  (if (looking-at "^$")
-      (delete-char 1)
-    (delete-region (line-beginning-position) (line-end-position))))
+  (save-excursion
+    (kill-whole-line)))
+
 (defun highlight-todo ()
   (font-lock-add-keywords nil '(("\\(@todo\\|@fixme\\|XXX\\|TODO\\|FIXME\\)" 1
                                  font-lock-warning-face prepend))))
 (defun python-compile ()
   (interactive)
   (compile (concat "python " (buffer-name))))
-(defun duplicate-line ()
-  (interactive)
-  (move-beginning-of-line 1)
-  (kill-line)
-  (yank)
-  (open-line 1)
-  (next-line 1)
-  (yank))
 ;;; Original author: ttn at netcom dot com, 28-Jan-1996
 ;;; Modified for multiple lines: Eric
 ;;; http://curiousprogrammer.wordpress.com/2009/02/11/simple-emacs-shortcut/
@@ -225,6 +308,107 @@
         (setq isearch-initial-string (buffer-substring begin end))
         (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
         (isearch-forward regexp-p no-recursive-edit)))))
+
+;; Delete current word under cursor
+(defun mark-current-word ()
+  "Put point at beginning of current word, set mark at end."
+  (interactive)
+  (let* ((opoint (point))
+         (word (current-word))
+         (word-length (length word)))
+    (if (save-excursion
+          ;; Avoid signaling error when moving beyond buffer.
+          (if (> (point-min)  (- (point) word-length))
+              (beginning-of-buffer)
+            (forward-char (- (length word))))
+          (search-forward word (+ opoint (length word))
+                          'noerror))
+        (progn (push-mark (match-end 0) nil t)
+               (goto-char (match-beginning 0)))
+      (error "No word at point" word))))
+
+(defun forward-beginning-word ()
+  (interactive)
+  (forward-word 2)
+  (backward-word 1))
+
+(defun kill-current-word ()
+  (interactive)
+  (save-excursion (kill-word 1) (backward-kill-word 1)))
+
+;; Kill word or cut region
+;; Courtesty to Robin "Rost" for this snippet.
+(defun smart-backward-kill-word (arg)
+  "Special version of backward-kill-word that swallows spaces
+and newlines separate from words. This way a C-w at
+beginning-of-line will not chew its way halfway through a word on
+the line above.
+
+Is this correct now? It now chews its way through words and
+whitespace, anything else get chewed one character at a time."
+  (interactive "p")
+  (cond ((looking-back "\\s-+")
+         (kill-region (point) (progn (re-search-backward "\\S-")
+                                     (forward-char 1) (point))))
+        ((looking-back "[^a-z0-9A-Z]") (backward-delete-char 1))
+        (t (backward-kill-word arg))))
+
+(defun smart-backwards-kill ()
+  "`kill-region' if the mark is active, else `backward-kill-word'."
+  (interactive)
+  (if mark-active
+      (call-interactively 'kill-region)
+    (call-interactively 'smart-backward-kill-word)))
+
+;; It can restore recently used files easily.
+;; Courtesty to Robin "Rost" for this snippet.
+(defun recentf-ido-find-file ()
+  "Find a recent file using Ido."
+  (interactive)
+  (let* ((file-assoc-list
+          (mapcar (lambda (x)
+                    (cons (file-name-nondirectory x)
+                          x))
+                  recentf-list))
+         (filename-list
+          (remove-duplicates (mapcar #'car file-assoc-list)
+                             :test #'string=))
+         (filename (ido-completing-read "Choose recent file: "
+                                        filename-list
+                                        nil
+                                        t)))
+    (when filename
+      (find-file (cdr (assoc filename
+                             file-assoc-list))))))
+
+(recentf-mode t)
+(setq recentf-auto-cleanup 300)
+(setq recentf-exclude '("^.+\\.ede" "TAGS$"))
+(setq recentf-max-saved-items 1000)
+(setq recentf-max-menu-items 100)
+
+(defun count-lines (start end)
+  "Return number of lines between START and END.            
+This is usually the number of newlines between them,        
+but can be one more if START is not equal to END            
+and the greater of them is not at the start of a line."
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (if (eq selective-display t)
+          (save-match-data
+            (let ((done 0))
+              (while (re-search-forward "[\n\C-m]" nil t 40)
+                (setq done (+ 40 done)))
+              (while (re-search-forward "[\n\C-m]" nil t 1)
+                (setq done (+ 1 done)))
+              (goto-char (point-max))
+              (if (and (/= start end)
+                       (not (bolp)))
+                  (1+ done)
+                done)))
+        (- (buffer-size) (forward-line (buffer-size)))))))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom aliases
@@ -270,9 +454,9 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
-(add-to-list 'load-path "~/dev/OTP/src/R13B04/lib/tools/emacs")
-(add-to-list 'exec-path "~/dev/OTP/install/R13B04/bin")
-(setq erlang-root-dir "~/dev/OTP/install/R13B04")
+(add-to-list 'load-path "~/dev/OTP/install/R14B02/lib/erlang/lib/tools-2.6.6.3/emacs")
+(add-to-list 'exec-path "~/dev/OTP/install/R14B02/bin")
+(setq erlang-root-dir "~/dev/OTP/install/R14B02")
 
 (require 'erlang-start)
 (setq erlang-tab-mode          nil
@@ -285,6 +469,7 @@
                                  erlang-electric-lt))
 (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
+(add-to-list 'interpreter-mode-alist '("escript" . erlang-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Distel
@@ -293,7 +478,7 @@
 (distel-setup)
 ; Nice new distel extension for Record and Macro lookup
 (setq erlookup-roots     '("~/dev/klarna/kred/lib"
-                           "~/dev/OTP/src/R13B04/lib")
+                           "~/dev/OTP/src/otp_r14b02_klarna/lib")
       erl-nodename-cache 'distel\@simpknot)
 
 (defun distel ()
@@ -322,8 +507,11 @@
 (add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
 
 (defun my-erlang-mode-hook ()
-;;  (flymake-mode t)
-  (highlight-todo))
+  (highlight-todo)
+  (highlight-parentheses-mode t)
+  ;; (flymake-mode t)
+  )
+
 ; Somehow there is a bug, that causes Emacs not to start correctly. Error:
 ; flymake-get-file-name-mode-and-masks: Invalid file-name
 
@@ -334,19 +522,19 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Scala Mode
-(add-to-list 'load-path "~/.emacs.d/scala-mode")
-(require 'scala-mode-auto)
+;(add-to-list 'load-path "~/.emacs.d/scala-mode")
+;(require 'scala-mode-auto)
 
 ;; Ensime for Scala Mode
-(add-to-list 'load-path "~/.emacs.d/ensime/elisp")
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+;(add-to-list 'load-path "~/.emacs.d/ensime/elisp")
+;(require 'ensime)
+;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Lua Mode
-(add-to-list 'load-path "~/.emacs.d/lua-mode")
-(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+;(add-to-list 'load-path "~/.emacs.d/lua-mode")
+;(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+;(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown Mode
@@ -365,11 +553,9 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; RCIRC - Emacs IRC
-(require 'rcirc)
-;; rcirc-color doesn't work yet: Wrong type argument: "Wrong type argument: number-or-marker-p, nil"
-;; (load-file "~/.emacs.d/rcirc-color.el")
-;; (eval-after-load 'rcirc '(require 'rcirc-color))
+(load-file "~/.emacs.d/rcirc.el")
 (load-file "~/.emacs.d/rcirc-notify.el")
+(require 'rcirc)
 (eval-after-load 'rcirc '(require 'rcirc-notify))
 ;; (rcirc-track-minor-mode 1)
 (add-hook 'rcirc-mode-hook (lambda ()
@@ -384,7 +570,7 @@
       rcirc-time-format            "%H:%M:%S "
       rcirc-startup-channels-alist '(("#tech" "#kong"))
       rcirc-prompt                 "%t %n> "
-      rcirc-fill-prefix            "      "
+      rcirc-fill-prefix            "         "
       rcirc-fill-column            65
       rcirc-log-flag               t
       rcirc-buffer-maximum-lines   10000
@@ -407,18 +593,41 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Twittering Mode
-(add-to-list 'load-path "~/.emacs.d/twittering-mode")
-(require 'twittering-mode)
-(setq twittering-update-status-function    'twittering-update-status-from-minibuffer
-      twittering-status-format             "%S %@%R\n%FILL[  ]{%t}\n"
-      twittering-retweet-format            "RT: %t ~@%s"
-      twittering-use-native-retweet        t
-      twittering-display-connection-method nil
-      twittering-icon-mode                 nil)
-(add-hook 'twittering-mode-hook (lambda ()
-                                  (interactive)
-                                  (linum-mode) ; Disable the line number mode
-                                  (twittering-enable-unread-status-notifier)))
+;(add-to-list 'load-path "~/.emacs.d/twittering-mode")
+;(require 'twittering-mode)
+;(setq twittering-update-status-function    'twittering-update-status-from-minibuffer
+;      twittering-status-format             "%S %@%R\n%FILL[  ]{%t}\n"
+;      twittering-retweet-format            "RT: %t ~@%s"
+;      twittering-use-native-retweet        t
+;      twittering-display-connection-method nil
+;      twittering-icon-mode                 nil)
+;(add-hook 'twittering-mode-hook (lambda ()
+;                                  (interactive)
+;                                  (linum-mode) ; Disable the line number mode
+;                                  (twittering-enable-unread-status-notifier)))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Email (SMTP/SSL)
+;; You need to install the starttls/gnutls package
+;; $ sudo apt-get install gnutls
+;; $ brew install gnutls
+
+;(setq imap-ssl-program             "gnutls-cli --port %p %s"
+;      gnus-select-method           '(nnimap "gmail" (nnimap-address "imap.gmail.com")
+;                                                    (nnimap-server-port 993)
+;                                                    (nnimap-authinfo-file "~/.authinfo")
+;                                                    (nnimap-stream tls))
+;      starttls-use-gnutls           t
+;      send-mail-function            'smtpmail-send-it
+;      message-send-mail-function    'smtpmail-send-it
+;      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+;      smtpmail-auth-credentials     (expand-file-name "~/.authinfo")
+;      smtpmail-default-smtp-server  "smtp.gmail.com"
+;      smtpmail-smtp-server          "smtp.gmail.com"
+;      smtpmail-smtp-service         587
+;      message-signature-file        (expand-file-name "~/.emacs.d/signature")
+;      smtpmail-debug-info           t)
+;(require 'smtpmail)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc - Delete old backup files

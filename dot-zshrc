@@ -1,34 +1,66 @@
-[ -z "$PS1" ] && return
-shopt -s histappend
-shopt -s checkwinsize
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+setopt APPEND_HISTORY      # Share history between sessions
+#setopt SHARE_HISTORY       # Share history between processes
+setopt INC_APPEND_HISTORY  # ?
+setopt EXTENDED_GLOB       # Use extended globbing ("**")
+setopt PROMPT_SUBST        # Substitute the prompt with given commands
+setopt NOAUTO_REMOVE_SLASH # ?
+setopt LIST_TYPES          # ?
+setopt COMPLETE_IN_WORD    # allow tab completion in the middle of a word
+setopt NO_BEEP             # Don not beep
+setopt AUTOCD              # "/etc" actually runs "cd /etc"
+setopt CORRECT             # Correct spelling mistakes
+setopt AUTO_LIST           # Automatically list tab-completion hits
+#setopt ALWAYS_TO_END       # After tab completion always move to end
+
+autoload -Uz compinit && compinit
+autoload -U colors && colors
+autoload -Uz vcs_info
+
+zstyle :compinstall filename '/Users/uwe/.zshrc'
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+unlimit
+
+#bindkey -v # vi key bindings
+bindkey -e # emacs key bindings
+bindkey ' ' magic-space # also do history expansion on space
 
 ####################################################################
-## GIT COMPLETION ##################################################
+## AUTO COMPLETION #################################################
 ####################################################################
 
-[ -f /etc/bash_completion ] && source /etc/bash_completion
-[ -f $HOME/.bin/git-completion.bash ] && source $HOME/.bin/git-completion.bash
-export GIT_PS1_SHOWDIRTYSTATE=true
+[ -f $HOME/.bin/git-completion.zsh ] && source $HOME/.bin/git-completion.zsh
 
 ####################################################################
 ## PROMPT SCRIPT ###################################################
 ####################################################################
 
-#PS1='\[\033[01;33m\]`stack=$((${#DIRSTACK[*]}-1)) ; if [[ $stack -gt 0 ]] ; then echo -n $stack ; fi`\[\033[01;32m\]\w\[\033[00m\]'
-#PS1="\[\033[01;32m\]◤$(hostname | cut -c 1) $PS1$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]") "
-#PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-if [ $INSIDE_EMACS ] ; then
-    PS1='\h \w$(__git_ps1 " %s")$ '
-else
-    PS1='\[\033[01;34m\]\h\[\033[00m\] \[\033[01;32m\]\W\[\033[00m\]$(__git_ps1 " \[\033[01;31m\]%s\[\033[00m\]")$ '
-fi
+zstyle ':vcs_info:*:prompt:*' formats "$VCSPROMPT" "%b"
+zstyle ':vcs_info:git:*' check-for-changes true
+
+__git_repo_is_modified() {
+    OUTPUT=$(git status --porcelain 2> /dev/null | grep -c "^M\|\\?" > /dev/null && echo "*")
+    OUTPUT=$OUTPUT$(git status --porcelain 2> /dev/null | grep -c "^A" > /dev/null && echo "±")
+    [ ! "$OUTPUT" = "" ] && echo "($OUTPUT)"
+}
+
+precmd() {
+    vcs_info 'prompt'
+    [ -n vcs_info_msg_0_ ] && RPS1="%B%F{red}${vcs_info_msg_1_} $(__git_repo_is_modified)%f %F{blue}%~%f %F{green}%m%f%b"
+}
+
+PS1="%B%F{white}»%f%b "
+RPS1="%F{green}%m%f"
 
 ####################################################################
 ## ALIASES #########################################################
 ####################################################################
 
 #alias a=''
-alias b='emacs ~/.bashrc ; ^vi^source^'
+alias b='emacs -nw ~/.bashrc ; source ~/.bashrc'
 alias c='clear'
 alias d='git diff'
 #alias e='emacsclient -nw -a ""' ## See e() function
@@ -55,7 +87,7 @@ alias t='tail'
 #alias w=''
 #alias x=''
 #alias y=''
-alias z='emacs ~/.zshrc ; ^vi^source^'
+alias z='emacs -nw ~/.zshrc ; source ~/.zshrc'
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -66,9 +98,8 @@ alias cpu='grep -c ^processor /proc/cpuinfo ; grep "^model name" /proc/cpuinfo |
 alias diff='diff -u'
 alias dir='echo "It is time to let MS-DOS go and is Linux."'
 alias dirs='dirs -l -v -p'
+alias edit='$EDITOR'
 alias erlgrep='find . -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
-alias imac='ssh -Y 10.20.9.110'
-alias joyent='ssh node@djui.no.de' # node@72.2.126.155
 alias erlinstall='./otp_build setup --prefix=`pwd`/../../install/R14B02 force_linux_pthread_rwlocks=yes && make install'
 alias gb='git branch'
 alias gc='git commit'
@@ -80,6 +111,7 @@ alias gg='git gui'
 alias gr='git remote'
 alias gx='gitx'
 alias imac='ssh -Y 10.20.9.110'
+alias joyent='ssh node@djui.no.de' # node@72.2.126.155
 alias lines='wc -l'
 [ $(uname) = "Darwin" ] && alias locate='mdfind -name'
 [ $(uname) = "Linux" ] && alias locate='find / -mount -wholename "/proc" -prune -o -iname'
@@ -95,8 +127,8 @@ alias ll='ls -lh'
 [ $(uname) = "Darwin" ] && alias ls='ls -G'
 [ $(uname) = "Linux" ] && alias ls='ls --color=auto'
 alias lt='tree -dCL 3'
-alias matrix='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock
-| GREP_COLOR="1;32" grep --color "[^ ]"'
+alias matrix='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS
+conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
 alias md='mkdir'
 alias mem='grep -o ^MemTotal.* /proc/meminfo'
 alias notify='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
@@ -107,7 +139,6 @@ alias ports='lsof -i -P' # -n
 alias vpn='[ $(nmcli con status | grep -c "Klarna") = 0 ] && nmcli con up id "Klarna"'
 alias whereis='find . -iname'
 
-alias tag='pushd ~/dev/klarna/kred ; ctags --languages=erlang -R ~/dev/klarna/kred/ ~/dev/OTP/install/R14B02/lib/erlang/lib/ ; popd'
 alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/dev/klarna/kred/test/shared/ebin -pa $HOME/.emacs.d/distel/ebin -pa $HOME/dev/riak_core/ebin'
 #alias gperf='erl -name gperf -run gperf -pa $HOME/dev/klarna/kred/lib/eper/ebin -pa /usr/local/lib/erlang/lib/gtknode-0.30/ebin/'
 
@@ -115,40 +146,7 @@ alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/d
 ## FUNCTIONS #######################################################
 ####################################################################
 
-function e {
-    if [ $SSH_TTY ] ; then
-        emacsclient -nw -c -a "" $*
-    else
-        emacsclient -nw -a "" $*
-    fi
-}
-
-function o {
-  # emacsclient -nw -a $(find . -name $@ -print -quit)
-  find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a ""
-}
-
-function google {
-    w3m "http://www.google.com/search?q=$@"
-}
-
-function encrypt {
-    openssl aes-256-cbc -a -salt -in "$1" -out "$1.aes"
-    shred --remove "$1"
-}
-
-function decrypt {
-    openssl aes-256-cbc -d -a -salt -in "$1.aes" -out "$1"
-}
-
-function title {
-    echo -ne "\033]0;$*\007"
-    # echo -ne "\[\033k$*\033\\\]"
-}
-
-function 2sv {
-e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a
-      "" $* ; fi }
+e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a "" $* ; fi }
 o() { find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a "" }
 rtfm() { help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@"; }
 cmdfu(){ curl "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ |
@@ -157,8 +155,7 @@ google() { w3m "http://www.google.com/search?q=$@" }
 encrypt() { openssl aes-256-cbc -a -salt -in "$1" -out "$1.aes" ; shred --remove "$1" }
 decrypt() { openssl aes-256-cbc -d -a -salt -in "$1.aes" -out "$1" }
 title() { echo -ne "\033]0;$*\007" }
-colors() { for c in {0..255} ; do echo -e "\e[38;05;${c}m $c: Test" ;
-done }
+colortable() { for c in {0..255} ; do echo -e "\e[38;05;${c}m $c: Test" ; done }
 2sv() {
     urlenctext="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$@")"
     transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Csv" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
@@ -175,7 +172,7 @@ done }
 ## EXPORTS #########################################################
 ####################################################################
 
-export PATH="$HOME/.bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/.bin:$HOME/.cabal/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 export EDITOR="emacs -nw"
 # Allow 256 colors in terminal
 # Also look here: http://www.xvx.ca/~awg/emacs-colors-howto.txt

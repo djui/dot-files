@@ -1,0 +1,3 @@
+#name : debug as error_logger:msg / io:format()
+# --
+error_logger:info_msg("[~s:~p] $1: ~p~n", [?FILE, ?LINE, $1]),$0

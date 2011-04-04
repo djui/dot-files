@@ -4,11 +4,14 @@
 DESTDIR="$HOME"
 SRCDIR="$HOME/dot-files"
 SRCITEMS=(
+    profile
     bashrc
+    zshrc
     bin
     ssh
     xmodmap
     xmodmap_laptop
+    inetrc
     xinitrc
     screenrc
     tmux.conf
@@ -19,6 +22,8 @@ SRCITEMS=(
     gitconfig
     irssi
     mocp
+    msmtprc
+    mailrc
     config!awesome
     config!terminator
 )
@@ -42,4 +47,3 @@ cd $HOME
 
 ## Initialize some scripts
 source $HOME/.bashrc
-xmodmap $HOME/.xmodmap

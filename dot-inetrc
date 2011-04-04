@@ -1,0 +1,4 @@
+{lookup, [file,dns]}.
+{file, hosts, "/etc/hosts"}.
+{file, resolv, "/etc/resolv.conf"}.
+

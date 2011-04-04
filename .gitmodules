@@ -18,3 +18,4 @@
   path = dot-emacs.d/twittering-mode
   url = git://github.com/hayamiz/twittering-mode.git
   ignore = dirty
+

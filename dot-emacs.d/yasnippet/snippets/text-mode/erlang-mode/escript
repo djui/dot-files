@@ -1,0 +1,37 @@
+#name : escript header
+# --
+#!/usr/bin/env escript
+%% -#*- erlang -*-
+%%% @doc ${1:TODO}
+%%% @copyright 2011 ${2:Klarna AB}
+%%% @author ${3:Uwe Dauernheim <uwe@klarna.com>}
+%%-module(${4:`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`}).
+-author("$3").
+-export([main/1]).
+
+-compile(nowarn_unused_function).
+
+main([Arg]) ->
+  $0;
+main(_) -> exit2(1, "usage: $4 [ARG]").
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+fmt(Format, Data) -> lists:flatten(io_lib:format(Format, Data)).
+
+cmd(Str) ->
+  Output = os:cmd(Str ++ " ; echo \$?"),
+  Lines = string:tokens(Output, "\n"),
+  [Code|ROutput] = lists:reverse(Lines),
+  {Code2, _} = string:to_integer(Code),
+  Output2 = string:join(lists:reverse(ROutput), "\n"),
+  {Code2, Output2}. 
+
+cmd2(Str) -> %% Note: This can only be applied on idempotent operations!
+  Code0 = os:cmd(Str ++ " > /dev/null 2>&1 ; echo \$?"),
+  {Code, _} = string:to_integer(Code0),
+  {Code, os:cmd(Str)}.
+
+exit2(C) when is_integer(C) -> halt(C);
+exit2(S)                    -> exit2(0, S).
+exit2(C, S) -> io:format("~s~n", [S]), halt(C).

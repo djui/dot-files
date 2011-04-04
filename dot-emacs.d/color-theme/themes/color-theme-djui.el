@@ -1,9 +1,11 @@
 ;; Description: A color theme based on eclips3.media and monokai. Some thing were added to cover
 ;; extensions, and some things were changed, similar to the color theme almost-monokai.
 ;; The theme needs a 256 colors terminal emulator to display colors propperly in the terminal.
-;; Note, that even thennot all colors are mathing 100% must sufficient enough.
+;; It only support a dark background and should be used in Terminal only.
+;; The theme works well with the font Terminus.
+;; Note, that even when not all colors are matching 100%, it's sufficient enough.
 ;;
-;; Copyrights: 2009-2010 Uwe Daueernheim <uwe@dauernheim.net>
+;; Copyrights: 2009-2011 Uwe Dauernheim <uwe@dauernheim.net>
 ;; License: MIT License
 ;; Credits: http://github.com/lut4rp/almost-monokai
 ;; Credits: http://www.eclips3media.com/workshop/2007/12/06/eclips3media-eclm-textmate-theme
@@ -12,16 +14,18 @@
   (interactive)
   (color-theme-install
    '(color-theme-djui
-     ((foreground-color . "#F8F8F2") (cursor-color . "#DAD085"))
+     ((foreground-color . "#F8F8F2")
+      (cursor-color . "#DAD085"))
 
      (default                          ((t (nil))))
      (modeline                         ((t (:background "white" :foreground "black"))))
      (modeline-inactive                ((t (:background nil :foreground "dark gray"))))
      (minibuffer-prompt                ((t (:foreground "#66D9EF"))))                      ; bright blue
 
+     (link                             ((t (:foreground nil :underline t))))
      (highlight-80+                    ((t (:background "#D62E00"))))                      ; red
      (hl-line                          ((t (:background "gray15"))))
-     (linum                            ((t (:foreground "gray20" :bold nil))))             ; shadowed/gray
+     (linum                            ((t (:foreground "gray20" :background nil :bold nil))))             ; shadowed/gray
      (region                           ((t (:background "#6DC5F1"))))                      ; bright blue
      (ido-subdir                       ((t (:foreground "#F1266F"))))                      ; bright pink
 
