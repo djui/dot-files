@@ -4,7 +4,7 @@ HISTFILE=~/.zsh_history
 setopt APPEND_HISTORY      # Share history between sessions
 #setopt SHARE_HISTORY       # Share history between processes
 setopt INC_APPEND_HISTORY  # ?
-setopt EXTENDED_GLOB       # Use extended globbing ("**")
+#setopt EXTENDED_GLOB       # Use extended globbing ("**") # Conflicts with e.g. "HEAD^"
 setopt PROMPT_SUBST        # Substitute the prompt with given commands
 setopt NOAUTO_REMOVE_SLASH # ?
 setopt LIST_TYPES          # ?
@@ -42,8 +42,11 @@ zstyle ':vcs_info:*:prompt:*' formats "$VCSPROMPT" "%b"
 zstyle ':vcs_info:git:*' check-for-changes true
 
 __git_repo_is_modified() {
-    OUTPUT=$(git status --porcelain 2> /dev/null | grep -c "^M\|\\?" > /dev/null && echo "*")
-    OUTPUT=$OUTPUT$(git status --porcelain 2> /dev/null | grep -c "^A" > /dev/null && echo "±")
+    MODIFIED=$(git status --porcelain 2> /dev/null | grep -c "^M\|\\?" > /dev/null && echo "±")
+    ADDED=$(git status --porcelain 2> /dev/null | grep -c "^A" > /dev/null && echo "+")
+    STASHED=$(git stash list 2> /dev/null | wc -l | tr -d " ")
+    [ ! "$MODIFIED$ADDED" = "" ] && OUTPUT="$MODIFIED$ADDED"
+    [ ! "$STASHED" = "0" ] && OUTPUT="${OUTPUT}s"
     [ ! "$OUTPUT" = "" ] && echo "($OUTPUT)"
 }
 
