@@ -30,8 +30,10 @@
      (ido-subdir                       ((t (:foreground "#F1266F"))))                      ; bright pink
 
      (isearch                          ((t (:background "palevioletred2" :foreground "brown4"))))
+     (isearch-lazy                     ((t (:background "palevioletred2" :foreground "brown4"))))
      (isearch-fail                     ((t (:background "red4"))))
-
+     (match                            ((t (:background "palevioletred2" :foreground "brown4"))))
+     
      (sh-quoted-exec                   ((t (:foreground "salmon"))))
 
      ;; Erlang applied vars
