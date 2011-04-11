@@ -28,6 +28,15 @@ unlimit
 bindkey -e # emacs key bindings
 bindkey ' ' magic-space # also do history expansion on space
 
+bindkey "^[b" backward-char
+bindkey  "^b" backward-word
+bindkey "^[f" forward-char
+bindkey  "^f" forward-word
+bindkey "^[d" delete-char
+bindkey  "^d" delete-word
+bindkey "^[w" backward-delete-char
+bindkey  "^w" backward-delete-word
+
 ####################################################################
 ## AUTO COMPLETION #################################################
 ####################################################################
@@ -41,7 +50,7 @@ bindkey ' ' magic-space # also do history expansion on space
 zstyle ':vcs_info:*:prompt:*' formats "$VCSPROMPT" "%b"
 zstyle ':vcs_info:git:*' check-for-changes true
 
-__git_repo_is_modified() {
+__git_status() {
     MODIFIED=$(git status --porcelain 2> /dev/null | grep -c "^M\|\\?" > /dev/null && echo "±")
     ADDED=$(git status --porcelain 2> /dev/null | grep -c "^A" > /dev/null && echo "+")
     STASHED=$(git stash list 2> /dev/null | wc -l | tr -d " " | grep -c "^[^0]" > /dev/null && echo "s")
@@ -52,7 +61,7 @@ __git_repo_is_modified() {
 
 precmd() {
     vcs_info 'prompt'
-    [ -n vcs_info_msg_0_ ] && RPS1="%B%F{red}${vcs_info_msg_1_} $(__git_repo_is_modified)%f %F{blue}%~%f %F{green}%m%f%b"
+    [ -n vcs_info_msg_0_ ] && RPS1="%B%F{red}${vcs_info_msg_1_} $(__git_status)%f %F{blue}%~%f %F{green}%m%f%b"
 }
 
 PS1="%B%F{white}»%f%b "
