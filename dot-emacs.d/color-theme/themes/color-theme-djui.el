@@ -63,6 +63,8 @@
      (whitespace-tab                   ((t (:background "gray15"))))
      (whitespace-trailing              ((t (:background "red4"))))
 
+     (diff-header                      ((t (:background nil))))
+     (diff-file-header                 ((t (:background "gray15" :bold t))))
      (diff-added                       ((t (:foreground "green"))))
      (diff-changed                     ((t (:foreground "yellow"))))
      (diff-removed                     ((t (:foreground "red"))))
