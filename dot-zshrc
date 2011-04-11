@@ -44,9 +44,9 @@ zstyle ':vcs_info:git:*' check-for-changes true
 __git_repo_is_modified() {
     MODIFIED=$(git status --porcelain 2> /dev/null | grep -c "^M\|\\?" > /dev/null && echo "±")
     ADDED=$(git status --porcelain 2> /dev/null | grep -c "^A" > /dev/null && echo "+")
-    STASHED=$(git stash list 2> /dev/null | wc -l | tr -d " ")
-    [ ! "$MODIFIED$ADDED" = "" ] && OUTPUT="$MODIFIED$ADDED"
-    [ ! "$STASHED" = "0" ] && OUTPUT="${OUTPUT}s"
+    STASHED=$(git stash list 2> /dev/null | wc -l | tr -d " " | grep -c "^[^0]" > /dev/null && echo "s")
+    CONFLICT=$(git status --porcelain 2> /dev/null | grep -c "^U" > /dev/null && echo "!")
+    [ ! "$MODIFIED$ADDED$CONFLICT" = "" ] && OUTPUT="$MODIFIED$ADDED$CONFLICT$STASHED"
     [ ! "$OUTPUT" = "" ] && echo "($OUTPUT)"
 }
 
