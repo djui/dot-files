@@ -122,7 +122,8 @@
 (global-set-key (kbd "M-s")         'isearch-forward-at-point)
 ;(global-set-key (kbd "M-d")         'kill-current-word) ;; A bit too strong
 (global-set-key (kbd "C-w")         'smart-backwards-kill)
-
+;(global-set-key (kbd "M-[")         'backward-paragraph)
+;(global-set-key (kbd "M-]")         'forward-paragraph)
 ;; Resize windows keyboard shortcuts
 ;;(global-set-key (kbd "M-<left>")   'shrink-window-horizontally) ; doesn't work in emacs -nw
 ;;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
