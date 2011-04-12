@@ -93,3 +93,5 @@
   token = c7a71dca362884293fbfadda4ae71d05
 [diff]
 #  external = meld
+[url "https://github.com/"]
+  insteadOf = "gh:"
