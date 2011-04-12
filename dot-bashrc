@@ -148,18 +148,15 @@ function title {
 }
 
 function 2sv {
-e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a
-      "" $* ; fi }
+e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a "" $* ; fi }
 o() { find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a "" }
 rtfm() { help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@"; }
-cmdfu(){ curl "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ |
-openssl base64)/plaintext"; }
+cmdfu(){ curl "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ | openssl base64)/plaintext"; }
 google() { w3m "http://www.google.com/search?q=$@" }
 encrypt() { openssl aes-256-cbc -a -salt -in "$1" -out "$1.aes" ; shred --remove "$1" }
 decrypt() { openssl aes-256-cbc -d -a -salt -in "$1.aes" -out "$1" }
 title() { echo -ne "\033]0;$*\007" }
-colors() { for c in {0..255} ; do echo -e "\e[38;05;${c}m $c: Test" ;
-done }
+colors() { for c in {0..255} ; do echo -e "\e[38;05;${c}m $c: Test" ; done }
 2sv() {
     urlenctext="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$@")"
     transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Csv" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
