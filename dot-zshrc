@@ -124,6 +124,7 @@ alias gs='git status'
 alias gg='git gui'
 alias gr='git remote'
 alias gx='gitx'
+alias hudson='ssh hudson@hudson-slave10'
 alias imac='ssh -Y 10.20.9.110'
 alias joyent='ssh node@djui.no.de' # node@72.2.126.155
 alias lines='wc -l'
@@ -153,7 +154,7 @@ alias ports='lsof -i -P' # -n
 alias vpn='[ $(nmcli con status | grep -c "Klarna") = 0 ] && nmcli con up id "Klarna"'
 alias whereis='find . -iname'
 
-alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/dev/klarna/kred/test/shared/ebin -pa $HOME/.emacs.d/distel/ebin -pa $HOME/dev/riak_core/ebin'
+alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/dev/klarna/kred/test/shared/ebin -pa $HOME/.emacs.d/distel/ebin'
 #alias gperf='erl -name gperf -run gperf -pa $HOME/dev/klarna/kred/lib/eper/ebin -pa /usr/local/lib/erlang/lib/gtknode-0.30/ebin/'
 
 ####################################################################
