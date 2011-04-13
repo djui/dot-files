@@ -527,22 +527,6 @@ and the greater of them is not at the start of a line."
 ;(require 'ifene)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Scala Mode
-;(add-to-list 'load-path "~/.emacs.d/scala-mode")
-;(require 'scala-mode-auto)
-
-;; Ensime for Scala Mode
-;(add-to-list 'load-path "~/.emacs.d/ensime/elisp")
-;(require 'ensime)
-;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Lua Mode
-;(add-to-list 'load-path "~/.emacs.d/lua-mode")
-;(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-;(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown Mode
 (add-to-list 'load-path "~/.emacs.d/markdown-mode")
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
@@ -596,61 +580,6 @@ and the greater of them is not at the start of a line."
 (defun rcirc-kill-all-buffers ()
   (interactive)
   (kill-all-mode-buffers 'rcirc-mode))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Twittering Mode
-;(add-to-list 'load-path "~/.emacs.d/twittering-mode")
-;(require 'twittering-mode)
-;(setq twittering-update-status-function    'twittering-update-status-from-minibuffer
-;      twittering-status-format             "%S %@%R\n%FILL[  ]{%t}\n"
-;      twittering-retweet-format            "RT: %t ~@%s"
-;      twittering-use-native-retweet        t
-;      twittering-display-connection-method nil
-;      twittering-icon-mode                 nil)
-;(add-hook 'twittering-mode-hook (lambda ()
-;                                  (interactive)
-;                                  (linum-mode) ; Disable the line number mode
-;                                  (twittering-enable-unread-status-notifier)))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Email (SMTP/SSL)
-;; You need to install the starttls/gnutls package
-;; $ sudo apt-get install gnutls
-;; $ brew install gnutls
-
-;(setq imap-ssl-program             "gnutls-cli --port %p %s"
-;      gnus-select-method           '(nnimap "gmail" (nnimap-address "imap.gmail.com")
-;                                                    (nnimap-server-port 993)
-;                                                    (nnimap-authinfo-file "~/.authinfo")
-;                                                    (nnimap-stream tls))
-;      starttls-use-gnutls           t
-;      send-mail-function            'smtpmail-send-it
-;      message-send-mail-function    'smtpmail-send-it
-;      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-;      smtpmail-auth-credentials     (expand-file-name "~/.authinfo")
-;      smtpmail-default-smtp-server  "smtp.gmail.com"
-;      smtpmail-smtp-server          "smtp.gmail.com"
-;      smtpmail-smtp-service         587
-;      message-signature-file        (expand-file-name "~/.emacs.d/signature")
-;      smtpmail-debug-info           t)
-;(require 'smtpmail)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Misc - Delete old backup files
-; (message "Deleting old backup files...")
-; (let ((week (* 60 60 24 7))
-;       (current (float-time (current-time))))
-;   (dolist (file (directory-files temporary-file-directory t))
-;     (when (and (backup-file-name-p file)
-;                (> (- current (float-time (fifth (file-attributes file))))
-;                   week))
-;       (message file)
-;       (delete-file file))))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Misc - Recompile
-;; Do a recompile once in a while to make startup faster
-; (byte-recompile-directory "~/.emacs.d")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom set variables
