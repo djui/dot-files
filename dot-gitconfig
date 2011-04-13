@@ -4,24 +4,25 @@
 [core]
   editor = emacs -nw
 [alias]
-  glog  = log --graph --abbrev-commit --pretty=oneline
-  lol   = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-  lola  = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
+  glog    = log --graph --abbrev-commit --pretty=oneline
+  lol     = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  lola    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
   # Called from the top-level dir. Pull from git://HOST/.
-  serv  = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git 
-  st    = status --ignore-submodules
-  ci    = commit
-  br    = branch
-  co    = checkout
-  df    = diff --ignore-submodules
-  lg    = log -p
+  serv    = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git 
+  st      = status --ignore-submodules
+  ci      = commit
+  br      = branch
+  co      = checkout
+  df      = diff --ignore-submodules
+  lg      = log -p
   # all new commits after you fetched, with stats, but excluding merges
-  lc    = log ORIG_HEAD.. --stat --no-merges
-  lin   = log HEAD..origin/master
-  lout  = log origin/master..HEAD
-  din   = diff HEAD..origin/master
-  dout  = diff origin/master..HEAD
-  in    = !git fetch && git log HEAD..origin/master
+  lc      = log ORIG_HEAD.. --stat --no-merges
+  lin     = log HEAD..origin/master
+  lout    = log origin/master..HEAD
+  din     = diff HEAD..origin/master
+  dout    = diff origin/master..HEAD
+  in      = !git fetch && git log HEAD..origin/master
+  pullsh  = !git pull && git push
   # Recall that the commit which will be committed after we resolve this conflict
   # will have two parents instead of the usual one: one parent will be HEAD, the 
   # tip of the current branch; the other will be the tip of the other branch, 
@@ -29,14 +30,14 @@
   gitkconflict = !gitk --left-right HEAD...MERGE_HEAD
   # "pull" or "merge" always leaves the original tip of the current branch in ORIG_HEAD.
   # Hence, to see what a merge brought in, use the mdiff alias:
-  mdiff = !gitk --left-right HEAD...ORIG_HEAD
+  mdiff   = !gitk --left-right HEAD...ORIG_HEAD
   # Remove a file from the index: git unstage <file>
   unstage = reset HEAD --
-  last = log -1 HEAD
-  whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-  who = "!git shortlog -s -- | sort -n -k1"
+  last    = log -1 HEAD
+  whois   = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+  who     = "!git shortlog -s -- | sort -n -k1"
   aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"
-  swap = checkout "@{-1}"
+  swap    = checkout "@{-1}"
   push-pull-request = "!sh -c 'hash=$(git rev-parse HEAD) ; \
                                git push $* && echo $hash >> .git/PUSH_COMMITS' - " 
   pull-request = "!sh -c 'if [ $1 ] ; then \
