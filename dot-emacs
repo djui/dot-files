@@ -47,10 +47,13 @@
               line-number-mode             t
               column-number-mode           t
               linum-format                 "%3d "
+              truncate-lines               -1
               ;; Syntax-, region mark-, parentals-Highlighting
               global-font-lock-mode        t
               font-lock-maximum-decoration t
               show-paren-mode              t
+              highlight-parentheses-mode   t
+              highlight-todo               t
               ;; Default tab width
               indent-tabs-mode             nil
               tab-width                    4 ; to show old style correctly
@@ -82,10 +85,6 @@
               frame-title-format           (setq icon-title-format
                                                  (format "%%b - %semacs"
                                                          (if (featurep 'xemacs) "x" "")))
-              ;; Highlight long lines
-              whitespace-style             (quote (tabs lines-tail))
-              whitespace-action            nil
-              whitespace-line-column       80
               ;; Mac specific options
               mac-command-modifier         'meta
               ;; Use Chromium as default browser for links instead of Firefox
@@ -442,6 +441,9 @@ and the greater of them is not at the start of a line."
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Whitespace Mode
 (require 'whitespace)
+(setq whitespace-style (quote (tabs lines-tail)))
+(setq whitespace-action      nil)
+(setq whitespace-line-column 80)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Parentheses Mode
@@ -512,10 +514,9 @@ and the greater of them is not at the start of a line."
 (add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
 
 (defun my-erlang-mode-hook ()
-  (highlight-todo)
-  (highlight-parentheses-mode t)
   ;; (flymake-mode t)
-  )
+  (setq truncate-lines t)
+  (setq truncate-partial-width-windows nil))
 
 ; Somehow there is a bug, that causes Emacs not to start correctly. Error:
 ; flymake-get-file-name-mode-and-masks: Invalid file-name
