@@ -445,7 +445,8 @@ and the greater of them is not at the start of a line."
 (add-to-list 'load-path "~/.emacs.d/color-theme")
 (require 'color-theme)
 (load-file "~/.emacs.d/color-theme/themes/color-theme-djui.el")
-(color-theme-djui)
+;(color-theme-djui-light)
+(color-theme-djui-dark)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; IDo-Mode, better than iswitch mode
