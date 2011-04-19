@@ -1,0 +1,11 @@
+# name: head2
+# --
+%%% @doc ${1:TODO}
+%%% @author ${3:Uwe Dauernheim <uwe@dauernheim.net>}
+-module(${4:`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`}).
+
+-author("$3").
+
+-export([${5:}]).
+
+$0
