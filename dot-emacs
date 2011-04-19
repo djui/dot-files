@@ -96,9 +96,13 @@
               fill-column                  80
               )
 
-;; Display time (next to date)
-;; Not needed at the moment due to tmux
-;; (display-time)
+;; Active the mouse wheel: Add scrolling with mouse
+(setq mac-emulate-three-button-mouse nil)
+(setq mouse-wheel-scroll-amount '(1.5))
+(global-set-key [mouse-4]    '(lambda () (interactive) (scroll-down 1)))
+(global-set-key [mouse-5]    '(lambda () (interactive) (scroll-up   1)))
+(global-set-key [wheel-up]   '(lambda () (interactive) (scroll-down 2)))
+(global-set-key [wheel-down] '(lambda () (interactive) (scroll-up   2)))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
@@ -114,10 +118,15 @@
 (global-set-key (kbd "C-c r")       'replace-string)
 (global-set-key (kbd "C-c R")       'replace-regexp)
 (global-set-key (kbd "C-c e")       'eval-buffer)
+(global-set-key (kbd "C-c s")       '(lambda () (interactive) (switch-to-buffer "*scratch*")))
+(global-set-key (kbd "C-c b")       'diff-buffer-with-file)
+
 (global-set-key (kbd "C-c [")       'hide-subtree)
 (global-set-key (kbd "C-c {")       'hide-sublevels)
 (global-set-key (kbd "C-c ]")       'show-subtree)
 (global-set-key (kbd "C-c }")       'show-all)
+(global-set-key (kbd "C-c SPC")     'compact-space)
+
 (global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
 (global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
 (global-set-key (kbd "M-k")         'backward-kill-line)
@@ -266,6 +275,17 @@
   (interactive)
   (save-excursion
     (kill-whole-line)))
+
+(defun compact-space ()
+  "Kill the whitespace between two non-whitespace characters"
+  (interactive "*")
+  (save-excursion
+    (save-restriction
+      (save-match-data
+        (progn
+          (re-search-backward "[^ \t\r\n]" nil t)
+          (re-search-forward "[ \t\r\n]+" nil t)
+          (replace-match " " nil nil))))))
 
 (defun highlight-todo ()
   (font-lock-add-keywords nil '(("\\(@todo\\|@fixme\\|XXX\\|TODO\\|FIXME\\)" 1
