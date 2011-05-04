@@ -1,9 +1,13 @@
 /dot-emacs.d/auto-save-list/
 /dot-emacs.d/backups/
 /dot-emacs.d/rcirc-log/
+/dot-w3m/history
+
 *~
 \#*
 .DS_Store
+*.beam
+
 /dot-ssh/*
 !/dot-ssh/config
 !/dot-ssh/github_rsa.pub
