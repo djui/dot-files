@@ -161,6 +161,7 @@
 (global-set-key (kbd "C-a")         'back-to-indentation)
 (global-set-key (kbd "M-m")         'move-beginning-of-line)
 (global-set-key (kbd "C-f")         'forward-beginning-word)
+
 (global-set-key (kbd "M-f")         'forward-char)
 (global-set-key (kbd "C-b")         'backward-word)
 (global-set-key (kbd "M-b")         'backward-char)
@@ -462,7 +463,7 @@ and the greater of them is not at the start of a line."
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Whitespace Mode
 (require 'whitespace)
-(setq whitespace-style (quote (tabs lines-tail)))
+(setq whitespace-style       (quote (face tabs lines-tail)))
 (setq whitespace-action      nil)
 (setq whitespace-line-column 80)
 
@@ -535,9 +536,16 @@ and the greater of them is not at the start of a line."
 (add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
 
 (defun my-erlang-mode-hook ()
-  ;; (flymake-mode t)
+  (interactive)
   (setq truncate-lines t)
-  (setq truncate-partial-width-windows nil))
+  (setq truncate-partial-width-windows nil)
+  (setq whitespace-style       (quote (face tabs lines-tail)))
+  (setq whitespace-action      nil)
+  (setq whitespace-line-column 80)
+  (whitespace-mode)
+  ;; (flymake-mode t)
+  (highlight-todo)
+  (highlight-parentheses-mode))
 
 ; Somehow there is a bug, that causes Emacs not to start correctly. Error:
 ; flymake-get-file-name-mode-and-masks: Invalid file-name
