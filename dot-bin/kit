@@ -1,0 +1,94 @@
+#!/bin/bash
+
+### @doc Kit - Klarna Git wrapper
+### Kit is aware of the default Klarna git repository URI so will save you time
+### and memorization efforts.
+### @author Uwe Dauernheim <uwe@klarna.com>
+### @copyright Klarna AB 2011
+
+################################################################################
+## FUNCTIONS
+################################################################################
+
+LOG_DEBUG() {
+    echo -e "[\033[01;34mDEBUG\033[0m] $*"
+}
+LOG_INFO() {
+    echo -e "[\033[01;32mINFO\033[0m ] $*"    
+}
+LOG_WARN() {
+    echo -e "[\033[01;33mWARN\033[0m ] $*"
+}
+LOG_ERROR() {
+    echo -e "[\033[01;31mERROR\033[0m] $*"
+    exit 1
+}
+
+################################################################################
+## SANITY CHECKS
+################################################################################
+
+if [ $(id -u) = "0" ] ; then
+    LOG_ERROR "Never run as root, target system gets confused if you do!"
+    exit 
+fi
+
+if [ ! $USER ] ; then
+    export USER=$(whoami)
+    if [ ! $USER ] ; then
+        LOG_ERROR "USER environment variable not set, and cannot be found \
+            using 'whoami'. I cannot run like this!"
+        exit
+    fi
+fi
+
+################################################################################
+## DEFAULTS
+################################################################################
+
+Verbose=
+Debug=
+
+################################################################################
+## PARSE ARGUMENTS
+################################################################################
+
+while [[ $# -gt 0 ]] ; do
+    arg="$1"
+    shift
+    
+    case $arg in
+        "-v")
+            Verbose=true
+            ;;
+        "-d")
+            Debug=true
+            ;;
+        clone)
+            Cmd=clone
+            Repo=git://git.hq.kred/$1.git
+            shift
+            Args=$Repo
+            ;;
+        *)
+            Cmd=$arg
+            Args=$*
+            # Flush the argument buffer to quite the loop
+            while [[ $# -gt 0 ]] ; do
+                shift
+            done
+            ;;
+    esac
+done
+
+################################################################################
+## PARSE ARGUMENTS
+################################################################################
+
+if [ ! $Debug = "" ] ; then
+    LOG_DEBUG "git $Cmd $Args"
+    exit
+fi
+
+[[ $Verbose = "" ]] || LOG_INFO "git $Cmd $Args"
+git $Cmd $Args
