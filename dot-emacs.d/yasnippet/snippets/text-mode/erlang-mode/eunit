@@ -1,0 +1,11 @@
+#name : -idef(EUNIT).
+# --
+-ifdef(EUNIT).
+-include_lib("eunit/include/eunit.hrl").
+-endif.
+
+-ifdef(EUNIT).
+
+$0
+
+-endif.
