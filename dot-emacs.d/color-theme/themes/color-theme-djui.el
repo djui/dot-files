@@ -26,12 +26,11 @@
      (highlight-80+                    ((t (:background "#D62E00"))))                      ; red
      (hl-line                          ((t (:background "gray75"))))
      (linum                            ((t (:foreground "gray20" :background nil :bold nil))))             ; shadowed/gray
-     (region                           ((t (:background "#6DC5F1"))))                      ; bright blue
+     (region                           ((t (:background "#6DC5F1" :foreground "black"))))  ; bright blue
      (ido-subdir                       ((t (:foreground "#F1266F"))))                      ; bright pink
 
      (isearch                          ((t (:background "palevioletred2" :foreground "brown4"))))
-     (isearch-lazy                     ((t (:background "palevioletred2" :foreground "brown4"))))
-     (isearch-fail                     ((t (:background "red4"))))
+     (lazy-highlight                   ((t (:background "palevioletred4" :foreground "black"))))
      (match                            ((t (:background "palevioletred2" :foreground "brown4"))))
      
      (sh-quoted-exec                   ((t (:foreground "salmon"))))
@@ -105,12 +104,11 @@
      (highlight-80+                    ((t (:background "#D62E00"))))                      ; red
      (hl-line                          ((t (:background "gray15"))))
      (linum                            ((t (:foreground "gray20" :background nil :bold nil))))             ; shadowed/gray
-     (region                           ((t (:background "#6DC5F1"))))                      ; bright blue
+     (region                           ((t (:background "#6DC5F1" :foreground "black"))))  ; bright blue
      (ido-subdir                       ((t (:foreground "#F1266F"))))                      ; bright pink
 
      (isearch                          ((t (:background "palevioletred2" :foreground "brown4"))))
-     (isearch-lazy                     ((t (:background "palevioletred2" :foreground "brown4"))))
-     (isearch-fail                     ((t (:background "red4"))))
+     (lazy-highlight                   ((t (:background "palevioletred4" :foreground "black"))))
      (match                            ((t (:background "palevioletred2" :foreground "brown4"))))
      
      (sh-quoted-exec                   ((t (:foreground "salmon"))))
