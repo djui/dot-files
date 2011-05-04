@@ -13,7 +13,7 @@
 (defun color-theme-djui-light ()
   (interactive)
   (color-theme-install
-   '(color-theme-djui
+   '(color-theme-djui-light
      ((foreground-color . "#000000")
       (cursor-color . "#DAD085"))
 
@@ -92,7 +92,7 @@
 (defun color-theme-djui-dark ()
   (interactive)
   (color-theme-install
-   '(color-theme-djui
+   '(color-theme-djui-dark
      ((foreground-color . "#F8F8F2")
       (cursor-color . "#DAD085"))
 
