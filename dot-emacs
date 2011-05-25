@@ -646,6 +646,7 @@ and the greater of them is not at the start of a line."
     (ido-completing-read "M-x " (all-completions "" obarray 'commandp)))))
 
 ;; smex - super M-x
+(load-file "~/.emacs.d/smex.el")
 (require 'smex)
 (smex-initialize)
 (setq smex-save-file "~/.emacs.d/smex-items")
