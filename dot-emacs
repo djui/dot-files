@@ -506,10 +506,10 @@ and the greater of them is not at the start of a line."
 (require 'distel)
 (distel-setup)
 ; Nice new distel extension for Record and Macro lookup
-(setq erlookup-roots     '("~/dev/klarna/kred/lib"
-                           "~/dev/klarna/kred/test/shared"
-                           "~/dev/OTP/src/otp_r14b02_klarna/lib")
-      erl-nodename-cache 'distel\@simpknot)
+;(setq erlookup-roots     '("~/dev/klarna/kred/lib"
+;                           "~/dev/klarna/kred/test/shared"
+;                           "~/dev/OTP/src/otp_r14b02_klarna/lib")
+(setq erl-nodename-cache 'distel\@simpknot)
 
 (defun distel ()
   (interactive)
@@ -581,6 +581,33 @@ and the greater of them is not at the start of a line."
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/yasnippet/snippets")
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Auto-complete mode
+;; See: https://github.com/m2ym/auto-complete.git
+(add-to-list 'load-path "~/.emacs.d/auto-complete")
+(require 'auto-complete-config)
+(add-to-list 'load-path "~/.emacs.d")
+(require 'auto-complete-distel)
+
+(ac-config-default)
+(global-auto-complete-mode t)
+
+(setq ac-delay            0.0
+      ac-auto-show-menu   0.1
+      ac-quick-help-delay 0.1)
+
+(add-to-list 'ac-modes 'erlang-mode)
+(add-hook 'erlang-mode-hook 'ac-erlang-mode-setup)
+
+(defun ac-erlang-mode-setup ()
+  (setq ac-sources (append '(ac-source-yasnippet
+                             ac-source-distel
+                             ;ac-source-words-in-same-mode-buffers
+                             ac-source-filename
+                             ;ac-source-gtags
+                             )
+                           ac-sources)))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; RCIRC - Emacs IRC

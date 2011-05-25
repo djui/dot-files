@@ -149,6 +149,12 @@
      (diff-indicator-changed           ((t (:foreground "yellow" :bold t))))
      (diff-indicator-removed           ((t (:foreground "red" :bold t))))
 
+     (ac-completion-face               ((t (:foreground "gray20" :underline t))))
+     (ac-candidate-face                ((t (:background "gray15"))))
+     (ac-selection-face                ((t (:background "lightgray"))))
+     (ac-distel-candidate-face         ((t (:background "gray15" :foreground "darkorange"))))
+     (ac-distel-selection-face         ((t (:background "gray20" :foreground "darkorange"))))
+
      (flymake-errline                  ((t (:background "FireBrick4"))))
      (flymake-warnline                 ((t (:background "DarkOrange"))))
 
