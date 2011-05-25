@@ -743,6 +743,20 @@ and the greater of them is not at the start of a line."
 ; Somehow there is a bug, that causes Emacs not to start correctly. Error:
 ; flymake-get-file-name-mode-and-masks: Invalid file-name
 
+;; Find in kred dirs
+;(defun kfind (&optional word)
+;  (interactive "r")
+(defun kfind (word)
+  (interactive "MFind: ")
+  (kfind-at
+   (concat (car (split-string (buffer-file-name) "lib")) "{lib,test}/")
+   word))
+
+(defun kfind-at (path word)
+  (grep-find
+   (concat "find " path 
+           (concat " -type f \\( -name '*.erl' -o -name '*.hrl' \\) | xargs grep --color=auto " word))))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Efene/Ifene Mode
 (add-to-list 'load-path "~/.emacs.d/efene-mode")
