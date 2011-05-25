@@ -834,15 +834,15 @@ and the greater of them is not at the start of a line."
       rcirc-default-full-name      "Uwe Dauernheim"
       rcirc-decode-coding-system   'undecided
       rcirc-time-format            "%H:%M:%S "
-      rcirc-startup-channels-alist '(("#tech" "#kong"))
+      rcirc-startup-channels-alist '(("#tech" "#core"))
       rcirc-prompt                 "%t %n> "
       rcirc-fill-prefix            "         "
       rcirc-fill-column            65
       rcirc-log-flag               t
       rcirc-buffer-maximum-lines   10000
-      rcirc-bright-nicks           (quote ("happi" "uwiger" "hansn"))
-      rcirc-keywords               (quote ("uwe" "happi" "jakob"))
-      rcirc-server-alist           '(("irc.hq.kred" :channels ("#tech" "#kong")))
+      rcirc-bright-nicks           (quote ("jakob" "fabian" "bjorn" "masse"))
+      rcirc-keywords               (quote ("uwe" "jakob" "fabian" "bjorn" "masse"))
+      rcirc-server-alist           '(("irc.hq.kred" :channels ("#tech" "#core")))
       rcirc-ignore-list            '()
       rcirc-omit-responses         '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
 
