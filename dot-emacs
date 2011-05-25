@@ -107,6 +107,26 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
+;; replacing default buffer
+
+;; Overwrite defaults
+(global-set-key (kbd "C-a")         'back-to-indentation)
+(global-set-key (kbd "M-m")         'move-beginning-of-line)
+(global-set-key (kbd "C-f")         'forward-beginning-word)
+(global-set-key (kbd "M-f")         'forward-char)
+(global-set-key (kbd "C-b")         'backward-word)
+(global-set-key (kbd "M-b")         'backward-char)
+(global-set-key (kbd "C-d")         'kill-word)
+(global-set-key (kbd "M-d")         'delete-char)
+(global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
+(global-set-key (kbd "M-k")         'backward-kill-line)
+(global-set-key (kbd "C-M-k")       'whole-kill-line)
+(global-set-key (kbd "C-x k")       'kill-this-buffer)
+;; Ido
+(global-set-key (kbd "C-x C-k")     'ido-kill-buffer)
+(global-set-key (kbd "C-x f")       'recentf-ido-find-file)
+
+;; Customized: C-c
 (global-set-key (kbd "C-c g")       'goto-line)
 (global-set-key (kbd "C-c t")       'forward-transpose-lines)
 (global-set-key (kbd "C-c T")       'backward-transpose-lines)
@@ -120,53 +140,40 @@
 (global-set-key (kbd "C-c e")       'eval-buffer)
 (global-set-key (kbd "C-c s")       '(lambda () (interactive) (switch-to-buffer "*scratch*")))
 (global-set-key (kbd "C-c b")       'diff-buffer-with-file)
+(global-set-key (kbd "C-c c")       'comment-or-uncomment-region)
+(global-set-key (kbd "C-c f")       'kfind)
 
+;; Code
+(global-set-key (kbd "C-c C-f")     'erlang-indent-function)
+(global-set-key (kbd "C-c C-M-f")   'erlang-indent-current-buffer)
+(global-set-key (kbd "C-/")         'comment-or-uncomment-region) ; doesn't work in emacs -nw
+(global-set-key (kbd "C-x v b")     'vc-annotate)
+
+;; iBuffer
+(global-set-key (kbd "C-x C-b")     'ibuffer)
+
+
+;; General
+(global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
+(global-set-key (kbd "M-s")         'isearch-forward-at-point)
+;(global-set-key (kbd "M-d")         'kill-current-word) ;; A bit too strong
+(global-set-key (kbd "C-w")         'smart-backwards-kill)
+
+;; Resize windows keyboard shortcuts
+;(global-set-key (kbd "M-<left>")   'shrink-window-horizontally) ; doesn't work in emacs -nw
+;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
+(global-set-key (kbd "\e <up>")     'shrink-window) ; \e because only works like that in emacs -nw
+(global-set-key (kbd "\e <down>")   'enlarge-window) ; \e because only works like that in emacs -nw
+(global-set-key (kbd "C-x =")       'balance-windows) ; usually on "C-x +"
+;(global-set-key (kbd "\e\t")       'previous-source-buffer)
+;(global-set-key (kbd "\e <left>")  'next-source-buffer)
+
+;; Org-mode
 (global-set-key (kbd "C-c [")       'hide-subtree)
 (global-set-key (kbd "C-c {")       'hide-sublevels)
 (global-set-key (kbd "C-c ]")       'show-subtree)
 (global-set-key (kbd "C-c }")       'show-all)
 (global-set-key (kbd "C-c SPC")     'compact-space)
-
-(global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
-(global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
-(global-set-key (kbd "M-k")         'backward-kill-line)
-(global-set-key (kbd "C-M-k")       'whole-kill-line)
-(global-set-key (kbd "M-s")         'isearch-forward-at-point)
-;(global-set-key (kbd "M-d")         'kill-current-word) ;; A bit too strong
-(global-set-key (kbd "C-w")         'smart-backwards-kill)
-;(global-set-key (kbd "M-[")         'backward-paragraph)
-;(global-set-key (kbd "M-]")         'forward-paragraph)
-;; Resize windows keyboard shortcuts
-;;(global-set-key (kbd "M-<left>")   'shrink-window-horizontally) ; doesn't work in emacs -nw
-;;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
-(global-set-key (kbd "\e <up>")     'shrink-window) ; \e because only works like that in emacs -nw
-(global-set-key (kbd "\e <down>")   'enlarge-window) ; \e because only works like that in emacs -nw
-(global-set-key (kbd "C-x =")       'balance-windows) ; usually on "C-x +"
-;;(global-set-key (kbd "\e\t")       'previous-source-buffer)
-;;(global-set-key (kbd "\e <left>")  'next-source-buffer)
-(global-set-key (kbd "C-/")         'comment-or-uncomment-region) ; doesn't work in emacs -nw
-
-;; Format Erlang code like Eclipse
-(global-set-key (kbd "C-c C-f")     'erlang-indent-function)
-;; Does not get recognized in Terminal mode
-(global-set-key (kbd "C-c C-M-f")   'erlang-indent-current-buffer)
-
-;; Remap Version Control Annotation (actually blame)
-(global-set-key (kbd "C-x v b")     'vc-annotate)
-
-;; Find recently opened files
-(global-set-key (kbd "C-x f")       'recentf-ido-find-file)
-
-;; Toggle some bindings
-(global-set-key (kbd "C-a")         'back-to-indentation)
-(global-set-key (kbd "M-m")         'move-beginning-of-line)
-(global-set-key (kbd "C-f")         'forward-beginning-word)
-
-(global-set-key (kbd "M-f")         'forward-char)
-(global-set-key (kbd "C-b")         'backward-word)
-(global-set-key (kbd "M-b")         'backward-char)
-(global-set-key (kbd "C-d")         'kill-word)
-(global-set-key (kbd "M-d")         'delete-char)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
