@@ -456,6 +456,177 @@ and the greater of them is not at the start of a line."
 ;(color-theme-djui-light)
 (color-theme-djui-dark)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; iBuffer mode
+(provide 'ibuffer-config)
+(require 'ibuffer-config)
+
+(eval-after-load 'ibuffer
+  '(progn
+     (setq ibuffer-show-empty-filter-groups nil
+           ibuffer-always-show-last-buffer  t
+           ibuffer-view-ibuffer             t
+           ibuffer-default-sorting-mode     'major-mode
+           ibuffer-expert                   t)
+
+     (setq ibuffer-never-show-predicates
+           (list "\\*Completions\\*"))
+
+     (setq ibuffer-saved-filter-groups
+           ' (("default"
+
+               ("elisp"
+                (or (filename . "elisp/")
+                    (filename . "elisp/etc/initd")
+                    (mode . emacs-lisp-mode)))
+
+               ("emacs"
+                (or (name . "^\\*scratch\\*$")
+                    (name . "^\\*Messages\\*$")
+                    (name . "^TAGS\\(<[0-9]+>\\)?$")
+                    (name . "^\\*Help\\*$")
+                    (name . "^\\*info\\*$")
+                    (name . "^\\*Occur\\*$")
+                    (name . "^\\*grep\\*$")
+                    (name . "^\\*Compile-Log\\*$")
+                    (name . "^\\*Backtrace\\*$")
+                    (name . "^\\*Process List\\*$")
+                    (name . "^\\*gud\\*$")
+                    (name . "^\\*Man")
+                    (name . "^\\*WoMan")
+                    (name . "^\\*Kill Ring\\*$")
+                    (name . "^\\*Completions\\*$")
+                    (name . "^\\*tramp")
+                    (name . "^\\*shell\\*$")
+                    (name . "^\\*compilation\\*$")))
+
+               ("org"
+                (or (mode . org-mode)
+                    (mode . muse-mode)))
+
+               ("agenda"
+                (or (name . "^\\*Calendar\\*$")
+                    (name . "^diary$")
+                    (name . "^\\*Agenda")
+                    (name . "^\\*org-")
+                    (name . "^\\*Org")))
+
+               ("latex"
+                (or (mode . latex-mode)
+                    (mode . LaTeX-mode)
+                    (mode . bibtex-mode)
+                    (mode . reftex-mode)))
+
+               ("shell"
+                (or (mode . eshell-mode)
+                    (mode . shell-mode)))
+
+               ("erlang code"
+                (or (mode . erlang-mode)
+                    (mode . erlang-extended-mode)
+                    (name . "\\.erl")
+                    (name . "\\*erl")
+                    (name . "\\.hrl")
+                    (name . "\\.yaws")))
+
+               ("erlang"
+                (or (name . "\\*derl")
+                    (name . "\\*Erl")
+                    (name . "\\*wrangler")
+                    (name . "\\*trace")
+                    (name . "\\*plist")
+                    (name . "\\*pid <")
+                    (name . "^\\*Wrangler")
+                    (name . "^\\*trace")
+                    (name . "\\*edb")))
+
+               ("lisp"
+                (or (mode . lisp-mode)
+                    (mode . repl)
+                    (mode . slime-repl-mode)
+                    (name . "^\\*slime")
+                    (name . "^\\*inferior-lisp")))
+
+               ("code"
+                (or (mode . autoconf-mode)
+                    (mode . c-mode)
+                    (mode . gud-mode)
+                    (mode . makefile-mode)
+                    (mode . sh-mode)))
+
+               ("version control"
+                (or (mode . svn-status-mode)
+                    (mode . svn-log-edit-mode)
+                    (name . "^\\*svn-")
+                    (name . "^\\*vc\\*$")
+                    (name . "^\\*Annotate")
+                    (name . "\\*[gG]it.*\\*")
+                    (name . "^*magit")
+                    (name . "^\\*git-")
+                    (name . "^\\*vc-")))
+
+               ("ediff"
+                (or (mode . ediff-mode)
+                    (name . "\\*ediff")
+                    (name . "\\*Ediff")))
+
+               ("wiki"
+                (mode . mediawiki-mode))
+
+               ("dired"
+                (or (mode . dired-mode)))
+
+               ("rcirc"
+                (mode . rcirc-mode))
+
+               ("gnus"
+                (or (mode . message-mode)
+                    (mode . bbdb-mode)
+                    (mode . mail-mode)
+                    (mode . gnus-group-mode)
+                    (mode . gnus-summary-mode)
+                    (mode . gnus-article-mode)
+                    (name . "^\\.newsrc*")
+                    (name . "^\\*nnimap")
+                    (name . "^\\*imap")
+                    (name . "^\\*gnus")
+                    (name . "^\\*BBDB\\*$")
+                    (name . "^\\.bbdb$")
+                    (name . "^\\.newsrc-dribble"))))))))
+
+(eval-after-load 'ibuffer
+  '(progn
+     (add-hook 'ibuffer-mode-hook
+               (lambda ()
+                 (local-set-key (kbd "C-g") 'ibuffer-quit)
+                 (ibuffer-switch-to-saved-filter-groups "default")))))
+
+(eval-after-load 'ibuffer
+  '(progn
+     ;; switching to ibuffer puts the cursor on the most recent buffer
+     (defadvice ibuffer (around ibuffer-point-to-most-recent activate) ()
+       "Open ibuffer with cursor pointed to most recent buffer name"
+       (let ((recent-buffer-name (buffer-name)))
+	 ad-do-it
+	 (ibuffer-jump-to-buffer recent-buffer-name)))))
+
+;(eval-after-load 'ibuffer
+;  '(progn
+;     ;; show git status in ibuffer
+;     (when (require 'ibuffer-git)
+;       (setq ibuffer-formats
+;             '((mark modified read-only
+;                     git-status-mini " "
+;                     (name 18 18 :left :elide) " "
+;                     (size 9 -1 :right) " "
+;                     (mode 16 16 :left :elide) " "
+;                     ;; (eproject 16 16 :left :elide) " "
+;                     (git-status 8 8 :left) " "
+;                     filename-and-process)
+;               (mark " "
+;                     (name 16 -1) " "
+;                     filename))))))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; IDo-Mode, better than iswitch mode
 (require 'ido)
