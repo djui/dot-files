@@ -637,6 +637,21 @@ and the greater of them is not at the start of a line."
 (add-hook 'ido-setup-hook 
           (lambda () 
             (define-key ido-completion-map [tab] 'ido-complete)))
+;; Can be done better using smex (below)
+;(global-set-key (kbd "M-x") 'ido-mx-completion)
+(defun ido-mx-completion ()
+  (interactive)
+  (call-interactively
+   (intern
+    (ido-completing-read "M-x " (all-completions "" obarray 'commandp)))))
+
+;; smex - super M-x
+(require 'smex)
+(smex-initialize)
+(setq smex-save-file "~/.emacs.d/smex-items")
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-x M-x") 'execute-extended-command)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Whitespace Mode
