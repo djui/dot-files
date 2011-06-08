@@ -164,6 +164,15 @@ alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/d
 ## FUNCTIONS #######################################################
 ####################################################################
 
+erlc2() {
+    erlc $* | \
+        perl -pe "s/^(.+?):/\033[37;1m\1\033[0m:/" | \
+        perl -pe "s/:(.+?): /:\033[37;1m\1\033[0m: /" | \
+        perl -pe "s/: (.+?)$/: \033[31;1m\1\033[0m/" | \
+        perl -pe "s/Warning: /\033[33;1mWarning\033[0m: /" | \
+        perl -pe "s/Warning: /\033[31;1mError\033[0m: /"
+}
+
 e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a "" $* ; fi }
 o() { find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a "" }
 rtfm() { help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@"; }
