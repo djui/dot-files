@@ -114,7 +114,6 @@ alias edit='$EDITOR'
 alias erl2='rlwrap -A -i -r -p red -a -- erl'
 alias erlgrep='find . -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
 alias kredgrep='find ~/dev/klarna/kred -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
-alias erlinstall='./otp_build setup --prefix=`pwd`/../../install/R14B02 force_linux_pthread_rwlocks=yes && make install'
 alias ga='git add'
 alias gb='git branch'
 alias gc='git commit'
@@ -237,16 +236,30 @@ function r14b02 {
     echo "Erlang: " `which erl`
 }
 
+function r14b03 {
+    export PATH="$HOME/dev/OTP/install/R14B03/bin:${ORIG_PATH}"
+    export DIALYZER_PLT="$HOME/dev/OTP/install/R14B03/dialyzer.plt"
+    echo "Erlang: " `which erl`
+}
+
 function stderl {
     export PATH="${ORIG_PATH}"
     echo "Erlang: " `which erl`
+}
+
+function erlinstall {
+    VERSION=R14B03
+    mkdir $(pwd)/../../install/$VERSION && \
+        ./otp_build setup --prefix=$(pwd)/../../install/$VERSION force_linux_pthread_rwlocks=yes && \
+        make && \
+        make install
 }
 
 ####################################################################
 ####################################################################
 ####################################################################
 
-r14b02
+r14b03
 
 if [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] ; then
     if [ ! -x $HOME/Dropbox/Klarna/klarna_animation.sh ] ; then
