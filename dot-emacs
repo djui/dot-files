@@ -457,6 +457,11 @@ and the greater of them is not at the start of a line."
 (color-theme-djui-dark)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Allout mode
+(require 'allout)
+(allout-init t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; iBuffer mode
 (provide 'ibuffer-config)
 (require 'ibuffer-config)
@@ -739,7 +744,8 @@ and the greater of them is not at the start of a line."
   (whitespace-mode)
   ;; (flymake-mode t)
   (highlight-todo)
-  (highlight-parentheses-mode))
+  (highlight-parentheses-mode)
+  (allout-mode))
 
 ; Somehow there is a bug, that causes Emacs not to start correctly. Error:
 ; flymake-get-file-name-mode-and-masks: Invalid file-name
@@ -867,7 +873,7 @@ and the greater of them is not at the start of a line."
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(fringe-mode 0 nil (fringe))
- '(safe-local-variable-values (quote (allout-layout t)))
+ '(safe-local-variable-values (quote ((allout-layout . t) allout-layout t)))
  '(tooltip-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
