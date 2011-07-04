@@ -58,11 +58,18 @@ while [[ $# -gt 0 ]] ; do
     shift
     
     case $arg in
+        ## Flags
         "-v")
             Verbose=true
             ;;
         "-d")
             Debug=true
+            ;;
+        ## Commands
+        zz)
+            Repo="~/public_git/$1.git"
+            shift
+            Cmd="ssh salmon 'git init $Repo'"
             ;;
         clone)
             Cmd=clone
@@ -70,6 +77,7 @@ while [[ $# -gt 0 ]] ; do
             shift
             Args=$Repo
             ;;
+        ## Thru-pass
         *)
             Cmd=$arg
             Args=$*
