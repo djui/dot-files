@@ -11,7 +11,7 @@ setopt LIST_TYPES          # ?
 setopt COMPLETE_IN_WORD    # allow tab completion in the middle of a word
 setopt NO_BEEP             # Don not beep
 setopt AUTOCD              # "/etc" actually runs "cd /etc"
-setopt CORRECT             # Correct spelling mistakes
+#setopt CORRECT             # Correct spelling mistakes
 setopt AUTO_LIST           # Automatically list tab-completion hits
 #setopt ALWAYS_TO_END       # After tab completion always move to end
 
