@@ -110,6 +110,7 @@
 ;; replacing default buffer
 
 ;; Overwrite defaults
+(global-set-key (kbd "C-x C-d")     'dired)
 (global-set-key (kbd "C-a")         'back-to-indentation)
 (global-set-key (kbd "M-m")         'move-beginning-of-line)
 (global-set-key (kbd "C-f")         'forward-beginning-word)
@@ -122,6 +123,8 @@
 (global-set-key (kbd "M-k")         'backward-kill-line)
 (global-set-key (kbd "C-M-k")       'whole-kill-line)
 (global-set-key (kbd "C-x k")       'kill-this-buffer)
+(global-set-key (kbd "C-x o")       'next-multiframe-window)
+(global-set-key (kbd "C-x O")       'previous-multiframe-window)
 ;; Ido
 (global-set-key (kbd "C-x C-k")     'ido-kill-buffer)
 (global-set-key (kbd "C-x f")       'recentf-ido-find-file)
@@ -140,6 +143,7 @@
 (global-set-key (kbd "C-c e")       'eval-buffer)
 (global-set-key (kbd "C-c s")       '(lambda () (interactive) (switch-to-buffer "*scratch*")))
 (global-set-key (kbd "C-c b")       'diff-buffer-with-file)
+(global-set-key (kbd "C-c B")       'vc-diff)
 (global-set-key (kbd "C-c c")       'comment-or-uncomment-region)
 (global-set-key (kbd "C-c f")       'kfind)
 
