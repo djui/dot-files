@@ -844,7 +844,7 @@ and the greater of them is not at the start of a line."
       rcirc-default-full-name      "Uwe Dauernheim"
       rcirc-decode-coding-system   'undecided
       rcirc-time-format            "%H:%M:%S "
-      rcirc-startup-channels-alist '(("#tech" "#core"))
+      rcirc-startup-channels-alist '(("#tech" "#core" "#staging"))
       rcirc-prompt                 "%t %n> "
       rcirc-fill-prefix            "         "
       rcirc-fill-column            65
@@ -852,7 +852,7 @@ and the greater of them is not at the start of a line."
       rcirc-buffer-maximum-lines   10000
       rcirc-bright-nicks           (quote ("jakob" "fabian" "bjorn" "masse"))
       rcirc-keywords               (quote ("uwe" "jakob" "fabian" "bjorn" "masse"))
-      rcirc-server-alist           '(("irc.hq.kred" :channels ("#tech" "#core")))
+      rcirc-server-alist           '(("irc.hq.kred" :channels ("#tech" "#core" "#staging")))
       rcirc-ignore-list            '()
       rcirc-omit-responses         '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
 
