@@ -662,9 +662,12 @@ and the greater of them is not at the start of a line."
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Whitespace Mode
 (require 'whitespace)
-(setq whitespace-style       (quote (face tabs lines-tail)))
+(setq whitespace-style       (quote (face tabs tab-mark lines-tail)))
 (setq whitespace-action      nil)
 (setq whitespace-line-column 80)
+(setq whitespace-display-mappings
+      '((tab-mark     ?\t   [?\xBB ?\t] [?\\ ?\t]) ; tab
+        ))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Parentheses Mode
