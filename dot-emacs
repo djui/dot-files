@@ -455,7 +455,29 @@ and the greater of them is not at the start of a line."
 ;; To see your style colors associations: M-x list-faces-display
 ;(require 'font-lock)
 (add-to-list 'load-path "~/.emacs.d/color-theme")
+(add-to-list 'load-path "~/.emacs.d/color-theme/themes")
 (require 'color-theme)
+
+;(require 'color-theme-solarized)
+;(setq solarized-termcolors 256)
+;;(color-theme-solarized-light)
+;(color-theme-solarized-dark)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-wombat.el")
+;(color-theme-wombat)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-less.el")
+;(color-theme-less)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-zenburn.el")
+;(color-theme-zenburn)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-drr.el")
+;(color-theme-drr)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-almost-monokai.el")
+;(color-theme-almost-monokai)
+
 (load-file "~/.emacs.d/color-theme/themes/color-theme-djui.el")
 ;(color-theme-djui-light)
 (color-theme-djui-dark)
