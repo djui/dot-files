@@ -787,7 +787,8 @@ and the greater of them is not at the start of a line."
 (defun kfind (word)
   (interactive "MFind: ")
   (kfind-at
-   (concat (car (split-string (buffer-file-name) "lib")) "{lib,test}/")
+   ;(concat (car (split-string (buffer-file-name) "lib")) "{lib,test}/")
+   "$HOME/dev/klarna/kred_master/{lib,test}/"
    word))
 
 (defun kfind-at (path word)
