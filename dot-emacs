@@ -835,10 +835,12 @@ and the greater of them is not at the start of a line."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; RCIRC - Emacs IRC
-(load-file "~/.emacs.d/rcirc.el")
-(load-file "~/.emacs.d/rcirc-notify.el")
+(load-file "~/.emacs.d/rcirc/rcirc.el")
+(load-file "~/.emacs.d/rcirc/rcirc-notify.el")
+;(load-file "~/.emacs.d/rcirc/rcirc-color.el")
 (require 'rcirc)
 (eval-after-load 'rcirc '(require 'rcirc-notify))
+;(eval-after-load 'rcirc '(require 'rcirc-color))
 ;; (rcirc-track-minor-mode 1)
 (add-hook 'rcirc-mode-hook (lambda ()
                              (rcirc-track-minor-mode 1)
