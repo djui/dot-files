@@ -659,6 +659,15 @@ and the greater of them is not at the start of a line."
 ;                     filename))))))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Dired-Mode
+(add-hook 'dired-mode-hook 'my-dired-mode-hook)
+(defun my-dired-mode-hook ()
+  (local-set-key (kbd "F") 'dired-find-file-other-window))
+(add-hook 'dired-mode-hook 'my-dired-mode-hook)
+(defun my-dired-mode-hook ()
+  (local-set-key (kbd "<mouse-2>") 'dired-mouse-find-file))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; IDo-Mode, better than iswitch mode
 (require 'ido)
 (ido-mode t)
