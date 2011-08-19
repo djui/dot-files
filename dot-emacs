@@ -836,25 +836,6 @@ and the greater of them is not at the start of a line."
 (add-to-list 'load-path "~/.emacs.d")
 (require 'auto-complete-distel)
 
-(ac-config-default)
-(global-auto-complete-mode t)
-
-(setq ac-delay            1.0
-      ac-auto-show-menu   1.0
-      ac-quick-help-delay 1.0)
-
-(add-to-list 'ac-modes 'erlang-mode)
-(add-hook 'erlang-mode-hook 'ac-erlang-mode-setup)
-
-(defun ac-erlang-mode-setup ()
-  (setq ac-sources (append '(ac-source-yasnippet
-                             ac-source-distel
-                             ;ac-source-words-in-same-mode-buffers
-                             ac-source-filename
-                             ;ac-source-gtags
-                             )
-                           ac-sources)))
-
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; RCIRC - Emacs IRC
 (load-file "~/.emacs.d/rcirc/rcirc.el")
