@@ -871,7 +871,8 @@ and the greater of them is not at the start of a line."
 (add-hook 'rcirc-mode-hook (lambda ()
                              (rcirc-track-minor-mode 1)
                              (rcirc-omit-mode)
-                             (linum-mode nil)))
+                             (linum-mode nil)
+                             (whitespace-mode)))
 
 (setq rcirc-default-nick           "uwe"
       rcirc-default-user-name      "uwe"
