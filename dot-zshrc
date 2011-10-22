@@ -1,6 +1,7 @@
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
+setopt HIST_IGNORE_ALL_DUPS # Ignore duplicate history entries
 setopt APPEND_HISTORY      # Share history between sessions
 #setopt SHARE_HISTORY       # Share history between processes
 setopt INC_APPEND_HISTORY  # ?
@@ -77,15 +78,14 @@ RPS1="%F{green}%m%f"
 alias b='emacs -nw ~/.bashrc ; source ~/.bashrc'
 alias c='clear'
 alias d='git diff'
-#alias emacs='emacsclient -nw -a ""'
-alias ec='emacsclient -nw -c -a ""'
-alias en='emacsclient -nw -n -a ""'
+alias ed='/Applications/Emacs.app/Contents/MacOS/Emacs --daemon'
+alias e='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t -c'
 alias f='find'
 alias g='grep'
 alias h='head'
 alias i='hostname -I'
 ##alias j='jumpstart'
-#alias k=''
+alias k='$HOME/Dropbox/Klarna/logo_ascii_animation/klarna'
 #alias l='ls'
 #alias m=''
 #alias n=''
@@ -107,13 +107,14 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias apt-search='apt-cache search'
 alias beep='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
+alias ccat='pygmentize -O style=trac -f terminal256 -g' # like github
 alias cd..='cd ..'
 alias cpu='grep -c ^processor /proc/cpuinfo ; grep "^model name" /proc/cpuinfo | sort -u'
 alias diff='diff -u'
 alias dir='echo "It is time to let MS-DOS go and is Linux."'
 alias dirs='dirs -l -v -p'
 alias edit='$EDITOR'
-alias erl2='rlwrap -A -i -r -p red -a -- erl'
+alias erl2='rlwrap -A -i -r -p RED -a -- erl'
 alias erlgrep='find . -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
 alias eg='erlgrep'
 alias kredgrep='find $HOME/dev/klarna/kred -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
@@ -121,8 +122,11 @@ alias ga='git add'
 alias gb='git branch -v'
 alias gc='git commit'
 alias gca='git add . && git commit'
+alias gcm='git commit -m'
+alias gcam='git add . && git commit -m'
 alias gcap='git commit -a && git push'
 alias gci='git commit --interactive'
+alias gcai='git add . && git commit --interactive'
 alias gd='git diff'
 alias gds='git diff --stat'
 alias gf='git fetch'
@@ -137,9 +141,11 @@ alias gr='git remote -v'
 alias gs='git status'
 alias gss='git stash show'
 alias gx='gitx'
+alias grep='grep --color=AUTO'
 alias hudson='ssh hudson@hudson-slave10'
 alias imac='ssh -Y 10.20.9.110'
 alias joyent='ssh node@djui.no.de' # node@72.2.126.155
+alias less='less -R -N -x2'
 alias lines='wc -l'
 [ $(uname) = "Darwin" ] && alias locate='mdfind -name'
 [ $(uname) = "Linux" ] && alias locate='find / -mount -wholename "/proc" -prune -o -iname'
@@ -167,6 +173,7 @@ alias ll='ls -lh'
 [ $(uname) = "Darwin" ] && alias ls='ls -G'
 [ $(uname) = "Linux" ] && alias ls='ls --color=auto'
 alias lt='tree -dCL 3'
+alias mg='mg -n'
 alias clean='git clean -fdx'
 alias matrix='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS
 conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
@@ -189,6 +196,16 @@ alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/d
 ####################################################################
 ## FUNCTIONS #######################################################
 ####################################################################
+
+rebarify() {
+    wget http://cloud.github.com/downloads/basho/rebar/rebar && chmod u+x ./rebar
+    mkdir ebin include priv src test
+    echo "/ebin/*" >> .gitignore
+    echo "erl_crash.dump" >> .gitignore
+    touch ebin/.gitignore
+    touch rebar.config
+    ./rebar create-app appid="$(basename $(pwd))"
+}
 
 erlc2() {
     erlc $* | \
@@ -294,13 +311,12 @@ function erlinstall {
 ####################################################################
 ####################################################################
 
-r14b03
+source $HOME/.bin/resty
 
-if [ -e $HOME/Dropbox/Klarna/klarna_animation.sh ] ; then
-    if [ ! -x $HOME/Dropbox/Klarna/klarna_animation.sh ] ; then
-        chmod +x $HOME/Dropbox/Klarna/klarna_animation.sh
-    fi
-    $HOME/Dropbox/Klarna/klarna_animation.sh 1
-fi
+r14b03 > /dev/null
+
+echo -e "\e[34;1m" # bright/bold blue
+[ -e $HOME/Dropbox/Klarna/kanimo ] && $HOME/Dropbox/Klarna/kanimo
+echo -e "\e[0m"
 
 [ $HOME = "$PWD" ] && cd $HOME/dev
