@@ -1,0 +1,5 @@
+#name : #!/usr/bin/env bash
+# --
+#!/usr/bin/${1:env ${2:bash}}
+
+$0

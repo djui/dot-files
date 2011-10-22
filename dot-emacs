@@ -8,9 +8,9 @@
       (mouse-wheel-mode t)))
 (menu-bar-mode          -1) ; nil would only toggle
 
-(global-linum-mode      t)
 (global-hl-line-mode    t)
-(global-whitespace-mode t)
+;(global-linum-mode      t)
+;(global-whitespace-mode t)
 
 ;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
 (setq-default user-full-name               "Uwe Dauernheim"
@@ -47,10 +47,13 @@
               line-number-mode             t
               column-number-mode           t
               linum-format                 "%3d "
+              truncate-lines               -1
               ;; Syntax-, region mark-, parentals-Highlighting
               global-font-lock-mode        t
               font-lock-maximum-decoration t
               show-paren-mode              t
+              highlight-parentheses-mode   t
+              highlight-todo               t
               ;; Default tab width
               indent-tabs-mode             nil
               tab-width                    4 ; to show old style correctly
@@ -82,10 +85,6 @@
               frame-title-format           (setq icon-title-format
                                                  (format "%%b - %semacs"
                                                          (if (featurep 'xemacs) "x" "")))
-              ;; Highlight long lines
-              whitespace-style             (quote (tabs lines-tail))
-              whitespace-action            nil
-              whitespace-line-column       80
               ;; Mac specific options
               mac-command-modifier         'meta
               ;; Use Chromium as default browser for links instead of Firefox
@@ -97,14 +96,45 @@
               fill-column                  80
               )
 
-;; Display time (next to date)
-;; Not needed at the moment due to tmux
-;; (display-time)
+;; Active the mouse wheel: Add scrolling with mouse
+(setq mac-emulate-three-button-mouse nil)
+(setq mouse-wheel-scroll-amount '(1.5))
+(global-set-key [mouse-4]    '(lambda () (interactive) (scroll-down 1)))
+(global-set-key [mouse-5]    '(lambda () (interactive) (scroll-up   1)))
+(global-set-key [wheel-up]   '(lambda () (interactive) (scroll-down 2)))
+(global-set-key [wheel-down] '(lambda () (interactive) (scroll-up   2)))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
-(global-set-key (kbd "C-c g")       'goto-line)
+;; replacing default buffer
+
+;; Reenforce defaults (???)
+(global-set-key (kbd "M-g")         'goto-line)
+
+;; Overwrite defaults
+(global-set-key (kbd "C-x C-d")     'dired)
+(global-set-key (kbd "C-a")         'back-to-indentation)
+(global-set-key (kbd "M-m")         'move-beginning-of-line)
+(global-set-key (kbd "C-f")         'forward-beginning-word)
+(global-set-key (kbd "M-f")         'forward-char)
+(global-set-key (kbd "C-b")         'backward-word)
+(global-set-key (kbd "M-b")         'backward-char)
+(global-set-key (kbd "C-d")         'kill-word)
+(global-set-key (kbd "M-d")         'delete-char)
+(global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
+(global-set-key (kbd "M-k")         'backward-kill-line)
+(global-set-key (kbd "C-M-k")       'whole-kill-line)
+(global-set-key (kbd "C-x k")       'kill-this-buffer)
+(global-set-key (kbd "C-x o")       'next-multiframe-window)
+(global-set-key (kbd "C-x O")       'previous-multiframe-window)
+
+;; Ido
+(global-set-key (kbd "C-x C-k")     'ido-kill-buffer)
+(global-set-key (kbd "C-x f")       'recentf-ido-find-file)
+
+;; Customized: C-c
+;(global-set-key (kbd "C-c g")       'goto-line)
 (global-set-key (kbd "C-c t")       'forward-transpose-lines)
 (global-set-key (kbd "C-c T")       'backward-transpose-lines)
 (global-set-key (kbd "C-c d")       'forward-duplicate-line)
@@ -114,45 +144,44 @@
 (global-set-key (kbd "C-c o")       'occur)
 (global-set-key (kbd "C-c r")       'replace-string)
 (global-set-key (kbd "C-c R")       'replace-regexp)
+(global-set-key (kbd "C-c e")       'eval-buffer)
+(global-set-key (kbd "C-c s")       '(lambda () (interactive) (switch-to-buffer "*scratch*")))
+(global-set-key (kbd "C-c b")       'diff-buffer-with-file)
+(global-set-key (kbd "C-c B")       'vc-diff)
+(global-set-key (kbd "C-c c")       'comment-or-uncomment-region)
+(global-set-key (kbd "C-c f")       'kfind)
 
+;; Code
+(global-set-key (kbd "C-c C-f")     'erlang-indent-function)
+(global-set-key (kbd "C-c C-M-f")   'erlang-indent-current-buffer)
+(global-set-key (kbd "C-/")         'comment-or-uncomment-region) ; doesn't work in emacs -nw
+(global-set-key (kbd "C-x v b")     'vc-annotate)
+
+;; iBuffer
+(global-set-key (kbd "C-x C-b")     'ibuffer)
+
+
+;; General
 (global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
-(global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
-(global-set-key (kbd "M-k")         'backward-kill-line)
-(global-set-key (kbd "C-M-k")       'whole-kill-line)
 (global-set-key (kbd "M-s")         'isearch-forward-at-point)
 ;(global-set-key (kbd "M-d")         'kill-current-word) ;; A bit too strong
 (global-set-key (kbd "C-w")         'smart-backwards-kill)
 
 ;; Resize windows keyboard shortcuts
-;;(global-set-key (kbd "M-<left>")   'shrink-window-horizontally) ; doesn't work in emacs -nw
-;;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
+;(global-set-key (kbd "M-<left>")   'shrink-window-horizontally) ; doesn't work in emacs -nw
+;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
 (global-set-key (kbd "\e <up>")     'shrink-window) ; \e because only works like that in emacs -nw
 (global-set-key (kbd "\e <down>")   'enlarge-window) ; \e because only works like that in emacs -nw
 (global-set-key (kbd "C-x =")       'balance-windows) ; usually on "C-x +"
-;;(global-set-key (kbd "\e\t")       'previous-source-buffer)
-;;(global-set-key (kbd "\e <left>")  'next-source-buffer)
-(global-set-key (kbd "C-/")         'comment-or-uncomment-region) ; doesn't work in emacs -nw
+;(global-set-key (kbd "\e\t")       'previous-source-buffer)
+;(global-set-key (kbd "\e <left>")  'next-source-buffer)
 
-;; Format Erlang code like Eclipse
-(global-set-key (kbd "C-c C-f")     'erlang-indent-function)
-;; Does not get recognized in Terminal mode
-(global-set-key (kbd "C-c C-M-f")   'erlang-indent-current-buffer)
-
-;; Remap Version Control Annotation (actually blame)
-(global-set-key (kbd "C-x v b")     'vc-annotate)
-
-;; Find recently opened files
-(global-set-key (kbd "C-x f")       'recentf-ido-find-file)
-
-;; Toggle some bindings
-(global-set-key (kbd "C-a")         'back-to-indentation)
-(global-set-key (kbd "M-m")         'move-beginning-of-line)
-(global-set-key (kbd "C-f")         'forward-beginning-word)
-(global-set-key (kbd "M-f")         'forward-char)
-(global-set-key (kbd "C-b")         'backward-word)
-(global-set-key (kbd "M-b")         'backward-char)
-(global-set-key (kbd "C-d")         'kill-word)
-(global-set-key (kbd "M-d")         'delete-char)
+;; Org-mode
+(global-set-key (kbd "C-c [")       'hide-subtree)
+(global-set-key (kbd "C-c {")       'hide-sublevels)
+(global-set-key (kbd "C-c ]")       'show-subtree)
+(global-set-key (kbd "C-c }")       'show-all)
+(global-set-key (kbd "C-c SPC")     'compact-space)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
@@ -263,6 +292,17 @@
   (save-excursion
     (kill-whole-line)))
 
+(defun compact-space ()
+  "Kill the whitespace between two non-whitespace characters"
+  (interactive "*")
+  (save-excursion
+    (save-restriction
+      (save-match-data
+        (progn
+          (re-search-backward "[^ \t\r\n]" nil t)
+          (re-search-forward "[ \t\r\n]+" nil t)
+          (replace-match " " nil nil))))))
+
 (defun highlight-todo ()
   (font-lock-add-keywords nil '(("\\(@todo\\|@fixme\\|XXX\\|TODO\\|FIXME\\)" 1
                                  font-lock-warning-face prepend))))
@@ -308,6 +348,19 @@
         (setq isearch-initial-string (buffer-substring begin end))
         (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
         (isearch-forward regexp-p no-recursive-edit)))))
+
+;; Align search results to center of buffer
+(defvar isearch-old-scroll-margin-value nil)
+(defun isearch-mode-margin-hook ()
+  (if isearch-old-scroll-margin-value
+      (progn
+        (setq scroll-margin isearch-old-scroll-margin-value)
+        (setq isearch-old-scroll-margin-value nil))
+    (setq isearch-old-scroll-margin-value scroll-margin)
+    (setq scroll-margin (/ (window-height) 2))))
+(add-hook 'isearch-mode-hook 'isearch-mode-margin-hook)
+(add-hook 'isearch-mode-end-hook 'isearch-mode-margin-hook)
+
 
 ;; Delete current word under cursor
 (defun mark-current-word ()
@@ -419,9 +472,237 @@ and the greater of them is not at the start of a line."
 ;; To see your style colors associations: M-x list-faces-display
 ;(require 'font-lock)
 (add-to-list 'load-path "~/.emacs.d/color-theme")
+(add-to-list 'load-path "~/.emacs.d/color-theme/themes")
 (require 'color-theme)
+;(color-theme-initialize) ;; Not all themes do exist or can be found
+
+;(require 'color-theme-solarized)
+;(setq solarized-termcolors 256)
+;;(color-theme-solarized-light)
+;(color-theme-solarized-dark)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-wombat.el")
+;(color-theme-wombat)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-less.el")
+;(color-theme-less)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-zenburn.el")
+;(color-theme-zenburn)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-twilight.el")
+;(color-theme-twilight)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-drr.el")
+;(color-theme-drr)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-almost-monokai.el")
+;(color-theme-almost-monokai)
+
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-empty-void.el")
+;(color-theme-empty-void)
+
 (load-file "~/.emacs.d/color-theme/themes/color-theme-djui.el")
-(color-theme-djui)
+;(color-theme-djui-light)
+(color-theme-djui-dark)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; w3m Browser
+(setq browse-url-browser-function 'w3m-browse-url
+      w3m-use-cookies             t
+      w3m-coding-system           'utf-8
+      w3m-file-coding-system      'utf-8
+      w3m-file-name-coding-system 'utf-8
+      w3m-input-coding-system     'utf-8
+      w3m-output-coding-system    'utf-8
+      w3m-terminal-coding-system  'utf-8)
+(autoload 'w3m-browse-url "org-w3m" "Ask a WWW browser to show a URL." t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Allout mode
+(require 'allout)
+(allout-init t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; iBuffer mode
+(provide 'ibuffer-config)
+(require 'ibuffer-config)
+
+(eval-after-load 'ibuffer
+  '(progn
+     (setq ibuffer-show-empty-filter-groups nil
+           ibuffer-always-show-last-buffer  t
+           ibuffer-view-ibuffer             t
+           ibuffer-default-sorting-mode     'major-mode
+           ibuffer-expert                   t)
+
+     (setq ibuffer-never-show-predicates
+           (list "\\*Completions\\*"))
+
+     (setq ibuffer-saved-filter-groups
+           ' (("default"
+
+               ("elisp"
+                (or (filename . "elisp/")
+                    (filename . "elisp/etc/initd")
+                    (mode . emacs-lisp-mode)))
+
+               ("emacs"
+                (or (name . "^\\*scratch\\*$")
+                    (name . "^\\*Messages\\*$")
+                    (name . "^TAGS\\(<[0-9]+>\\)?$")
+                    (name . "^\\*Help\\*$")
+                    (name . "^\\*info\\*$")
+                    (name . "^\\*Occur\\*$")
+                    (name . "^\\*grep\\*$")
+                    (name . "^\\*Compile-Log\\*$")
+                    (name . "^\\*Backtrace\\*$")
+                    (name . "^\\*Process List\\*$")
+                    (name . "^\\*gud\\*$")
+                    (name . "^\\*Man")
+                    (name . "^\\*WoMan")
+                    (name . "^\\*Kill Ring\\*$")
+                    (name . "^\\*Completions\\*$")
+                    (name . "^\\*tramp")
+                    (name . "^\\*shell\\*$")
+                    (name . "^\\*compilation\\*$")))
+
+               ("org"
+                (or (mode . org-mode)
+                    (mode . muse-mode)))
+
+               ("agenda"
+                (or (name . "^\\*Calendar\\*$")
+                    (name . "^diary$")
+                    (name . "^\\*Agenda")
+                    (name . "^\\*org-")
+                    (name . "^\\*Org")))
+
+               ("latex"
+                (or (mode . latex-mode)
+                    (mode . LaTeX-mode)
+                    (mode . bibtex-mode)
+                    (mode . reftex-mode)))
+
+               ("shell"
+                (or (mode . eshell-mode)
+                    (mode . shell-mode)))
+
+               ("erlang code"
+                (or (mode . erlang-mode)
+                    (mode . erlang-extended-mode)
+                    (name . "\\.erl")
+                    (name . "\\*erl")
+                    (name . "\\.hrl")
+                    (name . "\\.yaws")))
+
+               ("erlang"
+                (or (name . "\\*derl")
+                    (name . "\\*Erl")
+                    (name . "\\*wrangler")
+                    (name . "\\*trace")
+                    (name . "\\*plist")
+                    (name . "\\*pid <")
+                    (name . "^\\*Wrangler")
+                    (name . "^\\*trace")
+                    (name . "\\*edb")))
+
+               ("lisp"
+                (or (mode . lisp-mode)
+                    (mode . repl)
+                    (mode . slime-repl-mode)
+                    (name . "^\\*slime")
+                    (name . "^\\*inferior-lisp")))
+
+               ("code"
+                (or (mode . autoconf-mode)
+                    (mode . c-mode)
+                    (mode . gud-mode)
+                    (mode . makefile-mode)
+                    (mode . sh-mode)))
+
+               ("version control"
+                (or (mode . svn-status-mode)
+                    (mode . svn-log-edit-mode)
+                    (name . "^\\*svn-")
+                    (name . "^\\*vc\\*$")
+                    (name . "^\\*Annotate")
+                    (name . "\\*[gG]it.*\\*")
+                    (name . "^*magit")
+                    (name . "^\\*git-")
+                    (name . "^\\*vc-")))
+
+               ("ediff"
+                (or (mode . ediff-mode)
+                    (name . "\\*ediff")
+                    (name . "\\*Ediff")))
+
+               ("wiki"
+                (mode . mediawiki-mode))
+
+               ("dired"
+                (or (mode . dired-mode)))
+
+               ("rcirc"
+                (mode . rcirc-mode))
+
+               ("gnus"
+                (or (mode . message-mode)
+                    (mode . bbdb-mode)
+                    (mode . mail-mode)
+                    (mode . gnus-group-mode)
+                    (mode . gnus-summary-mode)
+                    (mode . gnus-article-mode)
+                    (name . "^\\.newsrc*")
+                    (name . "^\\*nnimap")
+                    (name . "^\\*imap")
+                    (name . "^\\*gnus")
+                    (name . "^\\*BBDB\\*$")
+                    (name . "^\\.bbdb$")
+                    (name . "^\\.newsrc-dribble"))))))))
+
+(eval-after-load 'ibuffer
+  '(progn
+     (add-hook 'ibuffer-mode-hook
+               (lambda ()
+                 (local-set-key (kbd "C-g") 'ibuffer-quit)
+                 (ibuffer-switch-to-saved-filter-groups "default")))))
+
+(eval-after-load 'ibuffer
+  '(progn
+     ;; switching to ibuffer puts the cursor on the most recent buffer
+     (defadvice ibuffer (around ibuffer-point-to-most-recent activate) ()
+       "Open ibuffer with cursor pointed to most recent buffer name"
+       (let ((recent-buffer-name (buffer-name)))
+         ad-do-it
+         (ibuffer-jump-to-buffer recent-buffer-name)))))
+
+;(eval-after-load 'ibuffer
+;  '(progn
+;     ;; show git status in ibuffer
+;     (when (require 'ibuffer-git)
+;       (setq ibuffer-formats
+;             '((mark modified read-only
+;                     git-status-mini " "
+;                     (name 18 18 :left :elide) " "
+;                     (size 9 -1 :right) " "
+;                     (mode 16 16 :left :elide) " "
+;                     ;; (eproject 16 16 :left :elide) " "
+;                     (git-status 8 8 :left) " "
+;                     filename-and-process)
+;               (mark " "
+;                     (name 16 -1) " "
+;                     filename))))))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Dired-Mode
+(add-hook 'dired-mode-hook 'my-dired-mode-hook)
+(defun my-dired-mode-hook ()
+  (local-set-key (kbd "F") 'dired-find-file-other-window))
+(add-hook 'dired-mode-hook 'my-dired-mode-hook)
+(defun my-dired-mode-hook ()
+  (local-set-key (kbd "<mouse-2>") 'dired-mouse-find-file))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; IDo-Mode, better than iswitch mode
@@ -433,10 +714,32 @@ and the greater of them is not at the start of a line."
 (add-hook 'ido-setup-hook 
           (lambda () 
             (define-key ido-completion-map [tab] 'ido-complete)))
+;; Can be done better using smex (below)
+;(global-set-key (kbd "M-x") 'ido-mx-completion)
+(defun ido-mx-completion ()
+  (interactive)
+  (call-interactively
+   (intern
+    (ido-completing-read "M-x " (all-completions "" obarray 'commandp)))))
+
+;; smex - super M-x
+(load-file "~/.emacs.d/smex.el")
+(require 'smex)
+(smex-initialize)
+(setq smex-save-file "~/.emacs.d/smex-items")
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-x M-x") 'execute-extended-command)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Whitespace Mode
 (require 'whitespace)
+(setq whitespace-style       (quote (face tabs tab-mark lines-tail)))
+(setq whitespace-action      nil)
+(setq whitespace-line-column 80)
+(setq whitespace-display-mappings
+      '((tab-mark     ?\t   [?\xBB ?\t] [?\\ ?\t]) ; tab
+        ))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Parentheses Mode
@@ -454,9 +757,9 @@ and the greater of them is not at the start of a line."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
-(add-to-list 'load-path "~/dev/OTP/install/R14B02/lib/erlang/lib/tools-2.6.6.3/emacs")
-(add-to-list 'exec-path "~/dev/OTP/install/R14B02/bin")
-(setq erlang-root-dir "~/dev/OTP/install/R14B02")
+(add-to-list 'load-path "~/dev/OTP/install/R14B03/lib/erlang/lib/tools-2.6.6.4/emacs")
+(add-to-list 'exec-path "~/dev/OTP/install/R14B03/bin")
+(setq erlang-root-dir "~/dev/OTP/install/R14B03")
 
 (require 'erlang-start)
 (setq erlang-tab-mode          nil
@@ -472,22 +775,31 @@ and the greater of them is not at the start of a line."
 (add-to-list 'interpreter-mode-alist '("escript" . erlang-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Wrangler
+(add-to-list 'load-path "~/.emacs.d/wrangler/elisp")
+(require 'wrangler)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Distel
-(add-to-list 'load-path "~/.emacs.d/distel/elisp")
-(require 'distel)
-(distel-setup)
+;; Handle from now on by Wrangler
+;(add-to-list 'load-path "~/.emacs.d/distel/elisp")
+;(require 'distel)
+;(distel-setup)
+
 ; Nice new distel extension for Record and Macro lookup
-(setq erlookup-roots     '("~/dev/klarna/kred/lib"
-                           "~/dev/OTP/src/otp_r14b02_klarna/lib")
-      erl-nodename-cache 'distel\@simpknot)
+;(setq erlookup-roots     '("~/dev/klarna/kred/lib"
+;                           "~/dev/klarna/kred/test/shared"
+;                           "~/dev/OTP/src/otp_r14b02_klarna/lib")
+(setq erl-nodename-cache 'distel\@simpknot)
 
 (defun distel ()
   (interactive)
   (set 'cmd (concat "erl -sname distel "
                     "-pa $HOME/.emacs.d/distel/ebin "
-                    "-pa $HOME/dev/klarna/kred/lib/*/ebin "
-                    "-pa $HOME/dev/klarna/kred/test/shared/ebin "
-                    "-pa $HOME/dev/riak_core/ebin"))
+                    "-pa $HOME/dev/klarna/kred_master/lib/*/ebin "
+                    "-pa $HOME/dev/klarna/kred_master/test/shared/ebin "
+                    "-pa $HOME/dev/klarna/soapbox/ebin "
+                    "-pa $HOME/dev/klarna/rpc_api/ebin "))
   (async-shell-command cmd)
   (other-window 1)
   (delete-window)
@@ -507,14 +819,36 @@ and the greater of them is not at the start of a line."
 (add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
 
 (defun my-erlang-mode-hook ()
-  (highlight-todo)
-  (highlight-parentheses-mode t)
-  (toggle-truncate-lines)
+  (interactive)
+  (linum-mode)
+  (setq truncate-lines t)
+  (setq truncate-partial-width-windows nil)
+  (setq whitespace-style       (quote (face tabs lines-tail)))
+  (setq whitespace-action      nil)
+  (setq whitespace-line-column 80)
+  (whitespace-mode)
   ;; (flymake-mode t)
-  )
+  (highlight-todo)
+  (highlight-parentheses-mode)
+  (allout-mode))
 
 ; Somehow there is a bug, that causes Emacs not to start correctly. Error:
 ; flymake-get-file-name-mode-and-masks: Invalid file-name
+
+;; Find in kred dirs
+;(defun kfind (&optional word)
+;  (interactive "r")
+(defun kfind (word)
+  (interactive "MFind: ")
+  (kfind-at
+   ;(concat (car (split-string (buffer-file-name) "lib")) "{lib,test}/")
+   "$HOME/dev/klarna/kred_master/{lib,test}/"
+   word))
+
+(defun kfind-at (path word)
+  (grep-find
+   (concat "find " path 
+           (concat " -type f \\( -name '*.erl' -o -name '*.hrl' \\) | xargs grep --color=auto " word))))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Efene/Ifene Mode
@@ -522,39 +856,24 @@ and the greater of them is not at the start of a line."
 ;(require 'ifene)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Scala Mode
-;(add-to-list 'load-path "~/.emacs.d/scala-mode")
-;(require 'scala-mode-auto)
-
-;; Ensime for Scala Mode
-;(add-to-list 'load-path "~/.emacs.d/ensime/elisp")
-;(require 'ensime)
-;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Lua Mode
-;(add-to-list 'load-path "~/.emacs.d/lua-mode")
-;(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-;(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Go! Mode
-(add-to-list 'load-path "~/.emacs.d/go-mode" t)
-(require 'go-mode-load)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Coffee script Mode
-(add-to-list 'load-path "~/.emacs.d/coffee-mode")
-(require 'coffee-mode)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown Mode
 (add-to-list 'load-path "~/.emacs.d/markdown-mode")
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(add-hook 'markdown-mode-hook '(lambda() (local-set-key (kbd "<backtab>") 'markdown-cycle)))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Ruby Mode
+(add-to-list 'load-path "~/.emacs.d/ruby-mode")
+(autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files")
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+(autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
+(autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
+(add-hook 'ruby-mode-hook '(lambda () (inf-ruby-keys)))
+(add-hook 'ruby-mode-hook 'turn-on-font-lock)
+(autoload 'rubydb "rubydb3x" "Ruby debugger" t)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yet Another Snippet plugin
@@ -565,36 +884,42 @@ and the greater of them is not at the start of a line."
 (yas/load-directory "~/.emacs.d/yasnippet/snippets")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Auto-complete mode
+;; See: https://github.com/m2ym/auto-complete.git
+(add-to-list 'load-path "~/.emacs.d/auto-complete")
+(require 'auto-complete-config)
+(add-to-list 'load-path "~/.emacs.d")
+(require 'auto-complete-distel)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; RCIRC - Emacs IRC
-(load-file "~/.emacs.d/rcirc.el")
-(load-file "~/.emacs.d/rcirc-notify.el")
+(load-file "~/.emacs.d/rcirc/rcirc.el")
+(load-file "~/.emacs.d/rcirc/rcirc-notify.el")
+;(load-file "~/.emacs.d/rcirc/rcirc-color.el")
 (require 'rcirc)
 (eval-after-load 'rcirc '(require 'rcirc-notify))
+;(eval-after-load 'rcirc '(require 'rcirc-color))
 ;; (rcirc-track-minor-mode 1)
 (add-hook 'rcirc-mode-hook (lambda ()
                              (rcirc-track-minor-mode 1)
-                             (rcirc-omit-mode)
-                             (linum-mode nil)))
+                             (rcirc-omit-mode)))
 
 (setq rcirc-default-nick           "uwe"
       rcirc-default-user-name      "uwe"
       rcirc-default-full-name      "Uwe Dauernheim"
       rcirc-decode-coding-system   'undecided
       rcirc-time-format            "%H:%M:%S "
-      rcirc-startup-channels-alist '(("#tech" "#kong"))
-      rcirc-prompt                 "%t %n> "
+      rcirc-startup-channels-alist '(("#tech" "#core" "#staging"))
+      rcirc-prompt                 "         %n> "
       rcirc-fill-prefix            "         "
       rcirc-fill-column            65
       rcirc-log-flag               t
       rcirc-buffer-maximum-lines   10000
-      rcirc-bright-nicks           (quote ("happi" "uwiger" "hansn"))
-      rcirc-keywords               (quote ("uwe" "happi" "jakob"))
-      rcirc-server-alist           '(("irc.hq.kred" :channels ("#tech" "#kong")))
+      rcirc-bright-nicks           (quote ("jakob" "fabian" "bjorn" "dklee" "masse"))
+      rcirc-keywords               (quote ("erlang"))
+      rcirc-server-alist           '(("irc.hq.kred" :channels ("#tech" "#core" "#staging")))
       rcirc-ignore-list            '()
       rcirc-omit-responses         '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
-
-;; Change the color of my own nickname
-(set-face-foreground 'rcirc-my-nick "gray" nil)
 
 ;; Wrap long lines according to the width of the window
 (add-hook 'window-configuration-change-hook '(lambda ()
@@ -604,81 +929,27 @@ and the greater of them is not at the start of a line."
   (interactive)
   (kill-all-mode-buffers 'rcirc-mode))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Twittering Mode
-;(add-to-list 'load-path "~/.emacs.d/twittering-mode")
-;(require 'twittering-mode)
-;(setq twittering-update-status-function    'twittering-update-status-from-minibuffer
-;      twittering-status-format             "%S %@%R\n%FILL[  ]{%t}\n"
-;      twittering-retweet-format            "RT: %t ~@%s"
-;      twittering-use-native-retweet        t
-;      twittering-display-connection-method nil
-;      twittering-icon-mode                 nil)
-;(add-hook 'twittering-mode-hook (lambda ()
-;                                  (interactive)
-;                                  (linum-mode) ; Disable the line number mode
-;                                  (twittering-enable-unread-status-notifier)))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Email (SMTP/SSL)
-;; You need to install the starttls/gnutls package
-;; $ sudo apt-get install gnutls
-;; $ brew install gnutls
-
-;(setq imap-ssl-program             "gnutls-cli --port %p %s"
-;      gnus-select-method           '(nnimap "gmail" (nnimap-address "imap.gmail.com")
-;                                                    (nnimap-server-port 993)
-;                                                    (nnimap-authinfo-file "~/.authinfo")
-;                                                    (nnimap-stream tls))
-;      starttls-use-gnutls           t
-;      send-mail-function            'smtpmail-send-it
-;      message-send-mail-function    'smtpmail-send-it
-;      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-;      smtpmail-auth-credentials     (expand-file-name "~/.authinfo")
-;      smtpmail-default-smtp-server  "smtp.gmail.com"
-;      smtpmail-smtp-server          "smtp.gmail.com"
-;      smtpmail-smtp-service         587
-;      message-signature-file        (expand-file-name "~/.emacs.d/signature")
-;      smtpmail-debug-info           t)
-;(require 'smtpmail)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Misc - Delete old backup files
-; (message "Deleting old backup files...")
-; (let ((week (* 60 60 24 7))
-;       (current (float-time (current-time))))
-;   (dolist (file (directory-files temporary-file-directory t))
-;     (when (and (backup-file-name-p file)
-;                (> (- current (float-time (fifth (file-attributes file))))
-;                   week))
-;       (message file)
-;       (delete-file file))))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Misc - Recompile
-;; Do a recompile once in a while to make startup faster
-; (byte-recompile-directory "~/.emacs.d")
-
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom set variables
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(allout-auto-activation "t")
  '(column-number-mode t)
  '(fringe-mode 0 nil (fringe))
- '(safe-local-variable-values (quote ((erlang-indent-level . 2))))
+ '(safe-local-variable-values (quote ((allout-layout . t) allout-layout t)))
  '(tooltip-mode nil))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-)
-(if window-system
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(font-lock-type-face ((t (:foreground "#FFFFFF" :weight normal)))))
+ (if window-system
     (custom-set-faces
-     '(default ((t (:inherit nil :stipple nil :background "#272821" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "unknown" :family "ProggyCleanTTSZBP"))))
+     '(default ((t (:inherit nil :stipple nil :background "#272821" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "unknown" :family "Terminus"))))
      '(mode-line ((t (:box nil))))
      '(mode-line-inactive ((t (:box nil))))
      '(whitespace-line ((t (:background "gray20" :foreground "#D62E00"))))))

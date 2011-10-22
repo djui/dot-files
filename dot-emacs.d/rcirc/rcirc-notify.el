@@ -69,8 +69,11 @@ notification.")
 same person.")
 
 (defun my-page-me (msg)
-  (start-process "rcirc-notify" "rcirc-notify" "tmux" "set-option" "status-left" (concat "#[fg=yellow,bright]" msg))
   (cond
+    ((executable-find "tmux")
+     (start-process "page-me" "rcirc-notify"
+                    "tmux" "set-option" "status-left"
+                    (concat "#[fg=yellow,bright]" msg)))
     ((executable-find "notify-send")
      (start-process "page-me" nil
                     ;; 8640000 ms = 1 day

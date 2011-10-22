@@ -1,9 +1,15 @@
 Host *
   VisualHostKey yes
   ServerAliveInterval 240
+  GSSAPIAuthentication yes
+  GSSAPIDelegateCredentials yes
 Host djui.no.de
   IdentityFile ~/.ssh/joyent_rsa
 Host github.com
   IdentityFile ~/.ssh/github_rsa
 Host git.hq.kred
+  IdentityFile ~/.ssh/kit_rsa
+Host salmon.hq.kred
+  IdentityFile ~/.ssh/kit_rsa
+Host samir-dev
   IdentityFile ~/.ssh/kit_rsa
