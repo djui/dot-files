@@ -40,9 +40,9 @@
      ;; function-header, arrow
      (font-lock-function-name-face     ((t (:foreground "#F1266F" :bold t))))              ; bright pink
      ;; int-bif, ext-bif, operators, guards, predefined
-     (font-lock-builtin-face           ((t (:foreground "#B0B0B0"))))                      ; dirty white
+     (font-lock-builtin-face           ((t (:foreground "#B0B0B0" :bold nil))))            ; dirty white
      ;; int-function-calls, ext-function-calls, keywords-fun-n, macros, records
-     (font-lock-type-face              ((t (:foreground "#FFFFFF"))))                      ; bright white
+     (font-lock-type-face              ((t (:foreground "#FFFFFF" :bold nil))))            ; bright white
      ;; dollar
      (font-lock-constant-face          ((t (:foreground "#65B042"))))                      ; dirty  green
      ;; lc, keywords, quotes
@@ -74,12 +74,23 @@
      (flymake-errline                  ((t (:background "FireBrick4"))))
      (flymake-warnline                 ((t (:background "DarkOrange"))))
 
-     (rcirc-my-nick-face               ((t (:foreground "#6DC5F1"))))
-     (rcirc-other-nick-face            ((t (:foreground "#F1266F"))))
-     (rcirc-server-face                ((t (:foreground "gray20"))))
-     (rcirc-nick-in-message-face       ((t (:foreground "cyan"))))
-     (rcirc-prompt-face                ((t (:foreground "#65B042"))))
-     (rcirc-mode-line-nick-face        ((t (:background "red" :foreground "#DFD874"))))
+     (rcirc-my-nick                    ((t (:foreground "gray20" :bold t))))
+     (rcirc-other-nick                 ((t (:foreground "white" :bold t))))
+     (rcirc-bright-nick                ((t (:foreground "yellow" :bold t))))
+     (rcirc-dim-nick                   ((t (:foreground "gray20" :bold t))))
+     (rcirc-server                     ((t (:foreground "gray30"))))
+     (rcirc-server-prefix              ((t (:foreground "gray30" :bold t))))
+     (rcirc-timestamp                  ((t (:foreground "gray60"))))
+     (rcirc-nick-in-message            ((t (:foreground "red"))))
+     (rcirc-nick-in-message-full-line  ((t (:background "gray20"))))
+     (rcirc-prompt                     ((t (:foreground "white" :bold t))))
+     ;; ???
+     (rcirc-track                      ((t (:foreground "blue" :underline t))))
+     ;; ???
+     (rcirc-track-keyword              ((t (:foreground "blue" :bold t))))
+     ;; ???
+     (rcirc-keyword                    ((t (:foreground "green"))))
+     (rcirc-url                        ((t (:underline t))))
 
      (markdown-header-face-1           ((t (:inherit markdown-header-face))))
      (markdown-header-face-2           ((t (:inherit markdown-header-face :foreground "#E72E71"))))
@@ -118,9 +129,9 @@
      ;; function-header, arrow
      (font-lock-function-name-face     ((t (:foreground "#F1266F" :bold t))))              ; bright pink
      ;; int-bif, ext-bif, operators, guards, predefined
-     (font-lock-builtin-face           ((t (:foreground "#B0B0B0"))))                      ; dirty white
+     (font-lock-builtin-face           ((t (:foreground "#B0B0B0" :bold nil))))            ; dirty white
      ;; int-function-calls, ext-function-calls, keywords-fun-n, macros, records
-     (font-lock-type-face              ((t (:foreground "#FFFFFF"))))                      ; bright white
+     (font-lock-type-face              ((t (:foreground "#FFFFFF" :bold nil))))            ; bright white
      ;; dollar
      (font-lock-constant-face          ((t (:foreground "#65B042"))))                      ; dirty  green
      ;; lc, keywords, quotes
@@ -158,12 +169,23 @@
      (flymake-errline                  ((t (:background "FireBrick4"))))
      (flymake-warnline                 ((t (:background "DarkOrange"))))
 
-     (rcirc-my-nick-face               ((t (:foreground "#6DC5F1"))))
-     (rcirc-other-nick-face            ((t (:foreground "#F1266F"))))
-     (rcirc-server-face                ((t (:foreground "gray20"))))
-     (rcirc-nick-in-message-face       ((t (:foreground "cyan"))))
-     (rcirc-prompt-face                ((t (:foreground "#65B042"))))
-     (rcirc-mode-line-nick-face        ((t (:background "red" :foreground "#DFD874"))))
+     (rcirc-my-nick                    ((t (:foreground "gray20" :bold t))))
+     (rcirc-other-nick                 ((t (:foreground "white" :bold t))))
+     (rcirc-bright-nick                ((t (:foreground "yellow" :bold t))))
+     (rcirc-dim-nick                   ((t (:foreground "gray20" :bold t))))
+     (rcirc-server                     ((t (:foreground "gray30"))))
+     (rcirc-server-prefix              ((t (:foreground "gray30" :bold t))))
+     (rcirc-timestamp                  ((t (:foreground "gray60"))))
+     (rcirc-nick-in-message            ((t (:foreground "red"))))
+     (rcirc-nick-in-message-full-line  ((t (:background "gray20"))))
+     (rcirc-prompt                     ((t (:foreground "white" :bold t))))
+     ;; ???
+     (rcirc-track                      ((t (:foreground "blue" :underline t))))
+     ;; ???
+     (rcirc-track-keyword              ((t (:foreground "blue" :bold t))))
+     ;; ???
+     (rcirc-keyword                    ((t (:foreground "green"))))
+     (rcirc-url                        ((t (:underline t))))
 
      (markdown-header-face-1           ((t (:inherit markdown-header-face))))
      (markdown-header-face-2           ((t (:inherit markdown-header-face :foreground "#E72E71"))))

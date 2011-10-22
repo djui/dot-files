@@ -35,9 +35,9 @@ Inspired by color-theme-late-night and the Less is More theme for vim."
      '(color-theme-less
        (;(background-color . "#000")
 	(background-mode . dark)
-	(background-toolbar-color . "#000")
-	(border-color . "#000")
-	(bottom-toolbar-shadow-color . "#000")
+	;(background-toolbar-color . "#000")
+	;(border-color . "#000")
+	;(bottom-toolbar-shadow-color . "#000")
 	(cursor-color	. "yellow")
 	(foreground-color . "gray70")
 	(top-toolbar-shadow-color . "#111"))

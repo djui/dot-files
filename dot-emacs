@@ -8,9 +8,9 @@
       (mouse-wheel-mode t)))
 (menu-bar-mode          -1) ; nil would only toggle
 
-(global-linum-mode      t)
 (global-hl-line-mode    t)
-(global-whitespace-mode t)
+;(global-linum-mode      t)
+;(global-whitespace-mode t)
 
 ;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
 (setq-default user-full-name               "Uwe Dauernheim"
@@ -109,6 +109,9 @@
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
 ;; replacing default buffer
 
+;; Reenforce defaults (???)
+(global-set-key (kbd "M-g")         'goto-line)
+
 ;; Overwrite defaults
 (global-set-key (kbd "C-x C-d")     'dired)
 (global-set-key (kbd "C-a")         'back-to-indentation)
@@ -131,7 +134,7 @@
 (global-set-key (kbd "C-x f")       'recentf-ido-find-file)
 
 ;; Customized: C-c
-(global-set-key (kbd "C-c g")       'goto-line)
+;(global-set-key (kbd "C-c g")       'goto-line)
 (global-set-key (kbd "C-c t")       'forward-transpose-lines)
 (global-set-key (kbd "C-c T")       'backward-transpose-lines)
 (global-set-key (kbd "C-c d")       'forward-duplicate-line)
@@ -345,6 +348,19 @@
         (setq isearch-initial-string (buffer-substring begin end))
         (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
         (isearch-forward regexp-p no-recursive-edit)))))
+
+;; Align search results to center of buffer
+(defvar isearch-old-scroll-margin-value nil)
+(defun isearch-mode-margin-hook ()
+  (if isearch-old-scroll-margin-value
+      (progn
+        (setq scroll-margin isearch-old-scroll-margin-value)
+        (setq isearch-old-scroll-margin-value nil))
+    (setq isearch-old-scroll-margin-value scroll-margin)
+    (setq scroll-margin (/ (window-height) 2))))
+(add-hook 'isearch-mode-hook 'isearch-mode-margin-hook)
+(add-hook 'isearch-mode-end-hook 'isearch-mode-margin-hook)
+
 
 ;; Delete current word under cursor
 (defun mark-current-word ()
@@ -736,9 +752,9 @@ and the greater of them is not at the start of a line."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
-(add-to-list 'load-path "~/dev/OTP/install/R14B02/lib/erlang/lib/tools-2.6.6.3/emacs")
-(add-to-list 'exec-path "~/dev/OTP/install/R14B02/bin")
-(setq erlang-root-dir "~/dev/OTP/install/R14B02")
+(add-to-list 'load-path "~/dev/OTP/install/R14B03/lib/erlang/lib/tools-2.6.6.4/emacs")
+(add-to-list 'exec-path "~/dev/OTP/install/R14B03/bin")
+(setq erlang-root-dir "~/dev/OTP/install/R14B03")
 
 (require 'erlang-start)
 (setq erlang-tab-mode          nil
@@ -754,10 +770,17 @@ and the greater of them is not at the start of a line."
 (add-to-list 'interpreter-mode-alist '("escript" . erlang-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Wrangler
+(add-to-list 'load-path "~/.emacs.d/wrangler/elisp")
+(require 'wrangler)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Distel
-(add-to-list 'load-path "~/.emacs.d/distel/elisp")
-(require 'distel)
-(distel-setup)
+;; Handle from now on by Wrangler
+;(add-to-list 'load-path "~/.emacs.d/distel/elisp")
+;(require 'distel)
+;(distel-setup)
+
 ; Nice new distel extension for Record and Macro lookup
 ;(setq erlookup-roots     '("~/dev/klarna/kred/lib"
 ;                           "~/dev/klarna/kred/test/shared"
@@ -792,6 +815,7 @@ and the greater of them is not at the start of a line."
 
 (defun my-erlang-mode-hook ()
   (interactive)
+  (linum-mode)
   (setq truncate-lines t)
   (setq truncate-partial-width-windows nil)
   (setq whitespace-style       (quote (face tabs lines-tail)))
@@ -873,9 +897,7 @@ and the greater of them is not at the start of a line."
 ;; (rcirc-track-minor-mode 1)
 (add-hook 'rcirc-mode-hook (lambda ()
                              (rcirc-track-minor-mode 1)
-                             (rcirc-omit-mode)
-                             (linum-mode nil)
-                             (whitespace-mode)))
+                             (rcirc-omit-mode)))
 
 (setq rcirc-default-nick           "uwe"
       rcirc-default-user-name      "uwe"
@@ -883,19 +905,16 @@ and the greater of them is not at the start of a line."
       rcirc-decode-coding-system   'undecided
       rcirc-time-format            "%H:%M:%S "
       rcirc-startup-channels-alist '(("#tech" "#core" "#staging"))
-      rcirc-prompt                 "%t %n> "
+      rcirc-prompt                 "         %n> "
       rcirc-fill-prefix            "         "
       rcirc-fill-column            65
       rcirc-log-flag               t
       rcirc-buffer-maximum-lines   10000
       rcirc-bright-nicks           (quote ("jakob" "fabian" "bjorn" "dklee" "masse"))
-      rcirc-keywords               (quote ("uwe" "jakob" "fabian" "bjorn" "dklee" "masse"))
-      rcirc-server-alist           '(("irc.hq.kred" :channels ("#tech" "#core")))
+      rcirc-keywords               (quote ("erlang"))
+      rcirc-server-alist           '(("irc.hq.kred" :channels ("#tech" "#core" "#staging")))
       rcirc-ignore-list            '()
       rcirc-omit-responses         '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
-
-;; Change the color of my own nickname
-(set-face-foreground 'rcirc-my-nick "gray" nil)
 
 ;; Wrap long lines according to the width of the window
 (add-hook 'window-configuration-change-hook '(lambda ()
@@ -912,6 +931,7 @@ and the greater of them is not at the start of a line."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(allout-auto-activation "t")
  '(column-number-mode t)
  '(fringe-mode 0 nil (fringe))
  '(safe-local-variable-values (quote ((allout-layout . t) allout-layout t)))
@@ -921,7 +941,7 @@ and the greater of them is not at the start of a line."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(font-lock-type-face ((t (:foreground "#FFFFFF" :weight normal)))))
  (if window-system
     (custom-set-faces
      '(default ((t (:inherit nil :stipple nil :background "#272821" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "unknown" :family "Terminus"))))

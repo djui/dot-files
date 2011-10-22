@@ -38,7 +38,7 @@
   who     = "!git shortlog -s -- | sort -n -k1"
   aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"
   swap    = checkout "@{-1}"
-  zz-init = "!sh -c 'ssh salmon \"git init --bare ~/public_git/$0\" && echo \"Use git clone git.hq.kred:~/public_git/$0 or checkout http://git/?p=zz/uwe/$0\"'"
+  zz-init = "!sh -c 'ssh salmon \"git init --bare /home/uwe/public_git/$0\" && echo \"Use git clone git.hq.kred:~/public_git/$0 or checkout http://git/?p=zz/uwe/$0\"'"
   zz-clone= "!sh -c 'git clone git.hq.kred:~/public_git/$0'"
   push-pull-request = "!sh -c 'hash=$(git rev-parse HEAD) ; \
                                git push $* && echo $hash >> .git/PUSH_COMMITS' - " 
