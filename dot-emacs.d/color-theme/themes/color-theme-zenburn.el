@@ -601,7 +601,7 @@
     '(wl-highlight-summary-displaying-face ((t (:underline t :weight bold))))
     ))
 
-(provide-theme 'zenburn)
+(provide-theme 'color-theme-zenburn)
 
 ;; Local Variables:
 ;; no-byte-compile: t

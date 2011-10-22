@@ -28,12 +28,12 @@
 Inspired by color-theme-late-night and the Less is More theme for vim."
   (interactive)
   (let ((color-theme-is-cumulative t))
-    (color-theme-dark-erc)
-    (color-theme-dark-gnus)
-    (color-theme-dark-info)
+    ;(color-theme-dark-erc)
+    ;(color-theme-dark-gnus)
+    ;(color-theme-dark-info)
     (color-theme-install
      '(color-theme-less
-       ((background-color . "#000")
+       (;(background-color . "#000")
 	(background-mode . dark)
 	(background-toolbar-color . "#000")
 	(border-color . "#000")
