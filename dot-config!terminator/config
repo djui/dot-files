@@ -37,7 +37,7 @@
     icon_bell = False
     show_titlebar = False
     antialias = False
-    font = Terminus Medium 12
+    font = ProggyCleanTTSZBP 12
     background_color = "#272821"
     scrollback_infinite = True
 [layouts]

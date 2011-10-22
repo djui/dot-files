@@ -509,6 +509,7 @@ and the greater of them is not at the start of a line."
 (defun my-erlang-mode-hook ()
   (highlight-todo)
   (highlight-parentheses-mode t)
+  (toggle-truncate-lines)
   ;; (flymake-mode t)
   )
 
@@ -535,6 +536,18 @@ and the greater of them is not at the start of a line."
 ;(add-to-list 'load-path "~/.emacs.d/lua-mode")
 ;(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 ;(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Go! Mode
+(add-to-list 'load-path "~/.emacs.d/go-mode" t)
+(require 'go-mode-load)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Coffee script Mode
+(add-to-list 'load-path "~/.emacs.d/coffee-mode")
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown Mode
