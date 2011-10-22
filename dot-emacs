@@ -474,6 +474,7 @@ and the greater of them is not at the start of a line."
 (add-to-list 'load-path "~/.emacs.d/color-theme")
 (add-to-list 'load-path "~/.emacs.d/color-theme/themes")
 (require 'color-theme)
+;(color-theme-initialize) ;; Not all themes do exist or can be found
 
 ;(require 'color-theme-solarized)
 ;(setq solarized-termcolors 256)
@@ -489,6 +490,9 @@ and the greater of them is not at the start of a line."
 ;(load-file "~/.emacs.d/color-theme/themes/color-theme-zenburn.el")
 ;(color-theme-zenburn)
 
+;(load-file "~/.emacs.d/color-theme/themes/color-theme-twilight.el")
+;(color-theme-twilight)
+
 ;(load-file "~/.emacs.d/color-theme/themes/color-theme-drr.el")
 ;(color-theme-drr)
 
@@ -501,6 +505,7 @@ and the greater of them is not at the start of a line."
 (load-file "~/.emacs.d/color-theme/themes/color-theme-djui.el")
 ;(color-theme-djui-light)
 (color-theme-djui-dark)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; w3m Browser
