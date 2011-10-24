@@ -118,38 +118,6 @@ alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/d
 ## FUNCTIONS #######################################################
 ####################################################################
 
-function e {
-    if [ $SSH_TTY ] ; then
-        emacsclient -nw -c -a "" $*
-    else
-        emacsclient -nw -a "" $*
-    fi
-}
-
-function o {
-  # emacsclient -nw -a $(find . -name $@ -print -quit)
-  find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a ""
-}
-
-function google {
-    w3m "http://www.google.com/search?q=$@"
-}
-
-function encrypt {
-    openssl aes-256-cbc -a -salt -in "$1" -out "$1.aes"
-    shred --remove "$1"
-}
-
-function decrypt {
-    openssl aes-256-cbc -d -a -salt -in "$1.aes" -out "$1"
-}
-
-function title {
-    echo -ne "\033]0;$*\007"
-    # echo -ne "\[\033k$*\033\\\]"
-}
-
-function 2sv {
 e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a "" $* ; fi }
 o() { find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a "" }
 rtfm() { help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@"; }
