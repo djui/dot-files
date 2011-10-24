@@ -1890,7 +1890,7 @@ With prefix ARG, go to the next low priority buffer with activity."
 			  "  Type C-u "
 			  (key-description (this-command-keys))
 			  " for low priority activity."))))
-    (start-process "rcirc-notify" "rcirc-notify" "tmux" "set-option" "status-left" ""))))))
+    (start-process "rcirc-notify" "rcirc-notify" "tmux" "set-option" "status-left" "")))))
 
 (defvar rcirc-activity-hooks nil
   "Hook to be run when there is channel activity.
