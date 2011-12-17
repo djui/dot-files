@@ -757,9 +757,12 @@ and the greater of them is not at the start of a line."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang Mode
-(add-to-list 'load-path "~/dev/OTP/install/R14B03/lib/erlang/lib/tools-2.6.6.4/emacs")
-(add-to-list 'exec-path "~/dev/OTP/install/R14B03/bin")
-(setq erlang-root-dir "~/dev/OTP/install/R14B03")
+;(add-to-list 'load-path "~/dev/otp/install/R14B03/lib/erlang/lib/tools-2.6.6.4/emacs")
+;(add-to-list 'exec-path "~/dev/otp/install/R14B03/bin")
+;(setq erlang-root-dir "~/dev/otp/install/R14B03")
+(add-to-list 'load-path "/usr/local/lib/erlang/lib/tools-2.6.6.5/emacs")
+(add-to-list 'exec-path "/usr/local/bin")
+(setq erlang-root-dir "/usr/local/lib/erlang")
 
 (require 'erlang-start)
 (setq erlang-tab-mode          nil
@@ -773,6 +776,11 @@ and the greater of them is not at the start of a line."
 (add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
 (add-to-list 'interpreter-mode-alist '("escript" . erlang-mode))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Go Mode
+(add-to-list 'load-path "/usr/local/Cellar/go/r60.3/misc/emacs")
+(require 'go-mode-load)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Wrangler
@@ -928,6 +936,29 @@ and the greater of them is not at the start of a line."
 (defun rcirc-kill-all-buffers ()
   (interactive)
   (kill-all-mode-buffers 'rcirc-mode))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Package manager
+(package-initialize)
+;;                              ("gnu"       . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("elpa"      . "http://tromey.com/elpa/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;;
+;; markdown-mode
+;; go-mode
+;;
+;; highlight-parentheses
+;; magit
+;; magit-simple-keys
+;; magithub
+;; diff-git
+;; autopair
+;; idle-highlight-mode
+;; ido-ubiquitous
+;; smart-tab
+;; smex
+;; yasnippet
+;; allout
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom set variables
