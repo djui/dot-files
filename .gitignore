@@ -12,6 +12,7 @@
 /dot-emacs.d/elpa
 /dot-emacs.d/rcirc-log/
 /dot-emacs.d/smex-items
+/dot-emacs.d/url/
 
 /dot-ssh/*
 !/dot-ssh/config
