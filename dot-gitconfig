@@ -40,9 +40,9 @@
   swap    = checkout "@{-1}"
   zz-init = "!sh -c 'ssh salmon \"git init --bare /home/uwe/public_git/$0\" && echo \"Use git clone git.hq.kred:~/public_git/$0 or checkout http://git/?p=zz/uwe/$0\"'"
   zz-clone= "!sh -c 'git clone git.hq.kred:~/public_git/$0'"
-  push-pull-request = "!sh -c 'hash=$(git rev-parse HEAD) ; \
+  push-pr = "!sh -c 'hash=$(git rev-parse HEAD) ; \
                                git push $* && echo $hash >> .git/PUSH_COMMITS' - " 
-  pull-request = "!sh -c 'if [ $1 ] ; then \
+  pr = "!sh -c 'if [ $1 ] ; then \
                               amount=$1 ; \
                           elif [ -f .git/PUSH_COMMITS ] ; then \
                               lastpushcommit=$(tail -n 1 .git/PUSH_COMMITS) ; \
@@ -57,7 +57,7 @@
                           echo \"git pull $repo $branch\" ; \
                           echo ; \
                           echo \"$ctexts\"' - "
-  send-pull-request = "!sh -c 'if [ $1 ] ; then \
+  send-pr = "!sh -c 'if [ $1 ] ; then \
                                    amount=$1 ; \
                                elif [ -f .git/PUSH_COMMITS ] ; then \
                                    lastpushcommit=$(tail -n 1 .git/PUSH_COMMITS) ; \
@@ -66,8 +66,8 @@
                                    amount=-1 ; \
                                fi ; \
                                branch=$(git name-rev --name-only HEAD) ; \
-                               git pull-request $amount | \
-                               mail -s \"Pull request: $branch\" $(git config pull-request.group)' - "
+                               git pr $amount | \
+                               mail -s \"Pull request: $branch into $(git config remote.origin.url)\" $(git config pull-request.group)' - "
 [pull-request]
   group = uwe@klarna.com
 [color]
