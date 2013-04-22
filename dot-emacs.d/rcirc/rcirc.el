@@ -920,7 +920,8 @@ IRC command completion is performed only if '/' is the first input char."
     (define-key map (kbd "C-c C-p") 'rcirc-cmd-part)
     (define-key map (kbd "C-c C-q") 'rcirc-cmd-query)
     (define-key map (kbd "C-c C-t") 'rcirc-cmd-topic)
-    (define-key map (kbd "C-c C-n") 'rcirc-cmd-names)
+    ;(define-key map (kbd "C-c C-n") 'rcirc-cmd-names)
+    (define-key map (kbd "C-c C-n") 'rcirc-cmd-separator)
     (define-key map (kbd "C-c C-w") 'rcirc-cmd-whois)
     (define-key map (kbd "C-c C-x") 'rcirc-cmd-quit)
     (define-key map (kbd "C-c TAB") ; C-i
@@ -1359,7 +1360,8 @@ is found by looking up RESPONSE in `rcirc-response-formats'."
 			(t nil)))
 		"")
 	    (?n sender)
-	    (?N (let ((my-nick (rcirc-nick process)))
+	    (?N (format "%-9s"
+            (let ((my-nick (rcirc-nick process)))
 		  (save-match-data
 		    (with-syntax-table rcirc-nick-syntax-table
 		      (rcirc-facify sender
@@ -1378,7 +1380,7 @@ is found by looking up RESPONSE in `rcirc-response-formats'."
 						 sender))
 					   'rcirc-dim-nick)
 					  (t
-					   'rcirc-other-nick)))))))
+					   'rcirc-other-nick))))))))
 	    (?m (propertize text 'rcirc-text text))
 	    (?r response)
 	    (?t (or target ""))
@@ -1502,10 +1504,10 @@ record activity."
 		    (propertize "\n" 'hard t))
 
  	    ;; squeeze spaces out of text before rcirc-text
-	    (fill-region fill-start
-			 (1- (or (next-single-property-change fill-start
-							      'rcirc-text)
-				 rcirc-prompt-end-marker)))
+	    ;(fill-region fill-start
+		;	 (1- (or (next-single-property-change fill-start
+		;					      'rcirc-text)
+		;		 rcirc-prompt-end-marker)))
 
 	    ;; run markup functions
  	    (save-excursion
@@ -2174,6 +2176,12 @@ If called interactively, prompt for a channel when prefix arg is supplied."
                      channel
                    target)))
     (rcirc-send-string process (concat "NAMES " channel))))
+
+(defun-rcirc-command separator (channel)
+  "Draws a line as read separator."
+  (interactive "P")
+  (if (called-interactively-p 'interactive)
+      (rcirc-print process nil "********************************************************************************" nil "" target)))
 
 (defun-rcirc-command topic (topic)
   "List TOPIC for the TARGET channel.

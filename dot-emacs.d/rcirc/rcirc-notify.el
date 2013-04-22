@@ -52,11 +52,11 @@
 ;;    in between notifications from the same nick.
 
 
-(defvar my-rcirc-notify-message "%s is calling your name."
+(defvar my-rcirc-notify-message "%s: %s"
   "Format if message to display in libnotify popup.
 '%s' will expand to the nick that notified you.")
 
-(defvar my-rcirc-notify-message-private "%s sent a private message."
+(defvar my-rcirc-notify-message-private "%s: %s"
   "Format if message to display in libnotify popup.
 '%s' will expand to the nick that sent the message.")
 
@@ -68,39 +68,25 @@ notification.")
   "Number of seconds that will elapse between notifications from the
 same person.")
 
-(defun my-page-me (msg)
-  (cond
-    ((executable-find "tmux")
-     (start-process "page-me" "rcirc-notify"
-                    "tmux" "set-option" "status-left"
-                    (concat "#[fg=yellow,bright]" msg)))
-    ((executable-find "notify-send")
-     (start-process "page-me" nil
-                    ;; 8640000 ms = 1 day
-                    "notify-send" "-u" "normal" "-i" "gtk-dialog-info"
-                    "-t" "8640000" "rcirc"
-                    msg))
-    ((executable-find "growlnotify")
-     (start-process "page-me" nil "growlnotify" "-t" "IRC" "-a" "Colloquy" "-m" msg))
-    ((executable-find "osascript")
-     (apply 'start-process `("page-me" nil
-			     "osascript"
-			     "-e" "tell application \"GrowlHelperApp\""
-			     "-e" "register as application \"Emacs\" all notifications {\"rcirc\"} default notifications {\"rcirc\"}"
-			     "-e" ,(concat "notify with name \"rcirc\" title \"rcirc\" description \""
-					   msg "\" application name \"Emacs\"")
-			     "-e" "end tell")))
-    (t (error "No method available to page you."))))
+(defun my-rcirc-notify-me (proc sender response target text)
+  "Notify the current user when someone sends a message that
+matches the current nick."
+  (interactive)
+  (when (and (string-match (rcirc-nick proc) text)
+             (not (string= (rcirc-nick proc) sender))
+             (not (string= (rcirc-server-name proc) sender))
+             (my-rcirc-notify-allowed sender))
+    (my-rcirc-notify sender text)))
 
-(defun my-rcirc-notify (sender)
-    ;; Set default dir to appease the notification gods
-    (let ((default-directory "~/"))
-      (my-page-me (format my-rcirc-notify-message sender))))
-
-(defun my-rcirc-notify-private (sender)
-    ;; Set default dir to appease the notification gods
-    (let ((default-directory "~/"))
-      (my-page-me (format my-rcirc-notify-message-private sender))))
+(defun my-rcirc-notify-privmsg (proc sender response target text)
+  "Notify the current user when someone sends a private message
+to them."
+  (interactive)
+  (when (and (string= response "PRIVMSG")
+             (not (string= sender (rcirc-nick proc)))
+             (not (rcirc-channel-p target))
+             (my-rcirc-notify-allowed sender))
+    (my-rcirc-notify-private sender text)))
 
 (defun my-rcirc-notify-allowed (nick &optional delay)
   "Return non-nil if a notification should be made for NICK.
@@ -119,26 +105,31 @@ that can occur between two notifications.  The default is
       (push (cons nick cur-time) my-rcirc-notify-nick-alist)
       t)))
 
-(defun my-rcirc-notify-me (proc sender response target text)
-  "Notify the current user when someone sends a message that
-matches the current nick."
-  (interactive)
-  (when (and (string-match (rcirc-nick proc) text)
-             (not (string= (rcirc-nick proc) sender))
-             (not (string= (rcirc-server-name proc) sender))
-             (my-rcirc-notify-allowed sender))
-    (my-rcirc-notify sender)))
+(defun my-rcirc-notify (sender text)
+    ;; Set default dir to appease the notification gods
+    (let ((default-directory "~/"))
+      (my-page-me (format my-rcirc-notify-message sender text))))
 
-(defun my-rcirc-notify-privmsg (proc sender response target text)
-  "Notify the current user when someone sends a private message
-to them."
-  (interactive)
-  (when (and (string= response "PRIVMSG")
-             (not (string= sender (rcirc-nick proc)))
-             (not (rcirc-channel-p target))
-             (my-rcirc-notify-allowed sender))
+(defun my-rcirc-notify-private (sender text)
+    ;; Set default dir to appease the notification gods
+    (let ((default-directory "~/"))
+      (my-page-me (format my-rcirc-notify-message-private sender text))))
 
-    (my-rcirc-notify-private sender)))
+(defun my-page-me (msg)
+  ;; TMUX
+  (when (executable-find "tmux")
+    (start-process "page-me" "rcirc-notify" "tmux" "set-option" "status-left" (concat "#[fg=yellow,bright]" msg)))
+  ;; Growl
+  (when (executable-find "growlnotify")
+    (start-process "page-me" nil "growlnotify" "-t" "rcirc" "-a" "Emacs" "-m" msg))
+  ;; Applescript to Growl
+  ; (when (executable-find "osascript")
+  ;  (apply 'start-process `("page-me" nil "osascript"
+  ;                          "-e" "tell application \"GrowlHelperApp\""
+  ;                          "-e" "register as application \"Emacs\" all notifications {\"rcirc\"} default notifications {\"rcirc\"}"
+  ;                          "-e" ,(concat "notify with name \"rcirc\" title \"rcirc\" description \"" msg "\" application name \"Emacs\" with sticky")
+  ;                          "-e" "end tell")))
+  )
 
 (add-hook 'rcirc-print-hooks 'my-rcirc-notify-privmsg)
 (add-hook 'rcirc-print-hooks 'my-rcirc-notify-me)
