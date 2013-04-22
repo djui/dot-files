@@ -200,6 +200,7 @@ function k {
     esac
 }
 alias clean='git clean -fdx'
+alias hibernate='sudo pmset -a hibernatemode 25 && pmset sleepnow'
 alias la='ls -alhp'
 #alias ll='if [ "$_" = "-lh" ] ; then echo -e "\033[01;30mBored, nervous or unconcentrated?\033[00m" ; else ls -lh ; fi'
 alias ll='ls -lh'
@@ -217,6 +218,7 @@ alias otpgrep='find $(which erl)/../../lib -type f \( -name "*.erl" -o -name "*.
 alias pd='pushd'
 alias ports='lsof -i -P' # -n
 alias sl='cut -c -$(tput cols)'
+alias sleep='sudo pmset -a hibernatemode 0 && pmset sleepnow'
 alias tips='e $HOME/Dropbox/_Life/_tips.md'
 alias tree='tree -C'
 alias tree2='tree -CifF'
