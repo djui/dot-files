@@ -110,10 +110,10 @@ alias b='emacs -nw ~/.bashrc ; source ~/.bashrc'
 alias c='clear'
 alias d='git diff'
 alias ed='/Applications/Emacs.app/Contents/MacOS/Emacs --daemon'
-alias e='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t -c'
+alias e='emacs -nw' # '/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t -c'
 alias f='find'
 alias g='grep'
-alias h='head'
+alias h='history'
 alias i='hostname -I'
 ##alias j='jumpstart'
 alias k='$HOME/Dropbox/Klarna/logo_ascii_animation/klarna'
@@ -136,9 +136,10 @@ alias z='emacs -nw ~/.zshrc ; source ~/.zshrc'
 
 alias ..='cd ..'
 alias ...='cd ../..'
+alias adn='brio'
 alias apt-search='apt-cache search'
-alias beep='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
-alias ccat='pygmentize -O style=trac -f terminal256 -g' # like github
+alias beep='mpg123 -q $HOME/Dropbox/Music/glass.mp3 &'
+alias ccat='pygmentize -O style=monokai -f terminal256 -g'
 alias cd..='cd ..'
 alias cpu='grep -c ^processor /proc/cpuinfo ; grep "^model name" /proc/cpuinfo | sort -u'
 alias diff='diff -u'
@@ -198,6 +199,7 @@ function k {
         "Linux" ) find / -mount -wholename "/proc" -prune -o -iname $* | grep "^$(pwd)" | head -n 1 | xargs emacs -nw ;;
     esac
 }
+alias clean='git clean -fdx'
 alias la='ls -alhp'
 #alias ll='if [ "$_" = "-lh" ] ; then echo -e "\033[01;30mBored, nervous or unconcentrated?\033[00m" ; else ls -lh ; fi'
 alias ll='ls -lh'
@@ -205,7 +207,6 @@ alias ll='ls -lh'
 [ $(uname) = "Linux" ] && alias ls='ls --color=auto'
 alias lt='tree -dCL 3'
 alias mg='mg -n'
-alias clean='git clean -fdx'
 alias matrix='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS
 conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
 alias md='mkdir'
@@ -216,6 +217,7 @@ alias otpgrep='find $(which erl)/../../lib -type f \( -name "*.erl" -o -name "*.
 alias pd='pushd'
 alias ports='lsof -i -P' # -n
 alias sl='cut -c -$(tput cols)'
+alias tips='e $HOME/Dropbox/_Life/_tips.md'
 alias tree='tree -C'
 alias tree2='tree -CifF'
 alias vpn='[ $(nmcli con status | grep -c "Klarna") = 0 ] && nmcli con up id "Klarna"'
@@ -247,8 +249,9 @@ erlc2() {
         perl -pe "s/Warning: /\033[31;1mError\033[0m: /"
 }
 
-e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a "" $* ; fi }
+# e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a "" $* ; fi }
 o() { find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a "" }
+movie() { date "+%Y-%m-%d $@" >> $HOME/Dropbox/_Life/_movies.md }
 rtfm() { help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@"; }
 cmdfu(){ curl "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ |
 openssl base64)/plaintext"; }
@@ -274,7 +277,13 @@ colortable() { for c in {0..255} ; do echo -e "\e[38;05;${c}m $c: Test" ; done }
 ## EXPORTS #########################################################
 ####################################################################
 
-export PATH="$HOME/.bin:$HOME/.cljr/bin:$HOME/.cabal/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/.bin:$PATH"
+export PATH="/usr/local/Cellar/ruby/1.9.3-p385/bin:$PATH"
+export PATH="$HOME/.cljr/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$PATH"
+export GOROOT="/usr/local/Cellar/go/1.0.3"
+
 export EDITOR="emacs -nw"
 # Allow 256 colors in terminal
 # Also look here: http://www.xvx.ca/~awg/emacs-colors-howto.txt
@@ -282,8 +291,11 @@ export EDITOR="emacs -nw"
 export TERM=xterm-256color
 
 ## Make the special character like Umlauts work through SSH on a Mac from Linux
-export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
+
+export MOSH_PREDICTION_DISPLAY="experimental"
 
 ####################################################################
 ## KLARNA/ERLANG STUFF #############################################
@@ -351,3 +363,6 @@ echo -e "\e[34;1m" # bright/bold blue
 echo -e "\e[0m"
 
 [ $HOME = "$PWD" ] && cd $HOME/dev
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
