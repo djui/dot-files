@@ -1,8 +1,8 @@
 Host *
   VisualHostKey yes
   ServerAliveInterval 240
-  GSSAPIAuthentication yes
-  GSSAPIDelegateCredentials yes
+#  GSSAPIAuthentication yes
+#  GSSAPIDelegateCredentials yes
 Host djui.no.de
   IdentityFile ~/.ssh/joyent_rsa
 Host github.com
@@ -13,3 +13,15 @@ Host salmon.hq.kred
   IdentityFile ~/.ssh/kit_rsa
 Host samir-dev
   IdentityFile ~/.ssh/kit_rsa
+Host heroku.com
+  IdentityFile ~/.ssh/heroku_rsa
+Host virtualbox
+  Hostname 192.168.0.10
+  IdentityFile ~/.ssh/aws_ecdsa_521
+Host ec2
+  Hostname ec2-46-51-151-2.eu-west-1.compute.amazonaws.com
+  IdentityFile ~/.ssh/ec2_rsa_2048
+Host rpi # raspberry raspberrypi raspberry-pi
+# Hostname 89.160.7.10
+  Hostname djui.dyndns.org
+  IdentityFile ~/.ssh/rpi_ecdsa_521
