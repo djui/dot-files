@@ -847,8 +847,8 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HTML mode
-(add-to-list 'auto-mode-alist '("\\.html$" html-helper-mode
-                                "\\.htm$"  html-helper-mode))
+(add-to-list 'auto-mode-alist '("\\.html$" . html-helper-mode))
+(add-to-list 'auto-mode-alist '("\\.htm$"  . html-helper-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Clojure mode
@@ -934,9 +934,9 @@ whitespace, anything else get chewed one character at a time."
                                  erlang-electric-newline
                                ; erlang-electric-gt        ; ...annoying
                                  erlang-electric-lt))
-(add-to-list 'auto-mode-alist '("\\.[eh]rl$" erlang-mode
-                                "\\.yaws$"   erlang-mode))
-(add-to-list 'interpreter-mode-alist '("escript" . erlang-mode))
+(add-to-list 'auto-mode-alist        '("\\.[eh]rl$" . erlang-mode))
+(add-to-list 'auto-mode-alist        '("\\.yaws$"   . erlang-mode))
+(add-to-list 'interpreter-mode-alist '("escript"    . erlang-mode))
 
 (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
 
@@ -959,8 +959,8 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown mode
-(add-to-list 'auto-mode-alist '("\\.md$"       markdown-mode
-                                "\\.markdown$" markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-hook 'markdown-mode-hook '(lambda() (local-set-key (kbd "<backtab>") 'markdown-cycle)))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
