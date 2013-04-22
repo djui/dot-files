@@ -1,6 +1,6 @@
 [user]
   name = Uwe Dauernheim
-  email = uwe@klarna.com
+	email = uwe@dauernheim.net
 [core]
   editor = emacs -nw
 [alias]
