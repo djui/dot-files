@@ -19,4 +19,7 @@
 !/dot-ssh/github_rsa.pub
 !/dot-ssh/kit_rsa.pub
 
+/dot-w3m/cookie
 /dot-w3m/history
+/dot-w3m/w3mcache*
+/dot-w3m/w3mtmp*
