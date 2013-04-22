@@ -826,8 +826,72 @@ whitespace, anything else get chewed one character at a time."
 (add-to-list 'auto-mode-alist '("\\.html$" html-helper-mode
                                 "\\.htm$"  html-helper-mode))
 
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Clojure mode
+;(package-install clojure-mode)
+;(package-install clojure-test-mode)
+(add-hook 'clojure-mode-hook 'clojure-hook)
+
+(defun clojure-hook ()
+  (highlight-parentheses))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; nREPL mode
+;(package-install auto-complete)
+;(package-install nrepl)
+;(package-install ac-nrepl)
+
+;; Use as:
 ;;
+;;   M-x nrepl-jack-in
 ;;
+;;   C-c C-d Show documentation
+;;   C-c C-s Show implementation
+;;   C-c C-t Jump to source or test file
+;;   M-. C-s Jump to definition
+;;   M-, Jump back
+;;   M-TAB auto-complete
+;;
+;; If documentation can't be found, add to ~/.lein/profiles.clj:
+;;
+;;   {:user {:injections [(use 'clojure.repl)]}}
+;;
+;; or type in nREPL:
+;;
+;;   (use 'clojure.repl)
+
+(require 'ac-nrepl)
+(add-hook 'nrepl-mode-hook             'ac-nrepl-setup)
+(add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'nrepl-mode))
+
+(add-hook 'auto-complete-mode-hook     'nrepl-hook)
+(add-hook 'nrepl-mode-hook             'nrepl-hook)
+(add-hook 'nrepl-interaction-mode-hook 'nrepl-hook)
+
+(define-key nrepl-interaction-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
+
+(defun nrepl-hook ()
+  (nrepl-turn-on-eldoc-mode)
+  (setq completion-at-point-functions '(auto-complete)
+        nrepl-hide-special-buffers t
+        nrepl-popup-stacktraces-in-repl t
+        nrepl-popup-stacktraces nil))
+
+
+(defun highlight-parentheses ()
+  (autoload 'paredit-mode "paredit" t)
+  (paredit-mode)
+  (show-paren-mode)
+  (rainbow-delimiters-mode)
+  (highlight-parentheses-mode))
+
+(setq hl-paren-colors
+      '("orange1"    "yellow1"      "greenyellow"
+        "green1"     "springgreen1" "cyan1"
+        "slateblue1" "magenta1"     "purple"))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang mode
 ;(add-to-list 'load-path "~/dev/otp/install/R14B03/lib/erlang/lib/tools-2.6.6.4/emacs")
