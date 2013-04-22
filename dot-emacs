@@ -1,20 +1,34 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; GLOBAL CONFIGURATION
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Configurations
 ;; These do not work with setq(-default)
 (if window-system
     (progn
-      (tool-bar-mode    -1) ; nil would only toggle
-      (scroll-bar-mode  -1) ; nil would only toggle
-      (mouse-wheel-mode t)))
-(menu-bar-mode          -1) ; nil would only toggle
+      (tool-bar-mode     -1) ; nil would only toggle
+      (scroll-bar-mode   -1) ; nil would only toggle
+      (mouse-wheel-mode  t)))
+(menu-bar-mode           -1) ; nil would only toggle
 
-(global-hl-line-mode    t)
+(global-hl-line-mode     t)
 ;(global-linum-mode      t)
 ;(global-whitespace-mode t)
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DEFAULTS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 ;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
 (setq-default user-full-name               "Uwe Dauernheim"
-              user-mail-address            "uwe@klarna.com"
+              user-mail-address            "uwe@dauernheim.net"
               ;; Annoying stuff
               inhibit-startup-echo-area-message t
               inhibit-startup-screen       t
@@ -51,8 +65,6 @@
               ;; Syntax-, region mark-, parentals-Highlighting
               global-font-lock-mode        t
               font-lock-maximum-decoration t
-              show-paren-mode              t
-              highlight-parentheses-mode   t
               highlight-todo               t
               ;; Default tab width
               indent-tabs-mode             nil
@@ -77,8 +89,6 @@
               kept-old-versions            10
               backup-directory-alist       '(("." . "~/.emacs.d/backups"))
               undo-limit                   100000
-              ;; Scrolling and mouse
-              xterm-mouse-mode             t
               ;; Version control
               vc-follow-symlinks           nil
               ;; Change frame title
@@ -96,23 +106,23 @@
               fill-column                  80
               )
 
-;; Active the mouse wheel: Add scrolling with mouse
-(setq mac-emulate-three-button-mouse nil)
-(setq mouse-wheel-scroll-amount '(1.5))
-(global-set-key [mouse-4]    '(lambda () (interactive) (scroll-down 1)))
-(global-set-key [mouse-5]    '(lambda () (interactive) (scroll-up   1)))
-(global-set-key [wheel-up]   '(lambda () (interactive) (scroll-down 2)))
-(global-set-key [wheel-down] '(lambda () (interactive) (scroll-up   2)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; GLOBAL KEYBINDINGS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
+;; Not belowing to a specific mode.
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
-;; replacing default buffer
 
-;; Reenforce defaults (???)
+;; Reenforce defaults? Something later on overwrites this...
 (global-set-key (kbd "M-g")         'goto-line)
 
-;; Overwrite defaults
+;; Overwrite/Inverse defaults
 (global-set-key (kbd "C-x C-d")     'dired)
 (global-set-key (kbd "C-a")         'back-to-indentation)
 (global-set-key (kbd "M-m")         'move-beginning-of-line)
@@ -129,101 +139,106 @@
 (global-set-key (kbd "C-x o")       'next-multiframe-window)
 (global-set-key (kbd "C-x O")       'previous-multiframe-window)
 
-;; Ido
-(global-set-key (kbd "C-x C-k")     'ido-kill-buffer)
-(global-set-key (kbd "C-x f")       'recentf-ido-find-file)
-
 ;; Customized: C-c
-;(global-set-key (kbd "C-c g")       'goto-line)
-(global-set-key (kbd "C-c t")       'forward-transpose-lines)
-(global-set-key (kbd "C-c T")       'backward-transpose-lines)
+(global-set-key (kbd "C-c g")       'goto-line)
 (global-set-key (kbd "C-c d")       'forward-duplicate-line)
 (global-set-key (kbd "C-c D")       'backward-duplicate-line)
 (global-set-key (kbd "C-c j")       'join-next-line)
 (global-set-key (kbd "C-c J")       'join-previous-line)
 (global-set-key (kbd "C-c o")       'occur)
-(global-set-key (kbd "C-c r")       'replace-string)
-(global-set-key (kbd "C-c R")       'replace-regexp)
+;(global-set-key (kbd "C-c C-r")    'replace-string)
+(global-set-key (kbd "C-c C-r")     'replace-regexp)
 (global-set-key (kbd "C-c e")       'eval-buffer)
-(global-set-key (kbd "C-c s")       '(lambda () (interactive) (switch-to-buffer "*scratch*")))
+(global-set-key (kbd "C-c s")       'switch-to-scratch-buffer)
+(global-set-key (kbd "C-c C-s")     'isearch-forward-at-point)
 (global-set-key (kbd "C-c b")       'diff-buffer-with-file)
 (global-set-key (kbd "C-c B")       'vc-diff)
 (global-set-key (kbd "C-c c")       'comment-or-uncomment-region)
 (global-set-key (kbd "C-c f")       'kfind)
-
-;; Code
+(global-set-key (kbd "C-c DEL")     'compact-space)
 (global-set-key (kbd "C-c C-f")     'erlang-indent-function)
 (global-set-key (kbd "C-c C-M-f")   'erlang-indent-current-buffer)
-(global-set-key (kbd "C-/")         'comment-or-uncomment-region) ; doesn't work in emacs -nw
-(global-set-key (kbd "C-x v b")     'vc-annotate)
-
-;; iBuffer
-(global-set-key (kbd "C-x C-b")     'ibuffer)
-
 
 ;; General
+(global-set-key (kbd "C-/")         'comment-or-uncomment-region) ; doesn't work in emacs -nw
+(global-set-key (kbd "C-x v b")     'vc-annotate)
 (global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
-(global-set-key (kbd "M-s")         'isearch-forward-at-point)
-;(global-set-key (kbd "M-d")         'kill-current-word) ;; A bit too strong
+;(global-set-key (kbd "M-d")        'kill-current-word) ;; A bit too strong
 (global-set-key (kbd "C-w")         'smart-backwards-kill)
 
-;; Resize windows keyboard shortcuts
-;(global-set-key (kbd "M-<left>")   'shrink-window-horizontally) ; doesn't work in emacs -nw
-;(global-set-key (kbd "M-<right>")  'enlarge-window-horizontally) ; doesn't work in emacs -nw
-(global-set-key (kbd "\e <up>")     'shrink-window) ; \e because only works like that in emacs -nw
-(global-set-key (kbd "\e <down>")   'enlarge-window) ; \e because only works like that in emacs -nw
+;; Resize windows keyboard shortcut
+;; In `emacs -nw`, \e works, M- doesn't
+;(global-set-key (kbd "\e <left>")  'shrink-window-horizontally)
+;(global-set-key (kbd "\e <right>") 'enlarge-window-horizontally)
+;(global-set-key (kbd "\e <up>")    'shrink-window)
+;(global-set-key (kbd "\e <down>")  'enlarge-window)
 (global-set-key (kbd "C-x =")       'balance-windows) ; usually on "C-x +"
 ;(global-set-key (kbd "\e\t")       'previous-source-buffer)
 ;(global-set-key (kbd "\e <left>")  'next-source-buffer)
 
 ;; Org-mode
-(global-set-key (kbd "C-c [")       'hide-subtree)
-(global-set-key (kbd "C-c {")       'hide-sublevels)
-(global-set-key (kbd "C-c ]")       'show-subtree)
-(global-set-key (kbd "C-c }")       'show-all)
-(global-set-key (kbd "C-c SPC")     'compact-space)
+;(global-set-key (kbd "C-c [")      'hide-subtree)
+;(global-set-key (kbd "C-c {")      'hide-sublevels)
+;(global-set-key (kbd "C-c ]")      'show-subtree)
+;(global-set-key (kbd "C-c }")      'show-all)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MOUSE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;; Active the mouse wheel: Add scrolling with mouse
+(setq mac-emulate-three-button-mouse nil 
+      mouse-wheel-scroll-amount      1.5
+      xterm-mouse-mode               t)
+(global-set-key [mouse-4]    '(lambda () (interactive) (scroll-down 1)))
+(global-set-key [mouse-5]    '(lambda () (interactive) (scroll-up   1)))
+(global-set-key [wheel-up]   '(lambda () (interactive) (scroll-down 2)))
+(global-set-key [wheel-down] '(lambda () (interactive) (scroll-up   2)))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ENCODINGS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
+(prefer-coding-system       'utf-8)
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Hooks
-(add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
-(add-hook 'python-mode-hook (local-set-key "\C-c\C-c" 'python-compile))
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PACKAGE MANAGER
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Assign mode to file (extensions)
-(add-to-list 'auto-mode-alist '("README" . text-mode))
-(add-to-list 'auto-mode-alist '("\\.html$" . html-helper-mode))
-(add-to-list 'auto-mode-alist '("\\.htm$" . html-helper-mode))
+;; Package manager
+(require 'package)
+(package-initialize)
+(add-to-list 'package-archives '("elpa"      "http://tromey.com/elpa/"
+                                 "marmalade" "http://marmalade-repo.org/packages/"))
+                              ;; "gnu"       "http://elpa.gnu.org/packages/"))
+                               
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; FUNCTIONS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom functions
-(defun forward-transpose-lines ()
-  (interactive)
-  (let ((col (current-column)))
-    (save-excursion
-      (kill-whole-line)
-      (next-line 1)
-      (move-beginning-of-line 1)
-      (yank))
-    (next-line 1)
-    (move-to-column col)))
-(defun backward-transpose-lines ()
-  (interactive)
-  (let ((col (current-column)))
-    (save-excursion
-      (kill-whole-line)
-      (previous-line 1)
-      (move-beginning-of-line 1)
-      (yank))
-    (previous-line 2)
-    (move-to-column col)))
-
 (defun forward-duplicate-line ()
   (interactive)
   (let ((col (current-column)))
@@ -236,6 +251,7 @@
       (yank))
     (next-line 1)
     (move-to-column col)))
+
 (defun backward-duplicate-line ()
   (interactive)
   (let ((col (current-column)))
@@ -259,6 +275,7 @@
           (fill-paragraph nil))
       (join-line))
     (move-to-column col)))
+
 (defun join-previous-line ()
   (interactive)
   (if mark-active ;; Not really working
@@ -271,6 +288,7 @@
   (next-buffer)
   (if (string-match "^\*.*\*$" (buffer-name))
       (next-source-buffer)))
+
 (defun previous-source-buffer ()
   (interactive)
   (previous-buffer)
@@ -282,11 +300,13 @@
   (if (looking-at "$")
       (delete-char 1)
     (delete-region (point) (line-end-position))))
+
 (defun backward-kill-line ()
   (interactive)
   (if (looking-at "^")
       (delete-backward-char 1)
     (kill-line 0)))
+
 (defun whole-kill-line ()
   (interactive)
   (save-excursion
@@ -306,9 +326,7 @@
 (defun highlight-todo ()
   (font-lock-add-keywords nil '(("\\(@todo\\|@fixme\\|XXX\\|TODO\\|FIXME\\)" 1
                                  font-lock-warning-face prepend))))
-(defun python-compile ()
-  (interactive)
-  (compile (concat "python " (buffer-name))))
+
 ;;; Original author: ttn at netcom dot com, 28-Jan-1996
 ;;; Modified for multiple lines: Eric
 ;;; http://curiousprogrammer.wordpress.com/2009/02/11/simple-emacs-shortcut/
@@ -331,17 +349,19 @@
     (goto-char bol)
     (insert line "\n")
     (move-to-column col)))
+
 ;; Original source: http://platypope.org/blog/2007/8/5/a-compendium-of-awesomeness
 (defvar isearch-initial-string nil)
 (defun isearch-set-initial-string ()
   (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
   (setq isearch-string isearch-initial-string)
   (isearch-search-and-update))
+
 (defun isearch-forward-at-point (&optional regexp-p no-recursive-edit)
   "Interactive search forward for the symbol at point."
   (interactive "P\np")
   (if regexp-p (isearch-forward regexp-p no-recursive-edit)
-    (let* ((end (progn (skip-syntax-forward "w_") (point)))
+    (let* ((end   (progn (skip-syntax-forward  "w_") (point)))
            (begin (progn (skip-syntax-backward "w_") (point))))
       (if (eq begin end)
           (isearch-forward regexp-p no-recursive-edit)
@@ -354,13 +374,13 @@
 (defun isearch-mode-margin-hook ()
   (if isearch-old-scroll-margin-value
       (progn
-        (setq scroll-margin isearch-old-scroll-margin-value)
-        (setq isearch-old-scroll-margin-value nil))
-    (setq isearch-old-scroll-margin-value scroll-margin)
-    (setq scroll-margin (/ (window-height) 2))))
-(add-hook 'isearch-mode-hook 'isearch-mode-margin-hook)
-(add-hook 'isearch-mode-end-hook 'isearch-mode-margin-hook)
+        (setq isearch-old-scroll-margin-value nil
+              scroll-margin                   isearch-old-scroll-margin-value))
+    (setq isearch-old-scroll-margin-value scroll-margin
+          scroll-margin                   (/ (window-height) 2))))
 
+(add-hook 'isearch-mode-hook     'isearch-mode-margin-hook)
+(add-hook 'isearch-mode-end-hook 'isearch-mode-margin-hook)
 
 ;; Delete current word under cursor
 (defun mark-current-word ()
@@ -413,103 +433,56 @@ whitespace, anything else get chewed one character at a time."
       (call-interactively 'kill-region)
     (call-interactively 'smart-backward-kill-word)))
 
-;; It can restore recently used files easily.
-;; Courtesty to Robin "Rost" for this snippet.
-(defun recentf-ido-find-file ()
-  "Find a recent file using Ido."
+(defun switch-to-scratch-buffer ()
   (interactive)
-  (let* ((file-assoc-list
-          (mapcar (lambda (x)
-                    (cons (file-name-nondirectory x)
-                          x))
-                  recentf-list))
-         (filename-list
-          (remove-duplicates (mapcar #'car file-assoc-list)
-                             :test #'string=))
-         (filename (ido-completing-read "Choose recent file: "
-                                        filename-list
-                                        nil
-                                        t)))
-    (when filename
-      (find-file (cdr (assoc filename
-                             file-assoc-list))))))
+  (switch-to-buffer "*scratch"))
 
-(recentf-mode t)
-(setq recentf-auto-cleanup 300)
-(setq recentf-exclude '("^.+\\.ede" "TAGS$"))
-(setq recentf-max-saved-items 1000)
-(setq recentf-max-menu-items 100)
+;; Find in kred dirs
+;(defun kfind (&optional word)
+;  (interactive "r")
+(defun kfind (word)
+  (interactive "MFind: ")
+  (kfind-at
+   ;(concat (car (split-string (buffer-file-name) "lib")) "{lib,test}/")
+   "$HOME/dev/project/{lib,test}/"
+   word))
 
-(defun count-lines (start end)
-  "Return number of lines between START and END.            
-This is usually the number of newlines between them,        
-but can be one more if START is not equal to END            
-and the greater of them is not at the start of a line."
-  (save-excursion
-    (save-restriction
-      (narrow-to-region start end)
-      (goto-char (point-min))
-      (if (eq selective-display t)
-          (save-match-data
-            (let ((done 0))
-              (while (re-search-forward "[\n\C-m]" nil t 40)
-                (setq done (+ 40 done)))
-              (while (re-search-forward "[\n\C-m]" nil t 1)
-                (setq done (+ 1 done)))
-              (goto-char (point-max))
-              (if (and (/= start end)
-                       (not (bolp)))
-                  (1+ done)
-                done)))
-        (- (buffer-size) (forward-line (buffer-size)))))))
+(defun kfind-at (path word)
+  (grep-find
+   (concat "find " path 
+           (concat " -type f \\( -name '*.erl' -o -name '*.hrl' \\) | xargs grep --color=auto " word))))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ALIASES
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom aliases
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MODES
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Color Themes
-;; To see your style colors associations: M-x list-faces-display
-;(require 'font-lock)
-(add-to-list 'load-path "~/.emacs.d/color-theme")
-(add-to-list 'load-path "~/.emacs.d/color-theme/themes")
-(require 'color-theme)
-;(color-theme-initialize) ;; Not all themes do exist or can be found
-
-;(require 'color-theme-solarized)
-;(setq solarized-termcolors 256)
-;;(color-theme-solarized-light)
-;(color-theme-solarized-dark)
-
-;(load-file "~/.emacs.d/color-theme/themes/color-theme-wombat.el")
-;(color-theme-wombat)
-
-;(load-file "~/.emacs.d/color-theme/themes/color-theme-less.el")
-;(color-theme-less)
-
-;(load-file "~/.emacs.d/color-theme/themes/color-theme-zenburn.el")
-;(color-theme-zenburn)
-
-;(load-file "~/.emacs.d/color-theme/themes/color-theme-twilight.el")
-;(color-theme-twilight)
-
-;(load-file "~/.emacs.d/color-theme/themes/color-theme-drr.el")
-;(color-theme-drr)
-
-;(load-file "~/.emacs.d/color-theme/themes/color-theme-almost-monokai.el")
-;(color-theme-almost-monokai)
-
-;(load-file "~/.emacs.d/color-theme/themes/color-theme-empty-void.el")
-;(color-theme-empty-void)
-
-(load-file "~/.emacs.d/color-theme/themes/color-theme-djui.el")
-;(color-theme-djui-light)
-(color-theme-djui-dark)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; w3m Browser
+; [Installation](http://emacs-w3m.namazu.org/)
+; $ cvs -d :pserver:anonymous@cvs.namazu.org:/storage/cvsroot co emacs-w3m
+; $ cd emacs-w3m && autoconf && ./configure && make install
+(add-to-list 'load-path "~/.emacs.d/emacs-w3m")
+(require 'w3m-load)
 (setq browse-url-browser-function 'w3m-browse-url
+      w3m-use-header-line         nil
+      w3m-use-tab                 nil
+      w3m-auto-show               t
       w3m-use-cookies             t
       w3m-coding-system           'utf-8
       w3m-file-coding-system      'utf-8
@@ -517,17 +490,34 @@ and the greater of them is not at the start of a line."
       w3m-input-coding-system     'utf-8
       w3m-output-coding-system    'utf-8
       w3m-terminal-coding-system  'utf-8)
-(autoload 'w3m-browse-url "org-w3m" "Ask a WWW browser to show a URL." t)
+(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
+(global-set-key "\C-xm" 'browse-url-at-point)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Recent mode
+(recentf-mode t)
+(setq recentf-auto-cleanup    300
+      recentf-max-saved-items 1000
+      recentf-max-menu-items  100)
+(add-to-list 'recentf-exclude '("^.+\\.ede" "TAGS$" "\\.ido\\.last" ".ido.last"))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Move text
+(require 'move-text)
+(global-set-key (kbd "M-p") 'move-text-up)
+(global-set-key (kbd "M-n") 'move-text-down)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Allout mode
 (require 'allout)
 (allout-init t)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; iBuffer mode
 (provide 'ibuffer-config)
 (require 'ibuffer-config)
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (eval-after-load 'ibuffer
   '(progn
@@ -639,13 +629,13 @@ and the greater of them is not at the start of a line."
                     (name . "\\*Ediff")))
 
                ("wiki"
-                (mode . mediawiki-mode))
+                (or (mode . mediawiki-mode)))
 
                ("dired"
                 (or (mode . dired-mode)))
 
                ("rcirc"
-                (mode . rcirc-mode))
+                (or (mode . rcirc-mode)))
 
                ("gnus"
                 (or (mode . message-mode)
@@ -678,61 +668,67 @@ and the greater of them is not at the start of a line."
          ad-do-it
          (ibuffer-jump-to-buffer recent-buffer-name)))))
 
-;(eval-after-load 'ibuffer
-;  '(progn
-;     ;; show git status in ibuffer
-;     (when (require 'ibuffer-git)
-;       (setq ibuffer-formats
-;             '((mark modified read-only
-;                     git-status-mini " "
-;                     (name 18 18 :left :elide) " "
-;                     (size 9 -1 :right) " "
-;                     (mode 16 16 :left :elide) " "
-;                     ;; (eproject 16 16 :left :elide) " "
-;                     (git-status 8 8 :left) " "
-;                     filename-and-process)
-;               (mark " "
-;                     (name 16 -1) " "
-;                     filename))))))
+(eval-after-load 'ibuffer
+  '(progn
+     ;; show git status in ibuffer
+     (add-to-list 'load-path "~/.emacs.d/ibuffer-git")
+     (when (require 'ibuffer-git)
+       (setq ibuffer-formats
+             '((mark modified read-only
+                     git-status-mini " "
+                     (name 18 18 :left :elide) " "
+                     (size 9 -1 :right) " "
+                     (mode 16 16 :left :elide) " "
+                     ;; (eproject 16 16 :left :elide) " "
+                     (git-status 8 8 :left) " "
+                     filename-and-process)
+               (mark " "
+                     (name 16 -1) " "
+                     filename))))))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Dired-Mode
+;; Dired mode
 (add-hook 'dired-mode-hook 'my-dired-mode-hook)
+(add-hook 'dired-mode-hook 'my-dired-mode-hook)
+
 (defun my-dired-mode-hook ()
   (local-set-key (kbd "F") 'dired-find-file-other-window))
-(add-hook 'dired-mode-hook 'my-dired-mode-hook)
+
 (defun my-dired-mode-hook ()
   (local-set-key (kbd "<mouse-2>") 'dired-mouse-find-file))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; IDo-Mode, better than iswitch mode
+;; IDo mode, better than iswitch mode
 (require 'ido)
 (ido-mode t)
 (setq ido-enable-flex-matching t
-      max-mini-window-height 0.25
-      ido-max-prospects 100)
-(add-hook 'ido-setup-hook 
-          (lambda () 
-            (define-key ido-completion-map [tab] 'ido-complete)))
-;; Can be done better using smex (below)
-;(global-set-key (kbd "M-x") 'ido-mx-completion)
+      ido-max-prospects        75)
+(global-set-key (kbd "M-x")     'ido-mx-completion)
+(global-set-key (kbd "C-x C-k") 'ido-kill-buffer)
+(global-set-key (kbd "C-x f")   'recentf-ido-find-file)
+
 (defun ido-mx-completion ()
   (interactive)
   (call-interactively
    (intern
     (ido-completing-read "M-x " (all-completions "" obarray 'commandp)))))
 
-;; smex - super M-x
-(load-file "~/.emacs.d/smex.el")
-(require 'smex)
-(smex-initialize)
-(setq smex-save-file "~/.emacs.d/smex-items")
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "C-x M-x") 'execute-extended-command)
+;; It can restore recently used files easily.
+;; Courtesty to Robin "Rost" for this snippet.
+(defun recentf-ido-find-file ()
+  "Find a recent file using Ido."
+  (interactive)
+  (let* ((file-assoc-list
+          (mapcar (lambda (x) (cons (file-name-nondirectory x) x)) recentf-list))
+         (filename-list
+          (remove-duplicates (mapcar #'car file-assoc-list) :test #'string=))
+         (filename
+          (ido-completing-read "Choose recent file: " filename-list nil t)))
+    (when filename
+      (find-file (cdr (assoc filename file-assoc-list))))))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Whitespace Mode
+;; Whitespace mode
 (require 'whitespace)
 (setq whitespace-style       (quote (face tabs tab-mark lines-tail)))
 (setq whitespace-action      nil)
@@ -740,12 +736,6 @@ and the greater of them is not at the start of a line."
 (setq whitespace-display-mappings
       '((tab-mark     ?\t   [?\xBB ?\t] [?\\ ?\t]) ; tab
         ))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Parentheses Mode
-(load-file "~/.emacs.d/highlight-parentheses.el")
-(require 'highlight-parentheses)
-(highlight-parentheses-mode t)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Magit
@@ -756,157 +746,31 @@ and the greater of them is not at the start of a line."
 ;; (add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . magit-commit-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Erlang Mode
-;(add-to-list 'load-path "~/dev/otp/install/R14B03/lib/erlang/lib/tools-2.6.6.4/emacs")
-;(add-to-list 'exec-path "~/dev/otp/install/R14B03/bin")
-;(setq erlang-root-dir "~/dev/otp/install/R14B03")
-(add-to-list 'load-path "/usr/local/lib/erlang/lib/tools-2.6.6.5/emacs")
-(add-to-list 'exec-path "/usr/local/bin")
-(setq erlang-root-dir "/usr/local/lib/erlang")
-
-(require 'erlang-start)
-(setq erlang-tab-mode          nil
-      erlang-indent-level      '2
-      erlang-electric-commands '(erlang-electric-semicolon
-                                 erlang-electric-comma
-                                 erlang-electric-arrow
-                                 erlang-electric-newline
-                               ; erlang-electric-gt        ; ...annoying
-                                 erlang-electric-lt))
-(add-to-list 'auto-mode-alist '("\\.[eh]rl$" . erlang-mode))
-(add-to-list 'auto-mode-alist '("\\.yaws$" . erlang-mode))
-(add-to-list 'interpreter-mode-alist '("escript" . erlang-mode))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Go Mode
-(add-to-list 'load-path "/usr/local/Cellar/go/r60.3/misc/emacs")
-(require 'go-mode-load)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Wrangler
-(add-to-list 'load-path "~/.emacs.d/wrangler/elisp")
-(require 'wrangler)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Distel
-;; Handle from now on by Wrangler
-;(add-to-list 'load-path "~/.emacs.d/distel/elisp")
-;(require 'distel)
-;(distel-setup)
-
-; Nice new distel extension for Record and Macro lookup
-;(setq erlookup-roots     '("~/dev/klarna/kred/lib"
-;                           "~/dev/klarna/kred/test/shared"
-;                           "~/dev/OTP/src/otp_r14b02_klarna/lib")
-(setq erl-nodename-cache 'distel\@simpknot)
-
-(defun distel ()
-  (interactive)
-  (set 'cmd (concat "erl -sname distel "
-                    "-pa $HOME/.emacs.d/distel/ebin "
-                    "-pa $HOME/dev/klarna/kred_master/lib/*/ebin "
-                    "-pa $HOME/dev/klarna/kred_master/test/shared/ebin "
-                    "-pa $HOME/dev/klarna/soapbox/ebin "
-                    "-pa $HOME/dev/klarna/rpc_api/ebin "))
-  (async-shell-command cmd)
-  (other-window 1)
-  (delete-window)
-  (message "Started Distel Erlang node."))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Flymake
-(require 'flymake)
-
-(defun flymake-erlang-init ()
-  (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                     'flymake-create-temp-inplace))
-         (local-file (file-relative-name temp-file
-                                         (file-name-directory buffer-file-name))))
-    (list "~/.emacs.d/flymake/eflymake" (list local-file))))
-
-(add-to-list 'flymake-allowed-file-name-masks '("\\.erl$" flymake-erlang-init))
-
-(defun my-erlang-mode-hook ()
-  (interactive)
-  (linum-mode)
-  (setq truncate-lines t)
-  (setq truncate-partial-width-windows nil)
-  (setq whitespace-style       (quote (face tabs lines-tail)))
-  (setq whitespace-action      nil)
-  (setq whitespace-line-column 80)
-  (whitespace-mode)
-  ;; (flymake-mode t)
-  (highlight-todo)
-  (highlight-parentheses-mode)
-  (allout-mode))
-
-; Somehow there is a bug, that causes Emacs not to start correctly. Error:
-; flymake-get-file-name-mode-and-masks: Invalid file-name
-
-;; Find in kred dirs
-;(defun kfind (&optional word)
-;  (interactive "r")
-(defun kfind (word)
-  (interactive "MFind: ")
-  (kfind-at
-   ;(concat (car (split-string (buffer-file-name) "lib")) "{lib,test}/")
-   "$HOME/dev/klarna/kred_master/{lib,test}/"
-   word))
-
-(defun kfind-at (path word)
-  (grep-find
-   (concat "find " path 
-           (concat " -type f \\( -name '*.erl' -o -name '*.hrl' \\) | xargs grep --color=auto " word))))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Efene/Ifene Mode
-(add-to-list 'load-path "~/.emacs.d/efene-mode")
-;(require 'ifene)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Markdown Mode
-(add-to-list 'load-path "~/.emacs.d/markdown-mode")
-(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-(add-hook 'markdown-mode-hook '(lambda() (local-set-key (kbd "<backtab>") 'markdown-cycle)))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Ruby Mode
-(add-to-list 'load-path "~/.emacs.d/ruby-mode")
-(autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files")
-(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
-(autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
-(autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
-(add-hook 'ruby-mode-hook '(lambda () (inf-ruby-keys)))
-(add-hook 'ruby-mode-hook 'turn-on-font-lock)
-(autoload 'rubydb "rubydb3x" "Ruby debugger" t)
+;; Auto-complete mode
+(require 'auto-complete-config)
+(global-auto-complete-mode t)
+; Fast popup, but slow auto-completion
+(setq ac-delay 1.0)
+(setq ac-auto-show-menu 0.1)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yet Another Snippet plugin
 ;; See http://yasnippet.googlecode.com/svn/trunk/doc/snippet-development.html
-(add-to-list 'load-path "~/.emacs.d/yasnippet")
-(require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/yasnippet/snippets")
+;(require 'yasnippet)
+;(yas/initialize)
+;(yas/load-directory "~/.emacs.d/yasnippets")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Auto-complete mode
-;; See: https://github.com/m2ym/auto-complete.git
-(add-to-list 'load-path "~/.emacs.d/auto-complete")
-(require 'auto-complete-config)
-(add-to-list 'load-path "~/.emacs.d")
-(require 'auto-complete-distel)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; RCIRC - Emacs IRC
-(load-file "~/.emacs.d/rcirc/rcirc.el")
-(load-file "~/.emacs.d/rcirc/rcirc-notify.el")
-;(load-file "~/.emacs.d/rcirc/rcirc-color.el")
+(add-to-list 'load-path "~/.emacs.d/rcirc")
 (require 'rcirc)
 (eval-after-load 'rcirc '(require 'rcirc-notify))
-;(eval-after-load 'rcirc '(require 'rcirc-color))
 ;; (rcirc-track-minor-mode 1)
 (add-hook 'rcirc-mode-hook (lambda ()
                              (rcirc-track-minor-mode 1)
@@ -937,28 +801,122 @@ and the greater of them is not at the start of a line."
   (interactive)
   (kill-all-mode-buffers 'rcirc-mode))
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; LANGUAGE MODES
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Package manager
-(package-initialize)
-;;                              ("gnu"       . "http://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("elpa"      . "http://tromey.com/elpa/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; Text mode
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-to-list 'auto-mode-alist '("README" . text-mode))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ELisp mode
+(add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
+
+(defun emacs-lisp-hook ()
+  (highlight-parentheses))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; HTML mode
+(add-to-list 'auto-mode-alist '("\\.html$" html-helper-mode
+                                "\\.htm$"  html-helper-mode))
+
 ;;
-;; markdown-mode
-;; go-mode
 ;;
-;; highlight-parentheses
-;; magit
-;; magit-simple-keys
-;; magithub
-;; diff-git
-;; autopair
-;; idle-highlight-mode
-;; ido-ubiquitous
-;; smart-tab
-;; smex
-;; yasnippet
-;; allout
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Erlang mode
+;(add-to-list 'load-path "~/dev/otp/install/R14B03/lib/erlang/lib/tools-2.6.6.4/emacs")
+;(add-to-list 'exec-path "~/dev/otp/install/R14B03/bin")
+;(setq erlang-root-dir   "~/dev/otp/install/R14B03")
+(add-to-list 'load-path "/usr/local/lib/erlang/lib/tools-2.6.10/emacs")
+(add-to-list 'exec-path "/usr/local/bin")
+(setq erlang-root-dir   "/usr/local/lib/erlang")
+
+(require 'erlang-start)
+(setq erlang-tab-mode          nil
+      erlang-indent-level      '2
+      erlang-electric-commands '(erlang-electric-semicolon
+                                 erlang-electric-comma
+                                 erlang-electric-arrow
+                                 erlang-electric-newline
+                               ; erlang-electric-gt        ; ...annoying
+                                 erlang-electric-lt))
+(add-to-list 'auto-mode-alist '("\\.[eh]rl$" erlang-mode
+                                "\\.yaws$"   erlang-mode))
+(add-to-list 'interpreter-mode-alist '("escript" . erlang-mode))
+
+(add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
+
+(defun my-erlang-mode-hook ()
+  (interactive)
+  (linum-mode)
+  (setq truncate-lines                 t
+        truncate-partial-width-windows nil
+        whitespace-style               '(face tabs lines-tail)
+        whitespace-action              nil
+        whitespace-line-column         80)
+  (whitespace-mode)
+  (highlight-todo)
+  (highlight-parentheses-mode)
+  (allout-mode))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Go mode
+(require 'go-mode-load)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Markdown mode
+(add-to-list 'auto-mode-alist '("\\.md$"       markdown-mode
+                                "\\.markdown$" markdown-mode))
+(add-hook 'markdown-mode-hook '(lambda() (local-set-key (kbd "<backtab>") 'markdown-cycle)))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Ruby mode
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+(autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
+(autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
+(add-hook 'ruby-mode-hook '(lambda () (inf-ruby-keys) (turn-on-font-lock)))
+(autoload 'rubydb "rubydb3x" "Ruby debugger" t)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; THEMES
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Color Themes
+;(setq solarized-termcolors 256)
+;(load-theme 'solarized-light t)
+;(load-theme 'solarized-dark t)
+;(load-theme 'less t)
+;(load-theme 'zenburn t)
+;(load-theme 'twilight t)
+;(load-theme 'drr t)
+;(load-theme 'almost-monokai t)
+;(load-theme 'empty-void t)
+;(load-theme 'wombat t)
+;(load-theme 'monokai t)
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa/github-theme-0.0.3")
+;(load-theme 'github t)
+(set-face-background 'default nil)
+(load-theme 'djui t)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CUSTOMIZATION
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom set variables
@@ -969,6 +927,7 @@ and the greater of them is not at the start of a line."
  ;; If there is more than one, they won't work right.
  '(allout-auto-activation "t")
  '(column-number-mode t)
+ '(custom-safe-themes (quote ("82cd267bd7a97d505f4c39869a8a952a217f077167ff096d935df1f4975b6182" default)))
  '(fringe-mode 0 nil (fringe))
  '(safe-local-variable-values (quote ((allout-layout . t) allout-layout t)))
  '(tooltip-mode nil))
