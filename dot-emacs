@@ -851,6 +851,17 @@ whitespace, anything else get chewed one character at a time."
 (add-to-list 'auto-mode-alist '("\\.htm$"  . html-helper-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Projectile mode
+; For help use: C-c p C-h
+(add-to-list 'load-path "~/.emacs.d/projectile")
+(require 'projectile)
+(projectile-global-mode)
+;(add-hook 'clojure-mode-hook 'projectile-on)
+(setq projectile-show-paths-function 'projectile-hashify-with-uniquify)
+;(setq projectile-use-native-indexing t)
+;(setq projectile-enable-caching t)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Clojure mode
 ;(package-install clojure-mode)
 ;(package-install clojure-test-mode)
