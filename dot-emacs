@@ -499,7 +499,7 @@ whitespace, anything else get chewed one character at a time."
 (setq recentf-auto-cleanup    300
       recentf-max-saved-items 1000
       recentf-max-menu-items  100)
-(add-to-list 'recentf-exclude '("^.+\\.ede" "TAGS$" "\\.ido\\.last" ".ido.last"))
+(add-to-list 'recentf-exclude "\\.ido\\.last")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Move text
