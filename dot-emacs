@@ -865,10 +865,19 @@ whitespace, anything else get chewed one character at a time."
 ;; Clojure mode
 ;(package-install clojure-mode)
 ;(package-install clojure-test-mode)
+;(package-install clojure-project-mode)
 (add-hook 'clojure-mode-hook 'clojure-hook)
 
 (defun clojure-hook ()
   (highlight-parentheses))
+
+(require 'clojure-project-mode)
+;(global-set-key (kbd "???") 'project-new)
+;(global-set-key (kbd "???") 'project-save)
+;(global-set-key (kbd "???") 'project-open)
+;(global-set-key (kbd "???") 'project-fuzzy-search)
+;(global-set-key (kbd "???") 'project-regex-search)
+;(global-set-key (kbd "???") 'project-search-text)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; nREPL mode
