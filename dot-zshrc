@@ -116,7 +116,7 @@ alias g='grep'
 alias h='history'
 alias i='hostname -I'
 ##alias j='jumpstart'
-alias k='$HOME/Dropbox/Klarna/logo_ascii_animation/klarna'
+alias k=''
 #alias l='ls'
 #alias m=''
 #alias n=''
@@ -149,7 +149,6 @@ alias edit='$EDITOR'
 alias erl2='rlwrap -A -i -r -p RED -a -- erl'
 alias erlgrep='find . -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
 alias eg='erlgrep'
-alias kredgrep='find $HOME/dev/klarna/kred -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
 alias ga='git add'
 alias gb='git branch -v'
 alias gc='git commit'
@@ -225,9 +224,6 @@ alias tree2='tree -CifF'
 alias vpn='[ $(nmcli con status | grep -c "Klarna") = 0 ] && nmcli con up id "Klarna"'
 alias whereis='find . -iname'
 
-alias distel='erl -sname distel -pa $HOME/dev/klarna/kred/lib/*/ebin -pa $HOME/dev/klarna/kred/test/shared/ebin -pa $HOME/.emacs.d/distel/ebin'
-#alias gperf='erl -name gperf -run gperf -pa $HOME/dev/klarna/kred/lib/eper/ebin -pa /usr/local/lib/erlang/lib/gtknode-0.30/ebin/'
-
 ####################################################################
 ## FUNCTIONS #######################################################
 ####################################################################
@@ -252,7 +248,6 @@ erlc2() {
 }
 
 # e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a "" $* ; fi }
-o() { find $HOME/dev/klarna/kred -name $1.?rl | xargs emacsclient -nw -a "" }
 movie() { date "+%Y-%m-%d $@" >> $HOME/Dropbox/_Life/_movies.md }
 rtfm() { help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@"; }
 cmdfu(){ curl "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ |
@@ -297,57 +292,10 @@ export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
 
-export MOSH_PREDICTION_DISPLAY="experimental"
-
-####################################################################
-## KLARNA/ERLANG STUFF #############################################
-####################################################################
-
-export NAME="Uwe Dauernheim"
-export MAIL="uwe@klarna.com"
-export ORGANIZATION="Klarna AB"
-export KRED_POLL=true
-export ERL_INETRC=$HOME/.inetrc
-export ORIG_PATH="$PATH"
-
-function r12b5 {
-    export PATH="$HOME/dev/OTP/install/R12B5/bin:${ORIG_PATH}"
-    echo "Erlang: " `which erl`
-}
-
-function r13b04 {
-    export PATH="$HOME/dev/OTP/install/R13B04/bin:${ORIG_PATH}"
-    export DIALYZER_PLT="$HOME/dev/OTP/install/R13B04/dialyzer.plt"
-    echo "Erlang: " `which erl`
-}
-
-function r14b01 {
-    export PATH="$HOME/dev/OTP/install/R14B01/bin:${ORIG_PATH}"
-    export DIALYZER_PLT="$HOME/dev/OTP/install/R14B01/dialyzer.plt"
-    echo "Erlang: " `which erl`
-}
-
-function r14b02 {
-    export PATH="$HOME/dev/OTP/install/R14B02/bin:${ORIG_PATH}"
-    export DIALYZER_PLT="$HOME/dev/OTP/install/R14B02/dialyzer.plt"
-    echo "Erlang: " `which erl`
-}
-
-function r14b03 {
-    export PATH="$HOME/dev/OTP/install/R14B03/bin:${ORIG_PATH}"
-    export DIALYZER_PLT="$HOME/dev/OTP/install/R14B03/dialyzer.plt"
-    echo "Erlang: " `which erl`
-}
-
-function stderl {
-    export PATH="${ORIG_PATH}"
-    echo "Erlang: " `which erl`
-}
-
 function erlinstall {
-    VERSION=R14B03
+    VERSION=R16B01
     mkdir $(pwd)/../../install/$VERSION && \
-        ./otp_build setup --prefix=$(pwd)/../../install/$VERSION force_linux_pthread_rwlocks=yes && \
+        ./otp_build setup --prefix=$(pwd)/../../install/$VERSION && \
         make && \
         make install
 }
@@ -357,12 +305,6 @@ function erlinstall {
 ####################################################################
 
 source $HOME/.bin/resty
-
-r14b03 > /dev/null
-
-echo -e "\e[34;1m" # bright/bold blue
-[ -e $HOME/Dropbox/Klarna/kanimo ] && $HOME/Dropbox/Klarna/kanimo
-echo -e "\e[0m"
 
 [ $HOME = "$PWD" ] && cd $HOME/dev
 
