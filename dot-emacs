@@ -69,10 +69,10 @@
               ;; Default tab width
               indent-tabs-mode             nil
               tab-width                    4 ; to show old style correctly
-              c-basisc-indent              2
               c-basic-offset               2
               py-indent-offset             2
               js-indent-level              2
+              rust-indent-unit             2
               ;; Have a border above and below the cursor while scrolling
               scroll-margin                5
               ;; Only scroll by 1 line a time
@@ -191,7 +191,7 @@
 
 
 ;; Active the mouse wheel: Add scrolling with mouse
-(setq mac-emulate-three-button-mouse nil 
+(setq mac-emulate-three-button-mouse nil
       mouse-wheel-scroll-amount      1.5
       xterm-mouse-mode               t)
 (global-set-key [mouse-4]    '(lambda () (interactive) (scroll-down 1)))
@@ -233,7 +233,7 @@
 (mapc
  (lambda (package)
    (or (package-installed-p package)
-       (if (y-or-n-p (format "Package %s is missing. Install it? " package)) 
+       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
            (package-install package))))
  '(ac-nrepl auto-complete auto-highlight-symbol autopair clojure-project-mode
             clojure-test-mode dash diff-git erlang expand-region github-theme
@@ -463,7 +463,7 @@ whitespace, anything else get chewed one character at a time."
 
 (defun kfind-at (path word)
   (grep-find
-   (concat "find " path 
+   (concat "find " path
            (concat " -type f \\( -name '*.erl' -o -name '*.hrl' \\) | xargs grep --color=auto " word))))
 
 

@@ -1,6 +1,6 @@
 [user]
   name = Uwe Dauernheim
-	email = uwe@dauernheim.net
+  email = uwe@dauernheim.net
 [core]
   editor = emacs -nw
 [alias]
@@ -70,7 +70,7 @@
                                mail -s \"Pull request: $branch into $(git config remote.origin.url)\" $(git config pull-request.group)' - "
   ff = "pull --ff-only"
 [pull-request]
-  group = uwe@klarna.com
+  group = uwe@dauernheim.net
 [color]
   branch = auto
   diff = auto
