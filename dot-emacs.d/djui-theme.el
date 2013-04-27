@@ -47,6 +47,7 @@
    `(modeline                         ((t (:foreground ,djui-black :background ,djui-white))))
    `(modeline-inactive                ((t (:foreground ,djui-gray-lighter :background nil))))
    `(region                           ((t (:foreground ,djui-black :background ,djui-blue-lighter))))
+   `(highlight                        ((t (:background ,djui-red-lightest))))
    `(highlight-80+                    ((t (:background ,djui-red))))
    `(indent-guide-face                ((t (:foreground ,djui-gray-dark))))
    `(ido-subdir                       ((t (:foreground ,djui-red-lighter))))

@@ -140,6 +140,7 @@
 (global-set-key (kbd "C-x O")       'previous-multiframe-window)
 
 ;; Customized: C-c
+(global-set-key (kbd "C-c a")       'anything)
 (global-set-key (kbd "C-c g")       'goto-line)
 (global-set-key (kbd "C-c d")       'forward-duplicate-line)
 (global-set-key (kbd "C-c D")       'backward-duplicate-line)
@@ -235,10 +236,10 @@
    (or (package-installed-p package)
        (if (y-or-n-p (format "Package %s is missing. Install it? " package))
            (package-install package))))
- '(ac-nrepl auto-complete auto-highlight-symbol autopair clojure-project-mode
-            clojure-test-mode dash diff-git erlang expand-region github-theme
-            gitty go-mode highlight-parentheses ibuffer-vc ido-ubiquitous iedit
-            indent-guide lua-mode magit-simple-keys magithub magit markdown-mode
+ '(ac-nrepl anything auto-complete auto-highlight-symbol auto-indent-mode autopair
+            clojure-project-mode clojure-test-mode dash diff-git erlang expand-region
+            github-theme gitty go-mode highlight-parentheses ibuffer-vc ido-ubiquitous
+            iedit indent-guide lua-mode magit-simple-keys magithub magit markdown-mode
             move-text multiple-cursors nrepl clojure-mode paredit popup project-mode
             levenshtein rainbow-delimiters ruby-mode rust-mode cm-mode s scala-mode
             smart-tab smex yasnippet))
