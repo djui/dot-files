@@ -873,8 +873,6 @@ whitespace, anything else get chewed one character at a time."
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Projectile mode
 ; For help use: C-c p C-h
-(add-to-list 'load-path "~/.emacs.d/projectile")
-(require 'projectile)
 (projectile-global-mode)
 ;(add-hook 'clojure-mode-hook 'projectile-on)
 (setq projectile-show-paths-function 'projectile-hashify-with-uniquify)
