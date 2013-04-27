@@ -517,6 +517,11 @@ whitespace, anything else get chewed one character at a time."
 (add-to-list 'recentf-exclude "\\.ido\\.last")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Auto-indent mode
+(auto-indent-global-mode)
+;(add-hook 'emacs-lisp-mode-hook 'auto-indent-minor-mode)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Move text
 (require 'move-text)
 (global-set-key (kbd "M-p") 'move-text-up)
