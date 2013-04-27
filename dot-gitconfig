@@ -68,6 +68,7 @@
                                branch=$(git name-rev --name-only HEAD) ; \
                                git pr $amount | \
                                mail -s \"Pull request: $branch into $(git config remote.origin.url)\" $(git config pull-request.group)' - "
+  ff = "pull --ff-only"
 [pull-request]
   group = uwe@klarna.com
 [color]
