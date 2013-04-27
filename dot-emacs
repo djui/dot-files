@@ -951,6 +951,9 @@ whitespace, anything else get chewed one character at a time."
   (rainbow-delimiters-mode)
   (highlight-parentheses-mode))
 
+(global-set-key (kbd "\e <left>")  'paredit-backward-slurp-sexp)
+(global-set-key (kbd "\e <right>") 'paredit-forward-slurp-sexp)
+
 (setq hl-paren-colors
       '("orange1"    "yellow1"      "greenyellow"
         "green1"     "springgreen1" "cyan1"
