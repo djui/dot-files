@@ -247,6 +247,12 @@ erlc2() {
         perl -pe "s/Warning: /\033[31;1mError\033[0m: /"
 }
 
+dialyze() {
+    erl_top=/usr/local/Cellar/erlang/R16B
+    apps=$(find $erl_top/lib/erlang/lib -name '*.app' | sed "s/^.*\/\(.*\)-.*$/\1/")
+    dialyzer --build_plt --apps $apps
+}
+
 # e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a "" $* ; fi }
 movie() { date "+%Y-%m-%d $@" >> $HOME/Dropbox/_Life/_movies.md }
 rtfm() { help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@"; }
@@ -263,17 +269,17 @@ colortable() { for c in {0..255} ; do echo -e "\e[38;05;${c}m $c: Test" ; done }
     transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Csv" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
     echo {${transtext#*:}
 }
-
+    
 2en() {
     urlenctext="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$@")"
     transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Cen" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
     echo {${transtext#*:}
 }
-
+    
 ####################################################################
 ## EXPORTS #########################################################
 ####################################################################
-
+    
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$HOME/.bin:$PATH"
 export PATH="/usr/local/Cellar/ruby/1.9.3-p385/bin:$PATH"
