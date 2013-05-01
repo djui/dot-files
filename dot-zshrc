@@ -283,6 +283,7 @@ colortable() { for c in {0..255} ; do echo -e "\e[38;05;${c}m $c: Test" ; done }
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$HOME/.bin:$PATH"
 export PATH="/usr/local/Cellar/ruby/1.9.3-p385/bin:$PATH"
+export PATH="/usr/local/Cellar/ruby/2.0.0-p0/bin:$PATH"
 export PATH="$HOME/.cljr/bin:$PATH"
 export PATH="$HOME/.cabal/bin:$PATH"
 export GOROOT="/usr/local/Cellar/go/1.0.3"
