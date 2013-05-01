@@ -33,12 +33,12 @@ zstyle ':completion:*' format '%B%d%b'
 zstyle ':completion:*' glob 0
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' insert-unambiguous true
-zstyle ':completion:*' list-colors "$(gdircolors -b)"
+zstyle ':completion:*' list-colors "$(dircolors -b 2> /dev/null || gdircolors -b)"
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 zstyle ':completion:*' max-errors 1
 zstyle ':completion:*' menu select=10
-zstyle ':completion:*' menu select=2 eval "$(gdircolors -b)"
+zstyle ':completion:*' menu select=2 eval "$(dircolors -b 2> /dev/null || gdircolors -b)"
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' squeeze-slashes true
@@ -54,7 +54,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle :compinstall filename '/Users/uwe/.zshrc'
 
-[ $(which gdircolors) ] || eval $(gdircolors)
+eval $(dircolors 2> /dev/null) || eval $(gdircolors)
 
 unlimit
 
@@ -310,9 +310,9 @@ function erlinstall {
 ####################################################################
 ####################################################################
 
-source $HOME/.bin/resty
+[ -f $HOME/.bin/resty ] && source $HOME/.bin/resty
 
-[ $HOME = "$PWD" ] && cd $HOME/dev
+[ $HOME = "$PWD" ] && [ -d $HOME/dev ] && cd $HOME/dev
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
