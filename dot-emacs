@@ -242,7 +242,7 @@
             iedit indent-guide lua-mode magit-simple-keys magithub magit markdown-mode
             move-text multiple-cursors nrepl clojure-mode paredit popup project-mode
             levenshtein rainbow-delimiters ruby-mode rust-mode cm-mode s scala-mode
-            smart-tab smex yasnippet))
+            smart-tab smex yaml-mode yasnippet))
 
 
 
@@ -867,8 +867,8 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HTML mode
-(add-to-list 'auto-mode-alist '("\\.html$" . html-helper-mode))
-(add-to-list 'auto-mode-alist '("\\.htm$"  . html-helper-mode))
+(add-to-list 'auto-mode-alist '("\\.html$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.htm$"  . html-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Projectile mode
@@ -1013,6 +1013,12 @@ whitespace, anything else get chewed one character at a time."
 (add-hook 'ruby-mode-hook '(lambda () (inf-ruby-keys) (turn-on-font-lock)))
 (autoload 'rubydb "rubydb3x" "Ruby debugger" t)
 
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; YAML mode
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$"  . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1056,7 +1062,7 @@ whitespace, anything else get chewed one character at a time."
  ;; If there is more than one, they won't work right.
  '(allout-auto-activation "t")
  '(column-number-mode t)
- '(custom-safe-themes (quote ("82cd267bd7a97d505f4c39869a8a952a217f077167ff096d935df1f4975b6182" default)))
+ '(custom-safe-themes (quote ("388b79a29145f779145215ba3d6d2857eafcac79785f82f9e8e35e2f88b3007e" "c582c1d99904ddc0677f87ba7eb6596cf9321a7e6233857dc4bd6ae587893194" "82cd267bd7a97d505f4c39869a8a952a217f077167ff096d935df1f4975b6182" default)))
  '(fringe-mode 0 nil (fringe))
  '(safe-local-variable-values (quote ((allout-layout . t) allout-layout t)))
  '(tooltip-mode nil))
@@ -1072,3 +1078,4 @@ whitespace, anything else get chewed one character at a time."
      '(mode-line ((t (:box nil))))
      '(mode-line-inactive ((t (:box nil))))
      '(whitespace-line ((t (:background "gray20" :foreground "#D62E00"))))))
+ 
