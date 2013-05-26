@@ -180,6 +180,12 @@ alias less='less -R -N -x2'
 alias lines='wc -l'
 [ $(uname) = "Darwin" ] && alias locate='mdfind -name'
 [ $(uname) = "Linux" ] && alias locate='find / -mount -wholename "/proc" -prune -o -iname'
+function gcmp {
+    git add . && git commit -m $1 && git push
+}
+function gcamp {
+    git add . && git commit -m $1 && git push
+}
 function locate2 {
     case $(uname) in
         "Darwin") mdfind -name $* | grep "^$(pwd)" ;;
