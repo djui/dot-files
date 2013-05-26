@@ -1,8 +1,13 @@
+(defun debug (s)
+  (message (concat (format-time-string "%H:%M:%S.%6N " (current-time)) s)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GLOBAL CONFIGURATION
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+
+(debug "Loading global config")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Configurations
@@ -25,6 +30,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+
+(debug "Loading defaults")
 
 ;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
 (setq-default user-full-name               "Uwe Dauernheim"
@@ -114,6 +121,8 @@
 
 
 
+(debug "Loading global keybindings")
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
 ;; Not belowing to a specific mode.
@@ -191,6 +200,8 @@
 
 
 
+(debug "Loading mouse settings")
+
 ;; Active the mouse wheel: Add scrolling with mouse
 (setq mac-emulate-three-button-mouse nil
       mouse-wheel-scroll-amount      1.5
@@ -208,6 +219,8 @@
 
 
 
+(debug "Loading encodings")
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
 (set-terminal-coding-system 'utf-8)
@@ -221,6 +234,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+
+(debug "Loading package manager")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package manager
@@ -251,6 +266,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+
+(debug "Loading custom functions")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom functions
@@ -475,6 +492,8 @@ whitespace, anything else get chewed one character at a time."
 
 
 
+(debug "Loading aliases")
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom aliases
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -492,6 +511,7 @@ whitespace, anything else get chewed one character at a time."
 ; [Installation](http://emacs-w3m.namazu.org/)
 ; $ cvs -d :pserver:anonymous@cvs.namazu.org:/storage/cvsroot co emacs-w3m
 ; $ cd emacs-w3m && autoconf && ./configure && make install
+(debug "Loading w3m-mode")
 (add-to-list 'load-path "~/.emacs.d/emacs-w3m")
 (require 'w3m-load)
 (setq browse-url-browser-function 'w3m-browse-url
@@ -509,7 +529,8 @@ whitespace, anything else get chewed one character at a time."
 (global-set-key "\C-xm" 'browse-url-at-point)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Recent mode
+;; Recentf mode
+(debug "Loading recentf-mode")
 (recentf-mode t)
 (setq recentf-auto-cleanup    300
       recentf-max-saved-items 1000
@@ -518,22 +539,26 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto-indent mode
+(debug "Loading auto-indent-global-mode")
 (auto-indent-global-mode)
 ;(add-hook 'emacs-lisp-mode-hook 'auto-indent-minor-mode)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Move text
+(debug "Loading move-text-mode")
 (require 'move-text)
 (global-set-key (kbd "M-p") 'move-text-up)
 (global-set-key (kbd "M-n") 'move-text-down)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Allout mode
+(debug "Loading allout-mode")
 (require 'allout)
 (allout-init t)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; iBuffer mode
+(debug "Loading ibuffer-mode")
 (provide 'ibuffer-config)
 (require 'ibuffer-config)
 
@@ -708,6 +733,7 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dired mode
+(debug "Loading dired-mode")
 (add-hook 'dired-mode-hook 'my-dired-mode-hook)
 (add-hook 'dired-mode-hook 'my-dired-mode-hook)
 
@@ -719,6 +745,7 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; IDo mode, better than iswitch mode
+(debug "Loading ido-mode")
 (require 'ido)
 (ido-mode t)
 (setq ido-enable-flex-matching t
@@ -749,6 +776,7 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Whitespace mode
+(debug "Loading whitespace-mode")
 (require 'whitespace)
 (setq whitespace-style       (quote (face tabs tab-mark lines-tail)))
 (setq whitespace-action      nil)
@@ -767,6 +795,7 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto-complete mode
+(debug "Loading auto-complete-mode")
 (require 'auto-complete-config)
 (global-auto-complete-mode t)
 ; Fast popup, but slow auto-completion
@@ -786,9 +815,11 @@ whitespace, anything else get chewed one character at a time."
 (indent-guide-set-delay 0.3)
 ;(setq indent-guide-char "│")
 (setq indent-guide-char "┊")
+(debug "Loading indent-guide-mode")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto-highlight-symbol mode
+(debug "Loading auto-highlight-symbol-mode")
 (require 'auto-highlight-symbol)
 (auto-highlight-symbol-mode)
 (global-auto-highlight-symbol-mode t)
@@ -799,6 +830,7 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Multiple-cursors mode
+(debug "Loading multiple-cursors-mode")
 (require 'multiple-cursors)
 (global-set-key (kbd "C-c m")   'mc/mark-all-like-this-dwim)
 (global-set-key (kbd "C-c M")   'mc/edit-lines)
@@ -812,6 +844,7 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; RCIRC - Emacs IRC
+(debug "Loading rcirc-mode")
 (add-to-list 'load-path "~/.emacs.d/rcirc")
 (require 'rcirc)
 (eval-after-load 'rcirc '(require 'rcirc-notify))
@@ -873,6 +906,7 @@ whitespace, anything else get chewed one character at a time."
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Projectile mode
 ; For help use: C-c p C-h
+(debug "Loading projectile-mode")
 (projectile-global-mode)
 ;(add-hook 'clojure-mode-hook 'projectile-on)
 (setq projectile-show-paths-function 'projectile-hashify-with-uniquify)
@@ -889,6 +923,7 @@ whitespace, anything else get chewed one character at a time."
 (defun clojure-hook ()
   (highlight-parentheses))
 
+(debug "Loading clojure-project-mode")
 (require 'clojure-project-mode)
 ;(global-set-key (kbd "???") 'project-new)
 ;(global-set-key (kbd "???") 'project-save)
@@ -921,7 +956,7 @@ whitespace, anything else get chewed one character at a time."
 ;; or type in nREPL:
 ;;
 ;;   (use 'clojure.repl)
-
+(debug "Loading ac-nrepl-mode")
 (require 'ac-nrepl)
 (add-hook 'nrepl-mode-hook             'ac-nrepl-setup)
 (add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
@@ -941,7 +976,6 @@ whitespace, anything else get chewed one character at a time."
         nrepl-popup-stacktraces-in-repl t
         nrepl-popup-stacktraces nil))
 
-
 (defun highlight-parentheses ()
   (autoload 'paredit-mode "paredit" t)
   (paredit-mode)
@@ -959,6 +993,7 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Erlang mode
+(debug "Loading erlang-mode")
 ;(add-to-list 'load-path "~/dev/otp/install/R14B03/lib/erlang/lib/tools-2.6.6.4/emacs")
 ;(add-to-list 'exec-path "~/dev/otp/install/R14B03/bin")
 ;(setq erlang-root-dir   "~/dev/otp/install/R14B03")
@@ -996,16 +1031,19 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Go mode
+(debug "Loading go-mode")
 (require 'go-mode-load)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown mode
+(debug "Loading markdown-mode")
 (add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-hook 'markdown-mode-hook '(lambda() (local-set-key (kbd "<backtab>") 'markdown-cycle)))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ruby mode
+(debug "Loading ruby-mode")
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 (autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
@@ -1029,6 +1067,7 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Color Themes
+(debug "Loading themes")
 ;(setq solarized-termcolors 256)
 ;(load-theme 'solarized-light t)
 ;(load-theme 'solarized-dark t)
@@ -1055,6 +1094,7 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom set variables
+(debug "Loading custom variables")
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1078,4 +1118,5 @@ whitespace, anything else get chewed one character at a time."
      '(mode-line ((t (:box nil))))
      '(mode-line-inactive ((t (:box nil))))
      '(whitespace-line ((t (:background "gray20" :foreground "#D62E00"))))))
- 
+
+(debug "Loading done.")
