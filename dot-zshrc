@@ -317,3 +317,5 @@ function erlinstall {
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+[ -f $HOME/Dropbox/_Life/motd ] && $HOME/Dropbox/_Life/motd
