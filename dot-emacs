@@ -806,9 +806,12 @@ whitespace, anything else get chewed one character at a time."
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yet Another Snippet plugin
 ;; See http://yasnippet.googlecode.com/svn/trunk/doc/snippet-development.html
-;(require 'yasnippet)
-;(yas/initialize)
-;(yas/load-directory "~/.emacs.d/yasnippets")
+(debug "Loading yasnippet-mode")
+(require 'yasnippet)
+(yas-global-mode 1)
+(when (require 'yasnippet nil 'noerror)
+  (progn
+    (yas/load-directory "~/.emacs.d/snippets")))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Indent-guide mode
