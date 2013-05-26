@@ -815,11 +815,11 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Indent-guide mode
-(require 'indent-guide)
-(indent-guide-set-delay 0.3)
-;(setq indent-guide-char "│")
-(setq indent-guide-char "┊")
 (debug "Loading indent-guide-mode")
+;(require 'indent-guide)
+;(indent-guide-set-delay 0.3)
+;;(setq indent-guide-char "│")
+;(setq indent-guide-char "┊")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto-highlight-symbol mode
