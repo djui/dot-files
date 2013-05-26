@@ -534,7 +534,8 @@ whitespace, anything else get chewed one character at a time."
 (recentf-mode t)
 (setq recentf-auto-cleanup    300
       recentf-max-saved-items 1000
-      recentf-max-menu-items  100)
+      recentf-max-menu-items  100
+      recentf-keep '(file-remote-p file-readable-p))
 (add-to-list 'recentf-exclude "\\.ido\\.last")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
