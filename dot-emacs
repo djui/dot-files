@@ -1005,7 +1005,7 @@ whitespace, anything else get chewed one character at a time."
 (add-to-list 'exec-path "/usr/local/bin")
 (setq erlang-root-dir   "/usr/local/lib/erlang")
 
-(require 'erlang-start)
+;(require 'erlang-start)
 (setq erlang-tab-mode          nil
       erlang-indent-level      '2
       erlang-electric-commands '(erlang-electric-semicolon
