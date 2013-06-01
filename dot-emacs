@@ -836,15 +836,14 @@ whitespace, anything else get chewed one character at a time."
 ;; Multiple-cursors mode
 (debug "Loading multiple-cursors-mode")
 (require 'multiple-cursors)
-(global-set-key (kbd "C-c m")   'mc/mark-all-like-this-dwim)
-(global-set-key (kbd "C-c M")   'mc/edit-lines)
-(global-set-key (kbd "C-c C-n") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-c >")   'mc/mark-next-like-this)
-(global-set-key (kbd "C-c C-p") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c <")   'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-a") 'mc/mark-all-like-this)
-;(global-set-key (kbd "C-c r")  'mc/mark-all-in-region)
-(global-set-key (kbd "C-c r")   'set-rectangular-region-anchor)
+(global-set-key (kbd "C-c m e") 'mc/edit-lines)
+(global-set-key (kbd "C-c m r") 'set-rectangular-region-anchor)
+
+(global-set-key (kbd "C-c m R") 'mc/mark-all-in-region)
+(global-set-key (kbd "C-c m a") 'mc/mark-all-like-this-dwim)
+(global-set-key (kbd "C-c m A") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-c m n") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-c m p") 'mc/mark-previous-like-this)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; RCIRC - Emacs IRC
