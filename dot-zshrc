@@ -225,6 +225,7 @@ alias ports='lsof -i -P' # -n
 alias sl='cut -c -$(tput cols)'
 alias sleep='sudo pmset -a hibernatemode 0 && pmset sleepnow'
 alias tips='e $HOME/Dropbox/_Life/_tips.md'
+alias tmux-pwn='tmux list-clients | sed "s|^\(/dev/ttys[0-9]\+\).*\[\([0-9]\+x[0-9]\+\).*$|\2 \1|" | sort -r -n | tail -n +2 | cut -d " " -f 2 | xargs -n 1 tmux detach-client -t'
 alias tree='tree -C'
 alias tree2='tree -CifF'
 alias vpn='[ $(nmcli con status | grep -c "Klarna") = 0 ] && nmcli con up id "Klarna"'
