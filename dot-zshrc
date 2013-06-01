@@ -98,7 +98,7 @@ precmd() {
     [ -n vcs_info_msg_0_ ] && RPS1="%B%F{red}${vcs_info_msg_1_} $(__git_status)%f %F{blue}%~%f %F{green}%m%f%b"
 }
 
-PS1="%B%F{white}»%f%b "
+PS1="%B»%b "
 RPS1="%F{green}%m%f"
 
 ####################################################################
