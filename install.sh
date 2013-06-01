@@ -1,49 +1,34 @@
-#!/usr/bin/env bash
-#set -x
+#!/bin/bash
 
 DESTDIR="$HOME"
-SRCDIR="$HOME/dot-files"
+SRCDIR="$HOME/dev/dot-files"
 SRCITEMS=(
-    profile
-    bashrc
-    zshrc
     bin
-    ssh
-    xmodmap
-    xmodmap_laptop
-    inetrc
-    xinitrc
-    screenrc
-    tmux.conf
     emacs
     emacs.d
-    vimrc
-    vim
     gitconfig
-    irssi
-    mocp
-    msmtprc
-    mailrc
-    config!awesome
-    config!terminator
+    gitignore
+    login_conf
+    ssh
+    tmux.conf
+    vim
+    vimrc
+    w3m
+    zshrc
 )
 
-mkdir -p $HOME/.config
-
-## First, get all git submodules like .config/awesome/vicious and .emacs.d/distel
-git submodule update --init
-
 for SRCITEM in ${SRCITEMS[*]} ; do 
-    DESTITEM=$(echo $SRCITEM | tr '!' '/')
-    echo "Trying to link $DESTDIR/.$SRCITEM ..."
-    [ -L "$DESTDIR/.$DESTITEM" ] && continue
-    [ -e "$DESTDIR/.$DESTITEM" ] && mv "$DESTDIR/.$DESTITEM" "$DESTDIR/.$DESTITEM.bak"
+    DESTITEM=$(echo $SRCITEM | tr '!' '/') # Take care of subdirectories
+    echo -n "Trying to link $DESTDIR/.${SRCITEM}..."
+    if [ -L "$DESTDIR/.$DESTITEM" ] ; then
+        echo " already linked."
+        continue
+    elif [ -e "$DESTDIR/.$DESTITEM" ] ; then
+        echo -n " conflict..."
+        mv "$DESTDIR/.$DESTITEM" "$DESTDIR/.$DESTITEM.bak"
+        echo " backed up."
+    fi
+    echo -n "linking..."
     ln -s "$SRCDIR/dot-$SRCITEM" "$DESTDIR/.$DESTITEM"
+    echo " done."
 done
-
-## Some emacs modules need compilation
-cd $HOME/.emacs.d/distel && make
-cd $HOME
-
-## Initialize some scripts
-source $HOME/.bashrc
