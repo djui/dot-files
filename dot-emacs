@@ -1106,7 +1106,7 @@ whitespace, anything else get chewed one character at a time."
  ;; If there is more than one, they won't work right.
  '(allout-auto-activation "t")
  '(column-number-mode t)
- '(custom-safe-themes (quote ("388b79a29145f779145215ba3d6d2857eafcac79785f82f9e8e35e2f88b3007e" "c582c1d99904ddc0677f87ba7eb6596cf9321a7e6233857dc4bd6ae587893194" "82cd267bd7a97d505f4c39869a8a952a217f077167ff096d935df1f4975b6182" default)))
+ '(custom-safe-themes (quote ("39bd29a2d79f42e907dd60243aa85a3d8a352528a6460a4ca88ce41c64cf424a" "388b79a29145f779145215ba3d6d2857eafcac79785f82f9e8e35e2f88b3007e" "c582c1d99904ddc0677f87ba7eb6596cf9321a7e6233857dc4bd6ae587893194" "82cd267bd7a97d505f4c39869a8a952a217f077167ff096d935df1f4975b6182" default)))
  '(fringe-mode 0 nil (fringe))
  '(safe-local-variable-values (quote ((allout-layout . t) allout-layout t)))
  '(tooltip-mode nil))
