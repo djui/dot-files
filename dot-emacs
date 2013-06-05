@@ -150,7 +150,6 @@
 
 ;; Customized: C-c
 (global-set-key (kbd "C-c a")       'anything)
-(global-set-key (kbd "C-c g")       'goto-line)
 (global-set-key (kbd "C-c d")       'forward-duplicate-line)
 (global-set-key (kbd "C-c D")       'backward-duplicate-line)
 (global-set-key (kbd "C-c j")       'join-next-line)
@@ -793,6 +792,7 @@ whitespace, anything else get chewed one character at a time."
 ;; and I don't see its use case yet.
 ;; (require 'magit)
 ;; (add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . magit-commit-mode))
+(global-set-key (kbd "C-c g") 'magit-status)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto-complete mode
