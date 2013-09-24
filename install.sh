@@ -8,6 +8,7 @@ SRCITEMS=(
     emacs.d
     gitconfig
     gitignore
+    git_template
     login_conf
     ssh
     tmux.conf
