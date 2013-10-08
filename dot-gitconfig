@@ -104,3 +104,5 @@
   insteadOf = "gh:"
 [init]
   templatedir = ~/.git_template
+[ghi]
+	token = 68ec08f34478a8596e123df825edea668b07f50f

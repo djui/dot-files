@@ -5,8 +5,6 @@
 ;; GLOBAL CONFIGURATION
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
 (debug "Loading global config")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -135,12 +133,12 @@
 (global-set-key (kbd "C-x C-d")     'dired)
 (global-set-key (kbd "C-a")         'back-to-indentation)
 (global-set-key (kbd "M-m")         'move-beginning-of-line)
-(global-set-key (kbd "C-f")         'forward-beginning-word)
-(global-set-key (kbd "M-f")         'forward-char)
-(global-set-key (kbd "C-b")         'backward-word)
-(global-set-key (kbd "M-b")         'backward-char)
-(global-set-key (kbd "C-d")         'kill-word)
-(global-set-key (kbd "M-d")         'delete-char)
+;(global-set-key (kbd "C-f")         'forward-beginning-word)
+;(global-set-key (kbd "M-f")         'forward-char)
+;(global-set-key (kbd "C-b")         'backward-word)
+;(global-set-key (kbd "M-b")         'backward-char)
+;(global-set-key (kbd "C-d")         'kill-word)
+;(global-set-key (kbd "M-d")         'delete-char)
 (global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
 (global-set-key (kbd "M-k")         'backward-kill-line)
 (global-set-key (kbd "C-M-k")       'whole-kill-line)
