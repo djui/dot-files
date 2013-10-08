@@ -5,8 +5,6 @@
 ;; GLOBAL CONFIGURATION
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
 (debug "Loading global config")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -135,10 +133,10 @@
 (global-set-key (kbd "C-x C-d")     'dired)
 (global-set-key (kbd "C-a")         'back-to-indentation)
 (global-set-key (kbd "M-m")         'move-beginning-of-line)
-(global-set-key (kbd "C-f")         'forward-beginning-word)
-(global-set-key (kbd "M-f")         'forward-char)
-(global-set-key (kbd "C-b")         'backward-word)
-(global-set-key (kbd "M-b")         'backward-char)
+;(global-set-key (kbd "C-f")         'forward-beginning-word)
+;(global-set-key (kbd "M-f")         'forward-char)
+;(global-set-key (kbd "C-b")         'backward-word)
+;(global-set-key (kbd "M-b")         'backward-char)
 (global-set-key (kbd "C-d")         'kill-word)
 (global-set-key (kbd "M-d")         'delete-char)
 (global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
@@ -253,7 +251,7 @@
  '(ac-nrepl anything auto-complete auto-highlight-symbol auto-indent-mode autopair
             clojure-project-mode clojure-test-mode dash diff-git erlang expand-region
             github-theme gitty go-mode highlight-parentheses ibuffer-vc ido-ubiquitous
-            iedit indent-guide lua-mode magit-simple-keys magithub magit markdown-mode
+            iedit indent-guide lua-mode magithub magit markdown-mode
             move-text multiple-cursors nrepl clojure-mode paredit popup project-mode
             levenshtein rainbow-delimiters ruby-mode rust-mode cm-mode s scala-mode
             smart-tab smex yaml-mode yasnippet))
@@ -881,6 +879,17 @@ whitespace, anything else get chewed one character at a time."
   (interactive)
   (kill-all-mode-buffers 'rcirc-mode))
 
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Projectile mode
+                                        ; For help use: C-c p C-h
+(debug "Loading projectile-mode")
+(require 'projectile)
+(projectile-global-mode)
+                                        ;(add-hook 'clojure-mode-hook 'projectile-on)
+(setq projectile-show-paths-function 'projectile-hashify-with-uniquify)
+                                        ;(setq projectile-use-native-indexing t)
+                                        ;(setq projectile-enable-caching t)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -907,15 +916,8 @@ whitespace, anything else get chewed one character at a time."
 (add-to-list 'auto-mode-alist '("\\.htm$"  . html-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Projectile mode
-; For help use: C-c p C-h
-(debug "Loading projectile-mode")
-(require 'projectile)
-(projectile-global-mode)
-;(add-hook 'clojure-mode-hook 'projectile-on)
-(setq projectile-show-paths-function 'projectile-hashify-with-uniquify)
-;(setq projectile-use-native-indexing t)
-;(setq projectile-enable-caching t)
+;; Python mode
+(require 'python-mode)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Clojure mode
@@ -923,6 +925,8 @@ whitespace, anything else get chewed one character at a time."
 ;(package-install clojure-test-mode)
 ;(package-install clojure-project-mode)
 (add-hook 'clojure-mode-hook 'clojure-hook)
+
+(setq auto-mode-alist (cons '("\\.cljs" . clojure-mode) auto-mode-alist))
 
 (defun clojure-hook ()
   (highlight-parentheses))
