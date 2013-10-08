@@ -6,6 +6,7 @@ SRCITEMS=(
     bin
     emacs
     emacs.d
+    git_template
     gitconfig
     gitignore
     gnupg

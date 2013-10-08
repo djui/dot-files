@@ -38,8 +38,6 @@
   who     = "!git shortlog -s -- | sort -n -k1"
   aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"
   swap    = checkout "@{-1}"
-  zz-init = "!sh -c 'ssh salmon \"git init --bare /home/uwe/public_git/$0\" && echo \"Use git clone git.hq.kred:~/public_git/$0 or checkout http://git/?p=zz/uwe/$0\"'"
-  zz-clone= "!sh -c 'git clone git.hq.kred:~/public_git/$0'"
   push-pr = "!sh -c 'hash=$(git rev-parse HEAD) ; \
                                git push $* && echo $hash >> .git/PUSH_COMMITS' - " 
   pr = "!sh -c 'if [ $1 ] ; then \
@@ -69,6 +67,11 @@
                                git pr $amount | \
                                mail -s \"Pull request: $branch into $(git config remote.origin.url)\" $(git config pull-request.group)' - "
   ff = "pull --ff-only"
+  # Work related
+  sp-init = "!sh -c 'git init $0 && scp git.spotify.net:hooks/commit-msg $0/.git/hooks/ > /dev/null && echo \"Gerrit hook installed.\"'"
+  sp-clone = "!sh -c 'git clone $0 && scp git.spotify.net:hooks/commit-msg $0/.git/hooks/ > /dev/null && echo \"Gerrit hook installed.\"'"
+  zz-init = "!sh -c 'ssh salmon \"git init --bare /home/uwe/public_git/$0\" && echo \"Use git clone git.hq.kred:~/public_git/$0 or checkout http://git/?p=zz/uwe/$0\"'"
+  zz-clone= "!sh -c 'git clone git.hq.kred:~/public_git/$0'"
 [pull-request]
   group = uwe@dauernheim.net
 [color]
@@ -91,7 +94,7 @@
   default = current
 [core]
   # global per user gitignore file
-  excludesfile = "~/.gitignore"
+  excludesfile = ~/.gitignore
 [github]
   user = uwe@dauernheim.net
   token = c7a71dca362884293fbfadda4ae71d05
@@ -99,3 +102,5 @@
 #  external = meld
 [url "https://github.com/"]
   insteadOf = "gh:"
+[init]
+  templatedir = ~/.git_template
