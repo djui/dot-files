@@ -1,1 +1,0 @@
-("~/dev/searchview/" "~/dev/dot-files/")
