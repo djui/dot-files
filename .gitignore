@@ -22,6 +22,8 @@
 !/dot-ssh/github_rsa.pub
 !/dot-ssh/kit_rsa.pub
 
+/dot-w3m/.arrived
+/dot-w3m/.sessions
 /dot-w3m/cookie
 /dot-w3m/history
 /dot-w3m/w3mcache*

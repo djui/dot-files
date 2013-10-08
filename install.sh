@@ -6,9 +6,10 @@ SRCITEMS=(
     bin
     emacs
     emacs.d
+    git_template
     gitconfig
     gitignore
-    git_template
+    gnupg
     login_conf
     ssh
     tmux.conf
