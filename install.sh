@@ -8,7 +8,7 @@ SRCITEMS=(
     emacs.d
     git_template
     gitconfig
-    gitignore
+    gitignore_global
     gnupg
     login_conf
     ssh

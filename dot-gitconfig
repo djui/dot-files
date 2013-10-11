@@ -94,7 +94,7 @@
   default = current
 [core]
   # global per user gitignore file
-  excludesfile = ~/.gitignore
+  excludesfile = /Users/uwe/.gitignore_global
 [github]
   user = uwe@dauernheim.net
   token = c7a71dca362884293fbfadda4ae71d05
