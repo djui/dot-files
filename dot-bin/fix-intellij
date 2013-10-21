@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -i '' '/DefaultHtmlDoctype.MigrateToHtml5/d' ~/Library/Preferences/IdeaIC12/options/options.xml
