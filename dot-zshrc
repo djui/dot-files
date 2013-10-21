@@ -242,6 +242,13 @@ alias hibernate='sudo pmset -a hibernatemode 25 && pmset sleepnow'
 ## FUNCTIONS #######################################################
 ####################################################################
 
+dups() {
+    f=/tmp/dup_checker.txt
+    p=${1:-.}
+
+    find $p \! -type d -exec shasum {} \; | sort -n | tee $f | cut -f 1 -d " " | uniq -d | grep -f /dev/stdin $f
+}
+
 download() {
     pushd $HOME/Downloads
     wget $1
