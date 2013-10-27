@@ -1,3 +1,5 @@
+HashKnownHosts yes
+
 Host *
   VisualHostKey yes
   ServerAliveInterval 240
@@ -25,3 +27,9 @@ Host rpi # raspberry raspberrypi raspberry-pi
 # Hostname 89.160.7.10
   Hostname djui.dyndns.org
   IdentityFile ~/.ssh/rpi_ecdsa_521
+Host *.spotify.net *-appstore-* *-appstoredb-* appstore-admin *.ash *.lon *.sto *.sjc1 *.d
+    ProxyCommand ssh -qax sptunnel 'nc %h %p -w 3600'
+Host sptunnel
+    DynamicForward localhost:1080
+    Hostname jump1.lon.spotify.net
+    ProxyCommand none
