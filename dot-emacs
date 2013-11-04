@@ -243,19 +243,46 @@
 (package-initialize)
 
 ;; check if the packages are installed; if not, install it.
-(mapc
- (lambda (package)
-   (or (package-installed-p package)
-       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
-           (package-install package))))
- '(ac-nrepl anything auto-complete auto-highlight-symbol auto-indent-mode autopair
-            clojure-project-mode clojure-test-mode dash diff-git erlang expand-region
-            github-theme gitty go-mode highlight-parentheses ibuffer-vc ido-ubiquitous
-            iedit indent-guide lua-mode magithub magit markdown-mode
-            move-text multiple-cursors nrepl clojure-mode paredit popup project-mode
-            levenshtein rainbow-delimiters ruby-mode rust-mode cm-mode s scala-mode
-            smart-tab smex yaml-mode yasnippet))
 
+(unless (package-installed-p 'anything)              (package-install 'anything))
+(unless (package-installed-p 'auto-complete)         (package-install 'auto-complete))
+(unless (package-installed-p 'auto-highlight-symbol) (package-install 'auto-highlight-symbol))
+(unless (package-installed-p 'auto-indent-mode)      (package-install 'auto-indent-mode))
+(unless (package-installed-p 'autopair)              (package-install 'autopair))
+(unless (package-installed-p 'cider)                 (package-install 'cider))
+(unless (package-installed-p 'clojure-mode)          (package-install 'clojure-mode))
+(unless (package-installed-p 'cm-mode)               (package-install 'cm-mode))
+(unless (package-installed-p 'dash)                  (package-install 'dash))
+(unless (package-installed-p 'diff-git)              (package-install 'diff-git))
+(unless (package-installed-p 'erlang)                (package-install 'erlang))
+(unless (package-installed-p 'expand-region)         (package-install 'expand-region))
+(unless (package-installed-p 'github-theme)          (package-install 'github-theme))
+(unless (package-installed-p 'gitty)                 (package-install 'gitty))
+(unless (package-installed-p 'go-mode)               (package-install 'go-mode))
+(unless (package-installed-p 'highlight-parentheses) (package-install 'highlight-parentheses))
+(unless (package-installed-p 'ibuffer-vc)            (package-install 'ibuffer-vc))
+(unless (package-installed-p 'ido-ubiquitous)        (package-install 'ido-ubiquitous))
+(unless (package-installed-p 'iedit)                 (package-install 'iedit))
+(unless (package-installed-p 'indent-guide)          (package-install 'indent-guide))
+(unless (package-installed-p 'levenshtein)           (package-install 'levenshtein))
+(unless (package-installed-p 'lua-mode)              (package-install 'lua-mode))
+(unless (package-installed-p 'magit)                 (package-install 'magit))
+(unless (package-installed-p 'magithub)              (package-install 'magithub))
+(unless (package-installed-p 'markdown-mode)         (package-install 'markdown-mode))
+(unless (package-installed-p 'move-text)             (package-install 'move-text))
+(unless (package-installed-p 'multiple-cursors)      (package-install 'multiple-cursors))
+(unless (package-installed-p 'paredit)               (package-install 'paredit))
+(unless (package-installed-p 'popup)                 (package-install 'popup))
+(unless (package-installed-p 'project-mode)          (package-install 'project-mode))
+(unless (package-installed-p 'rainbow-delimiters)    (package-install 'rainbow-delimiters))
+(unless (package-installed-p 'ruby-mode)             (package-install 'ruby-mode))
+(unless (package-installed-p 'rust-mode)             (package-install 'rust-mode))
+(unless (package-installed-p 's)                     (package-install 's))
+(unless (package-installed-p 'scala-mode)            (package-install 'scala-mode))
+(unless (package-installed-p 'smart-tab)             (package-install 'smart-tab))
+(unless (package-installed-p 'smex)                  (package-install 'smex))
+(unless (package-installed-p 'yaml-mode)             (package-install 'yaml-mode))
+(unless (package-installed-p 'yasnippet)             (package-install 'yasnippet))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -905,10 +932,10 @@ whitespace, anything else get chewed one character at a time."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ELisp mode
-(add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
-
-(defun emacs-lisp-hook ()
-  (highlight-parentheses))
+(add-hook 'cider-repl-mode-hook 'paredit-mode)
+(add-hook 'cider-repl-mode-hook 'show-paren-mode)
+(add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'cider-repl-mode-hook 'highlight-parentheses-mode)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HTML mode
@@ -924,15 +951,16 @@ whitespace, anything else get chewed one character at a time."
 ;(package-install clojure-mode)
 ;(package-install clojure-test-mode)
 ;(package-install clojure-project-mode)
-(add-hook 'clojure-mode-hook 'clojure-hook)
+(add-hook 'clojure-mode-hook 'cider-mode)
+(add-hook 'clojure-mode-hook 'paredit-mode)
+(add-hook 'clojure-mode-hook 'show-paren-mode)
+(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
 
 (setq auto-mode-alist (cons '("\\.cljs" . clojure-mode) auto-mode-alist))
 
-(defun clojure-hook ()
-  (highlight-parentheses))
-
-(debug "Loading clojure-project-mode")
-(require 'clojure-project-mode)
+;(debug "Loading clojure-project-mode")
+;(require 'clojure-project-mode)
 ;(global-set-key (kbd "???") 'project-new)
 ;(global-set-key (kbd "???") 'project-save)
 ;(global-set-key (kbd "???") 'project-open)
@@ -941,11 +969,7 @@ whitespace, anything else get chewed one character at a time."
 ;(global-set-key (kbd "???") 'project-search-text)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; nREPL mode
-;(package-install auto-complete)
-;(package-install nrepl)
-;(package-install ac-nrepl)
-
+;; Cider mode
 ;; Use as:
 ;;
 ;;   M-x nrepl-jack-in
@@ -964,32 +988,18 @@ whitespace, anything else get chewed one character at a time."
 ;; or type in nREPL:
 ;;
 ;;   (use 'clojure.repl)
-(debug "Loading ac-nrepl-mode")
-(require 'ac-nrepl)
-(add-hook 'nrepl-mode-hook             'ac-nrepl-setup)
-(add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'nrepl-mode))
+(add-hook 'cider-mode-hook      'cider-turn-on-eldoc-mode)
+(add-hook 'cider-repl-mode-hook 'paredit-mode)
+(add-hook 'cider-repl-mode-hook 'show-paren-mode)
+(add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'cider-repl-mode-hook 'highlight-parentheses-mode)
 
-(add-hook 'auto-complete-mode-hook     'nrepl-hook)
-(add-hook 'nrepl-mode-hook             'nrepl-hook)
-(add-hook 'nrepl-interaction-mode-hook 'nrepl-hook)
-
-(define-key nrepl-interaction-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
-
-(defun nrepl-hook ()
-  (nrepl-turn-on-eldoc-mode)
-  (setq completion-at-point-functions '(auto-complete)
-        nrepl-hide-special-buffers t
-        nrepl-popup-stacktraces-in-repl t
-        nrepl-popup-stacktraces nil))
-
-(defun highlight-parentheses ()
-  (autoload 'paredit-mode "paredit" t)
-  (paredit-mode)
-  (show-paren-mode)
-  (rainbow-delimiters-mode)
-  (highlight-parentheses-mode))
+(setq completion-at-point-functions       '(auto-complete)
+      nrepl-hide-special-buffers          t
+      cider-repl-pop-to-buffer-on-connect nil
+      cider-repl-popup-stacktraces        nil
+      cider-auto-select-error-buffer      nil
+      cider-popup-stacktraces             t)
 
 (global-set-key (kbd "\e <left>")  'paredit-backward-slurp-sexp)
 (global-set-key (kbd "\e <right>") 'paredit-forward-slurp-sexp)
@@ -1023,6 +1033,10 @@ whitespace, anything else get chewed one character at a time."
 (add-to-list 'interpreter-mode-alist '("escript"    . erlang-mode))
 
 (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
+(add-hook 'cider-repl-mode-hook 'show-paren-mode)
+(add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'cider-repl-mode-hook 'highlight-parentheses-mode)
+
 
 (defun my-erlang-mode-hook ()
   (interactive)
@@ -1034,7 +1048,6 @@ whitespace, anything else get chewed one character at a time."
         whitespace-line-column         80)
   (whitespace-mode)
   (highlight-todo)
-  (highlight-parentheses-mode)
   (allout-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
