@@ -136,7 +136,7 @@ alias z='emacs -nw ~/.zshrc ; source ~/.zshrc'
 
 alias ..='cd ..'
 alias ...='cd ../..'
-alias 80='grep -r "^.\{81\}"'
+alias 80='grep -nr "^.\{81\}"'
 alias adn='brio'
 alias apt-search='apt-cache search'
 alias beep='mpg123 -q $HOME/Dropbox/Music/glass.mp3 &'
@@ -175,11 +175,11 @@ alias gr='git remote -v'
 alias gs='git status'
 alias gss='git stash show'
 alias gx='gitx'
-alias grep='egrep --color=AUTO'
 alias history='cat $HISTFILE'
 alias hudson='ssh hudson@hudson-slave10'
 alias hurl='jhurl'
 alias imac='ssh -Y 10.20.9.110'
+alias isodate='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 alias joyent='ssh node@djui.no.de' # node@72.2.126.155
 alias less='less -R -N -x2'
 alias lines='wc -l'
@@ -350,8 +350,6 @@ function erlinstall {
 ####################################################################
 
 [ -f $HOME/.bin/resty ] && source $HOME/.bin/resty
-
-[ $HOME = "$PWD" ] && [ -d $HOME/dev ] && cd $HOME/dev
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
