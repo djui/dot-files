@@ -95,11 +95,12 @@ __git_status() {
 
 precmd() {
     vcs_info 'prompt'
-    [ -n vcs_info_msg_0_ ] && RPS1="%B%F{red}${vcs_info_msg_1_} $(__git_status)%f %F{blue}%~%f %F{green}%m%f%b"
+    # [ -n vcs_info_msg_0_ ] && RPS1="%B%F{red}${vcs_info_msg_1_} $(__git_status)%f %F{blue}%~%f %F{green}%m%f%b"
+    [ -n vcs_info_msg_0_ ] && PS1=$'\n%B%F{8}%n@%M:%~ %F{red}${vcs_info_msg_1_} $(__git_status)%f%b\n%B»%b '
 }
 
-PS1="%B»%b "
-RPS1="%F{green}%m%f"
+#PS1="%B»%b "
+#RPS1="%F{green}%m%f"
 
 ####################################################################
 ## ALIASES #########################################################
@@ -289,6 +290,7 @@ google() { w3m "http://www.google.com/search?q=$@" }
 encrypt() { openssl aes-256-cbc -a -salt -in "$1" -out "$1.aes" ; shred --remove "$1" }
 decrypt() { openssl aes-256-cbc -d -a -salt -in "$1.aes" -out "$1" }
 title() { echo -ne "\033]0;$*\007" }
+title-pwd() { title $(basename $PWD) }
 www() { if [ $1 ] ; then w3m $* ; else w3m google.com ; fi }
 colortable() { for c in {0..255} ; do echo -e "\033[38;05;${c}m $c: Test" ; done }
 2sv() {
@@ -366,3 +368,8 @@ fi
 # export JAVA_HOME=$(/usr/libexec/java_home)
 export JAVA_HOME=/Library/Java/Home
 export MAVEN_COLOR=true
+
+### Work related
+
+alias sphost='ssh -A jump1.sto.spotify.net sphost'
+alias spcloud='ssh -A jump1.sto.spotify.net spcloud'
