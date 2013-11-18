@@ -67,15 +67,15 @@
                                git pr $amount | \
                                mail -s \"Pull request: $branch into $(git config remote.origin.url)\" $(git config pull-request.group)' - "
   ff = "pull --ff-only"
+  #unmerged = "!git diff --name-status --diff-filter=U | cut -f 2"
+  unmerged = "!git ls-files -u | cut -f 2 | sort -u"
+  conflicts = "!git ls-files -u | cut -f 2 | sort -u" # alias for unmerged
+  untracked = "!git ls-files --other --exclude-standard"
   # Work related
   sp-init = "!sh -c 'git init $0 && scp git.spotify.net:hooks/commit-msg $0/.git/hooks/ > /dev/null && echo \"Gerrit hook installed.\"'"
   sp-clone = "!sh -c 'git clone $0 && scp git.spotify.net:hooks/commit-msg $0/.git/hooks/ > /dev/null && echo \"Gerrit hook installed.\"'"
   zz-init = "!sh -c 'ssh salmon \"git init --bare /home/uwe/public_git/$0\" && echo \"Use git clone git.hq.kred:~/public_git/$0 or checkout http://git/?p=zz/uwe/$0\"'"
   zz-clone= "!sh -c 'git clone git.hq.kred:~/public_git/$0'"
-  #unmerged = "!git diff --name-status --diff-filter=U | cut -f 2"
-  unmerged = "!git ls-files -u | cut -f 2 | sort -u"
-  conflicts = "!git ls-files -u | cut -f 2 | sort -u" # alias for unmerged
-  untracked = "!git ls-files --other --exclude-standard"
 [pull-request]
   group = uwe@dauernheim.net
 [color]
