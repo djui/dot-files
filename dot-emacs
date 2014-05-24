@@ -1,11 +1,6 @@
-(defun debug (s)
-  (message (concat (format-time-string "%H:%M:%S.%6N " (current-time)) s)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GLOBAL CONFIGURATION
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(debug "Loading global config")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Configurations
@@ -28,8 +23,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-
-(debug "Loading defaults")
 
 ;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
 (setq-default user-full-name               "Uwe Dauernheim"
@@ -114,109 +107,10 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; GLOBAL KEYBINDINGS
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-(debug "Loading global keybindings")
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Global keybindings
-;; Not belowing to a specific mode.
-;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
-
-;; Reenforce defaults? Something later on overwrites this...
-(global-set-key (kbd "M-g")         'goto-line)
-
-;; Overwrite/Inverse defaults
-(global-set-key (kbd "C-x C-d")     'dired)
-(global-set-key (kbd "C-a")         'back-to-indentation)
-(global-set-key (kbd "M-m")         'move-beginning-of-line)
-;(global-set-key (kbd "C-f")         'forward-beginning-word)
-;(global-set-key (kbd "M-f")         'forward-char)
-;(global-set-key (kbd "C-b")         'backward-word)
-;(global-set-key (kbd "M-b")         'backward-char)
-(global-set-key (kbd "C-d")         'kill-word)
-(global-set-key (kbd "M-d")         'delete-char)
-(global-set-key (kbd "C-k")         'forward-kill-line) ; doesn't fill the kill ring
-(global-set-key (kbd "M-k")         'backward-kill-line)
-(global-set-key (kbd "C-M-k")       'whole-kill-line)
-(global-set-key (kbd "C-x k")       'kill-this-buffer)
-(global-set-key (kbd "C-x o")       'next-multiframe-window)
-(global-set-key (kbd "C-x O")       'previous-multiframe-window)
-
-;; Customized: C-c
-(global-set-key (kbd "C-c a")       'anything)
-(global-set-key (kbd "C-c d")       'forward-duplicate-line)
-(global-set-key (kbd "C-c D")       'backward-duplicate-line)
-(global-set-key (kbd "C-c j")       'join-next-line)
-(global-set-key (kbd "C-c J")       'join-previous-line)
-(global-set-key (kbd "C-c o")       'occur)
-;(global-set-key (kbd "C-c C-r")    'replace-string)
-(global-set-key (kbd "C-c C-r")     'replace-regexp)
-(global-set-key (kbd "C-c e")       'eval-buffer)
-(global-set-key (kbd "C-c s")       'switch-to-scratch-buffer)
-(global-set-key (kbd "C-c C-s")     'isearch-forward-at-point)
-(global-set-key (kbd "C-c b")       'diff-buffer-with-file)
-(global-set-key (kbd "C-c B")       'vc-diff)
-(global-set-key (kbd "C-c c")       'comment-or-uncomment-region)
-(global-set-key (kbd "C-c f")       'kfind)
-(global-set-key (kbd "C-c DEL")     'compact-space)
-(global-set-key (kbd "C-c C-f")     'erlang-indent-function)
-(global-set-key (kbd "C-c C-M-f")   'erlang-indent-current-buffer)
-
-;; General
-(global-set-key (kbd "C-/")         'comment-or-uncomment-region) ; doesn't work in emacs -nw
-(global-set-key (kbd "C-x v b")     'vc-annotate)
-(global-set-key (kbd "C-h C-c")     'highlight-changes-mode)
-;(global-set-key (kbd "M-d")        'kill-current-word) ;; A bit too strong
-(global-set-key (kbd "C-w")         'smart-backwards-kill)
-
-;; Resize windows keyboard shortcut
-;; In `emacs -nw`, \e works, M- doesn't
-;(global-set-key (kbd "\e <left>")  'shrink-window-horizontally)
-;(global-set-key (kbd "\e <right>") 'enlarge-window-horizontally)
-;(global-set-key (kbd "\e <up>")    'shrink-window)
-;(global-set-key (kbd "\e <down>")  'enlarge-window)
-(global-set-key (kbd "C-x =")       'balance-windows) ; usually on "C-x +"
-;(global-set-key (kbd "\e\t")       'previous-source-buffer)
-;(global-set-key (kbd "\e <left>")  'next-source-buffer)
-
-;; Org-mode
-;(global-set-key (kbd "C-c [")      'hide-subtree)
-;(global-set-key (kbd "C-c {")      'hide-sublevels)
-;(global-set-key (kbd "C-c ]")      'show-subtree)
-;(global-set-key (kbd "C-c }")      'show-all)
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; MOUSE
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-(debug "Loading mouse settings")
-
-;; Active the mouse wheel: Add scrolling with mouse
-(setq mac-emulate-three-button-mouse nil
-      mouse-wheel-scroll-amount      1.5
-      xterm-mouse-mode               t)
-(global-set-key [mouse-4]    '(lambda () (interactive) (scroll-down 1)))
-(global-set-key [mouse-5]    '(lambda () (interactive) (scroll-up   1)))
-(global-set-key [wheel-up]   '(lambda () (interactive) (scroll-down 2)))
-(global-set-key [wheel-down] '(lambda () (interactive) (scroll-up   2)))
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ENCODINGS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-
-(debug "Loading encodings")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
@@ -227,12 +121,22 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; PACKAGE MANAGER
+;; ALIASES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
-(debug "Loading package manager")
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Custom aliases
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PACKAGE MANAGER
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package manager
@@ -242,47 +146,63 @@
 ;(add-to-list 'package-archives '("gnu"       . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
-;; check if the packages are installed; if not, install it.
 
-(unless (package-installed-p 'anything)              (package-install 'anything))
-(unless (package-installed-p 'auto-complete)         (package-install 'auto-complete))
-(unless (package-installed-p 'auto-highlight-symbol) (package-install 'auto-highlight-symbol))
-(unless (package-installed-p 'auto-indent-mode)      (package-install 'auto-indent-mode))
-(unless (package-installed-p 'autopair)              (package-install 'autopair))
-(unless (package-installed-p 'cider)                 (package-install 'cider))
-(unless (package-installed-p 'clojure-mode)          (package-install 'clojure-mode))
-(unless (package-installed-p 'cm-mode)               (package-install 'cm-mode))
-(unless (package-installed-p 'dash)                  (package-install 'dash))
-(unless (package-installed-p 'diff-git)              (package-install 'diff-git))
-(unless (package-installed-p 'erlang)                (package-install 'erlang))
-(unless (package-installed-p 'expand-region)         (package-install 'expand-region))
-(unless (package-installed-p 'github-theme)          (package-install 'github-theme))
-(unless (package-installed-p 'gitty)                 (package-install 'gitty))
-(unless (package-installed-p 'go-mode)               (package-install 'go-mode))
-(unless (package-installed-p 'highlight-parentheses) (package-install 'highlight-parentheses))
-(unless (package-installed-p 'ibuffer-vc)            (package-install 'ibuffer-vc))
-(unless (package-installed-p 'ido-ubiquitous)        (package-install 'ido-ubiquitous))
-(unless (package-installed-p 'iedit)                 (package-install 'iedit))
-(unless (package-installed-p 'indent-guide)          (package-install 'indent-guide))
-(unless (package-installed-p 'levenshtein)           (package-install 'levenshtein))
-(unless (package-installed-p 'lua-mode)              (package-install 'lua-mode))
-(unless (package-installed-p 'magit)                 (package-install 'magit))
-(unless (package-installed-p 'magithub)              (package-install 'magithub))
-(unless (package-installed-p 'markdown-mode)         (package-install 'markdown-mode))
-(unless (package-installed-p 'move-text)             (package-install 'move-text))
-(unless (package-installed-p 'multiple-cursors)      (package-install 'multiple-cursors))
-(unless (package-installed-p 'paredit)               (package-install 'paredit))
-(unless (package-installed-p 'popup)                 (package-install 'popup))
-(unless (package-installed-p 'project-mode)          (package-install 'project-mode))
-(unless (package-installed-p 'rainbow-delimiters)    (package-install 'rainbow-delimiters))
-(unless (package-installed-p 'ruby-mode)             (package-install 'ruby-mode))
-(unless (package-installed-p 'rust-mode)             (package-install 'rust-mode))
-(unless (package-installed-p 's)                     (package-install 's))
-(unless (package-installed-p 'scala-mode)            (package-install 'scala-mode))
-(unless (package-installed-p 'smart-tab)             (package-install 'smart-tab))
-(unless (package-installed-p 'smex)                  (package-install 'smex))
-(unless (package-installed-p 'yaml-mode)             (package-install 'yaml-mode))
-(unless (package-installed-p 'yasnippet)             (package-install 'yasnippet))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; THEMES
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Color Themes
+(load-theme 'djui t)
+;;(load-theme 'github t)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; GLOBAL KEYBINDINGS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Global keybindings
+;; Not belowing to a specific mode.
+;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
+(global-set-key (kbd "M-g")         'goto-line)
+
+(global-set-key (kbd "C-a")         'back-to-indentation)
+
+(global-set-key (kbd "C-c d")       'forward-duplicate-line)
+(global-set-key (kbd "C-c D")       'forward-duplicate-line)
+(global-set-key (kbd "C-c e")       'eval-buffer)
+(global-set-key (kbd "C-c j")       'join-next-line)
+(global-set-key (kbd "C-c J")       'join-previous-line)
+(global-set-key (kbd "C-c r")       'replace-regexp)
+(global-set-key (kbd "C-c /")       'comment-or-uncomment-region)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; GLOBAL MOUSE/TRACKPAD MODE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+(unless window-system
+  (require 'mouse)
+  (xterm-mouse-mode t)
+  (global-set-key [mouse-4] '(lambda ()
+                               (interactive)
+                               (scroll-down 1)))
+  (global-set-key [mouse-5] '(lambda ()
+                               (interactive)
+                               (scroll-up 1)))
+  (defun track-mouse (e))
+  (setq mouse-sel-mode t))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -290,8 +210,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-
-(debug "Loading custom functions")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom functions
@@ -339,189 +257,6 @@
         (fill-paragraph nil))
     (join-line)))
 
-(defun next-source-buffer ()
-  (interactive)
-  (next-buffer)
-  (if (string-match "^\*.*\*$" (buffer-name))
-      (next-source-buffer)))
-
-(defun previous-source-buffer ()
-  (interactive)
-  (previous-buffer)
-  (if (string-match "^\*.*\*$" (buffer-name))
-      (previous-source-buffer)))
-
-(defun forward-kill-line ()
-  (interactive)
-  (if (looking-at "$")
-      (delete-char 1)
-    (delete-region (point) (line-end-position))))
-
-(defun backward-kill-line ()
-  (interactive)
-  (if (looking-at "^")
-      (delete-backward-char 1)
-    (kill-line 0)))
-
-(defun whole-kill-line ()
-  (interactive)
-  (save-excursion
-    (kill-whole-line)))
-
-(defun compact-space ()
-  "Kill the whitespace between two non-whitespace characters"
-  (interactive "*")
-  (save-excursion
-    (save-restriction
-      (save-match-data
-        (progn
-          (re-search-backward "[^ \t\r\n]" nil t)
-          (re-search-forward "[ \t\r\n]+" nil t)
-          (replace-match " " nil nil))))))
-
-(defun highlight-todo ()
-  (font-lock-add-keywords nil '(("\\(@todo\\|@fixme\\|XXX\\|TODO\\|FIXME\\)" 1
-                                 font-lock-warning-face prepend))))
-
-;;; Original author: ttn at netcom dot com, 28-Jan-1996
-;;; Modified for multiple lines: Eric
-;;; http://curiousprogrammer.wordpress.com/2009/02/11/simple-emacs-shortcut/
-(defun another-line (num-lines)
-  "Copies line, preserving cursor column, and increments any numbers found.
-  This should probably be generalized in the future.
-  Argument NUM-LINES is the number of lines to modify."
-  (interactive "p")
-  (if (not num-lines) (setq num-lines 0) (setq num-lines (1- num-lines)))
-  (let* ((col (current-column))
-         (bol (save-excursion (forward-line (- num-lines)) (beginning-of-line) (point)))
-         (eol (progn (end-of-line) (point)))
-         (line (buffer-substring bol eol)))
-    (goto-char bol)
-    (while (re-search-forward "[0-9]+" eol 1)
-      (let ((num (string-to-int (buffer-substring
-                                 (match-beginning 0) (match-end 0)))))
-        (replace-match (int-to-string (1+ num))))
-      (setq eol (save-excursion (goto-char eol) (end-of-line) (point))))
-    (goto-char bol)
-    (insert line "\n")
-    (move-to-column col)))
-
-;; Original source: http://platypope.org/blog/2007/8/5/a-compendium-of-awesomeness
-(defvar isearch-initial-string nil)
-(defun isearch-set-initial-string ()
-  (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
-  (setq isearch-string isearch-initial-string)
-  (isearch-search-and-update))
-
-(defun isearch-forward-at-point (&optional regexp-p no-recursive-edit)
-  "Interactive search forward for the symbol at point."
-  (interactive "P\np")
-  (if regexp-p (isearch-forward regexp-p no-recursive-edit)
-    (let* ((end   (progn (skip-syntax-forward  "w_") (point)))
-           (begin (progn (skip-syntax-backward "w_") (point))))
-      (if (eq begin end)
-          (isearch-forward regexp-p no-recursive-edit)
-        (setq isearch-initial-string (buffer-substring begin end))
-        (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
-        (isearch-forward regexp-p no-recursive-edit)))))
-
-;; Align search results to center of buffer
-(defvar isearch-old-scroll-margin-value nil)
-(defun isearch-mode-margin-hook ()
-  (if isearch-old-scroll-margin-value
-      (progn
-        (setq isearch-old-scroll-margin-value nil
-              scroll-margin                   isearch-old-scroll-margin-value))
-    (setq isearch-old-scroll-margin-value scroll-margin
-          scroll-margin                   (/ (window-height) 2))))
-
-(add-hook 'isearch-mode-hook     'isearch-mode-margin-hook)
-(add-hook 'isearch-mode-end-hook 'isearch-mode-margin-hook)
-
-;; Delete current word under cursor
-(defun mark-current-word ()
-  "Put point at beginning of current word, set mark at end."
-  (interactive)
-  (let* ((opoint (point))
-         (word (current-word))
-         (word-length (length word)))
-    (if (save-excursion
-          ;; Avoid signaling error when moving beyond buffer.
-          (if (> (point-min)  (- (point) word-length))
-              (beginning-of-buffer)
-            (forward-char (- (length word))))
-          (search-forward word (+ opoint (length word))
-                          'noerror))
-        (progn (push-mark (match-end 0) nil t)
-               (goto-char (match-beginning 0)))
-      (error "No word at point" word))))
-
-(defun forward-beginning-word ()
-  (interactive)
-  (forward-word 2)
-  (backward-word 1))
-
-(defun kill-current-word ()
-  (interactive)
-  (save-excursion (kill-word 1) (backward-kill-word 1)))
-
-;; Kill word or cut region
-;; Courtesty to Robin "Rost" for this snippet.
-(defun smart-backward-kill-word (arg)
-  "Special version of backward-kill-word that swallows spaces
-and newlines separate from words. This way a C-w at
-beginning-of-line will not chew its way halfway through a word on
-the line above.
-
-Is this correct now? It now chews its way through words and
-whitespace, anything else get chewed one character at a time."
-  (interactive "p")
-  (cond ((looking-back "\\s-+")
-         (kill-region (point) (progn (re-search-backward "\\S-")
-                                     (forward-char 1) (point))))
-        ((looking-back "[^a-z0-9A-Z]") (backward-delete-char 1))
-        (t (backward-kill-word arg))))
-
-(defun smart-backwards-kill ()
-  "`kill-region' if the mark is active, else `backward-kill-word'."
-  (interactive)
-  (if mark-active
-      (call-interactively 'kill-region)
-    (call-interactively 'smart-backward-kill-word)))
-
-(defun switch-to-scratch-buffer ()
-  (interactive)
-  (switch-to-buffer "*scratch"))
-
-;; Find in kred dirs
-;(defun kfind (&optional word)
-;  (interactive "r")
-(defun kfind (word)
-  (interactive "MFind: ")
-  (kfind-at
-   ;(concat (car (split-string (buffer-file-name) "lib")) "{lib,test}/")
-   "$HOME/dev/project/{lib,test}/"
-   word))
-
-(defun kfind-at (path word)
-  (grep-find
-   (concat "find " path
-           (concat " -type f \\( -name '*.erl' -o -name '*.hrl' \\) | xargs grep --color=auto " word))))
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ALIASES
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-(debug "Loading aliases")
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Custom aliases
-(defalias 'yes-or-no-p 'y-or-n-p)
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -531,30 +266,34 @@ whitespace, anything else get chewed one character at a time."
 
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; w3m Browser
-; [Installation](http://emacs-w3m.namazu.org/)
-; $ cvs -d :pserver:anonymous@cvs.namazu.org:/storage/cvsroot co emacs-w3m
-; $ cd emacs-w3m && autoconf && ./configure && make install
-(debug "Loading w3m-mode")
-(add-to-list 'load-path "~/.emacs.d/emacs-w3m")
-(require 'w3m-load)
-(setq browse-url-browser-function 'w3m-browse-url
-      w3m-use-header-line         nil
-      w3m-use-tab                 nil
-      w3m-auto-show               t
-      w3m-use-cookies             t
-      w3m-coding-system           'utf-8
-      w3m-file-coding-system      'utf-8
-      w3m-file-name-coding-system 'utf-8
-      w3m-input-coding-system     'utf-8
-      w3m-output-coding-system    'utf-8
-      w3m-terminal-coding-system  'utf-8)
-(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
-(global-set-key "\C-xm" 'browse-url-at-point)
+;; Clojure mode
+(add-hook 'clojure-mode-hook 'cider-mode)
+(add-hook 'clojure-mode-hook 'paredit-mode)
+(add-hook 'clojure-mode-hook 'show-paren-mode)
+(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
+
+(setq auto-mode-alist (cons '("\\.cljs" . clojure-mode) auto-mode-alist))
+
+(setq completion-at-point-functions       '(auto-complete)
+      nrepl-hide-special-buffers          t
+      cider-repl-pop-to-buffer-on-connect nil
+      cider-repl-popup-stacktraces        nil
+      cider-auto-select-error-buffer      nil
+      cider-popup-stacktraces             t)
+
+(global-set-key (kbd "\e <left>")  'paredit-backward-slurp-sexp)
+(global-set-key (kbd "\e <right>") 'paredit-forward-slurp-sexp)
+
+(setq hl-paren-colors
+      '("orange1"    "yellow1"      "greenyellow"
+        "green1"     "springgreen1" "cyan1"
+        "slateblue1" "magenta1"     "purple"))
+
+
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Recentf mode
-(debug "Loading recentf-mode")
 (recentf-mode t)
 (setq recentf-auto-cleanup    300
       recentf-max-saved-items 1000
@@ -562,28 +301,10 @@ whitespace, anything else get chewed one character at a time."
       recentf-keep '(file-remote-p file-readable-p))
 (add-to-list 'recentf-exclude "\\.ido\\.last")
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Auto-indent mode
-(debug "Loading auto-indent-global-mode")
-(auto-indent-global-mode)
-;(add-hook 'emacs-lisp-mode-hook 'auto-indent-minor-mode)
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Move text
-(debug "Loading move-text-mode")
-(require 'move-text)
-(global-set-key (kbd "M-p") 'move-text-up)
-(global-set-key (kbd "M-n") 'move-text-down)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Allout mode
-(debug "Loading allout-mode")
-(require 'allout)
-(allout-init t)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; iBuffer mode
-(debug "Loading ibuffer-mode")
 (provide 'ibuffer-config)
 (require 'ibuffer-config)
 
@@ -756,21 +477,10 @@ whitespace, anything else get chewed one character at a time."
                      (name 16 -1) " "
                      filename))))))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Dired mode
-(debug "Loading dired-mode")
-(add-hook 'dired-mode-hook 'my-dired-mode-hook)
-(add-hook 'dired-mode-hook 'my-dired-mode-hook)
 
-(defun my-dired-mode-hook ()
-  (local-set-key (kbd "F") 'dired-find-file-other-window))
-
-(defun my-dired-mode-hook ()
-  (local-set-key (kbd "<mouse-2>") 'dired-mouse-find-file))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; IDo mode, better than iswitch mode
-(debug "Loading ido-mode")
 (require 'ido)
 (ido-mode t)
 (setq ido-enable-flex-matching t
@@ -799,345 +509,20 @@ whitespace, anything else get chewed one character at a time."
     (when filename
       (find-file (cdr (assoc filename file-assoc-list))))))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Whitespace mode
-(debug "Loading whitespace-mode")
-(require 'whitespace)
-(setq whitespace-style       (quote (face tabs tab-mark lines-tail)))
-(setq whitespace-action      nil)
-(setq whitespace-line-column 80)
-(setq whitespace-display-mappings
-      '((tab-mark     ?\t   [?\xBB ?\t] [?\\ ?\t]) ; tab
-        ))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Magit
-;; Will only work if you did "make && sudo make install" on it
-;; Deactivated at the moment. It brings error during commit message edits
-;; and I don't see its use case yet.
-;; (require 'magit)
-;; (add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . magit-commit-mode))
-(global-set-key (kbd "C-c g") 'magit-status)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Auto-complete mode
-(debug "Loading auto-complete-mode")
-(require 'auto-complete-config)
-(global-auto-complete-mode t)
-; Fast popup, but slow auto-completion
-(setq ac-delay 1.0)
-(setq ac-auto-show-menu 0.1)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Yet Another Snippet plugin
-;; See http://yasnippet.googlecode.com/svn/trunk/doc/snippet-development.html
-(debug "Loading yasnippet-mode")
-(require 'yasnippet)
-(yas-global-mode 1)
-(when (require 'yasnippet nil 'noerror)
-  (progn
-    (yas/load-directory "~/.emacs.d/snippets")))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Indent-guide mode
-(debug "Loading indent-guide-mode")
-;(require 'indent-guide)
-;(indent-guide-set-delay 0.3)
-;;(setq indent-guide-char "│")
-;(setq indent-guide-char "┊")
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Auto-highlight-symbol mode
-(debug "Loading auto-highlight-symbol-mode")
-(require 'auto-highlight-symbol)
-(auto-highlight-symbol-mode)
-(global-auto-highlight-symbol-mode t)
-(setq ahs-default-range 'ahs-range-whole-buffer
-      ahs-idle-interval 1.0)
-(global-set-key (kbd "C-c p") 'ahs-backward)
-(global-set-key (kbd "C-c n") 'ahs-forward)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Multiple-cursors mode
-(debug "Loading multiple-cursors-mode")
-(require 'multiple-cursors)
-(global-set-key (kbd "C-c m e") 'mc/edit-lines)
-(global-set-key (kbd "C-c m r") 'set-rectangular-region-anchor)
-
-(global-set-key (kbd "C-c m R") 'mc/mark-all-in-region)
-(global-set-key (kbd "C-c m a") 'mc/mark-all-like-this-dwim)
-(global-set-key (kbd "C-c m A") 'mc/mark-all-like-this)
-(global-set-key (kbd "C-c m n") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-c m p") 'mc/mark-previous-like-this)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; RCIRC - Emacs IRC
-(debug "Loading rcirc-mode")
-(add-to-list 'load-path "~/.emacs.d/rcirc")
-(require 'rcirc)
-(eval-after-load 'rcirc '(require 'rcirc-notify))
-;; (rcirc-track-minor-mode 1)
-(add-hook 'rcirc-mode-hook (lambda ()
-                             (rcirc-track-minor-mode 1)
-                             (rcirc-omit-mode)))
-
-(setq rcirc-default-nick           "uwe"
-      rcirc-default-user-name      "uwe"
-      rcirc-default-full-name      "Uwe Dauernheim"
-      rcirc-decode-coding-system   'undecided
-      rcirc-time-format            "%H:%M:%S "
-      rcirc-startup-channels-alist '(("#tech" "#core" "#staging"))
-      rcirc-prompt                 "         %n> "
-      rcirc-fill-prefix            "         "
-      rcirc-fill-column            65
-      rcirc-log-flag               t
-      rcirc-buffer-maximum-lines   10000
-      rcirc-bright-nicks           (quote ("jakob" "fabian" "bjorn" "dklee" "masse"))
-      rcirc-keywords               (quote ("erlang"))
-      rcirc-server-alist           '(("irc.hq.kred" :channels ("#tech" "#core" "#staging")))
-      rcirc-ignore-list            '()
-      rcirc-omit-responses         '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
-
-;; Wrap long lines according to the width of the window
-(add-hook 'window-configuration-change-hook '(lambda ()
-                                               (setq rcirc-fill-column (- (window-width) 2))))
-
-(defun rcirc-kill-all-buffers ()
-  (interactive)
-  (kill-all-mode-buffers 'rcirc-mode))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Projectile mode
-                                        ; For help use: C-c p C-h
-(debug "Loading projectile-mode")
-(require 'projectile)
-(projectile-global-mode)
-                                        ;(add-hook 'clojure-mode-hook 'projectile-on)
-(setq projectile-show-paths-function 'projectile-hashify-with-uniquify)
-                                        ;(setq projectile-use-native-indexing t)
-                                        ;(setq projectile-enable-caching t)
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; LANGUAGE MODES
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Text mode
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-to-list 'auto-mode-alist '("README" . text-mode))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ELisp mode
-(add-hook 'cider-repl-mode-hook 'paredit-mode)
-(add-hook 'cider-repl-mode-hook 'show-paren-mode)
-(add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'cider-repl-mode-hook 'highlight-parentheses-mode)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; HTML mode
-(add-to-list 'auto-mode-alist '("\\.html$" . html-mode))
-(add-to-list 'auto-mode-alist '("\\.htm$"  . html-mode))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Python mode
-(require 'python-mode)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Clojure mode
-;(package-install clojure-mode)
-;(package-install clojure-test-mode)
-;(package-install clojure-project-mode)
-(add-hook 'clojure-mode-hook 'cider-mode)
-(add-hook 'clojure-mode-hook 'paredit-mode)
-(add-hook 'clojure-mode-hook 'show-paren-mode)
-(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
-
-(setq auto-mode-alist (cons '("\\.cljs" . clojure-mode) auto-mode-alist))
-
-;(debug "Loading clojure-project-mode")
-;(require 'clojure-project-mode)
-;(global-set-key (kbd "???") 'project-new)
-;(global-set-key (kbd "???") 'project-save)
-;(global-set-key (kbd "???") 'project-open)
-;(global-set-key (kbd "???") 'project-fuzzy-search)
-;(global-set-key (kbd "???") 'project-regex-search)
-;(global-set-key (kbd "???") 'project-search-text)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Cider mode
-;; Use as:
-;;
-;;   M-x nrepl-jack-in
-;;
-;;   C-c C-d Show documentation
-;;   C-c C-s Show implementation
-;;   C-c C-t Jump to source or test file
-;;   M-. C-s Jump to definition
-;;   M-, Jump back
-;;   M-TAB auto-complete
-;;
-;; If documentation can't be found, add to ~/.lein/profiles.clj:
-;;
-;;   {:user {:injections [(use 'clojure.repl)]}}
-;;
-;; or type in nREPL:
-;;
-;;   (use 'clojure.repl)
-(add-hook 'cider-mode-hook      'cider-turn-on-eldoc-mode)
-(add-hook 'cider-repl-mode-hook 'paredit-mode)
-(add-hook 'cider-repl-mode-hook 'show-paren-mode)
-(add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'cider-repl-mode-hook 'highlight-parentheses-mode)
-
-(setq completion-at-point-functions       '(auto-complete)
-      nrepl-hide-special-buffers          t
-      cider-repl-pop-to-buffer-on-connect nil
-      cider-repl-popup-stacktraces        nil
-      cider-auto-select-error-buffer      nil
-      cider-popup-stacktraces             t)
-
-(global-set-key (kbd "\e <left>")  'paredit-backward-slurp-sexp)
-(global-set-key (kbd "\e <right>") 'paredit-forward-slurp-sexp)
-
-(setq hl-paren-colors
-      '("orange1"    "yellow1"      "greenyellow"
-        "green1"     "springgreen1" "cyan1"
-        "slateblue1" "magenta1"     "purple"))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Erlang mode
-(debug "Loading erlang-mode")
-;(add-to-list 'load-path "~/dev/otp/install/R14B03/lib/erlang/lib/tools-2.6.6.4/emacs")
-;(add-to-list 'exec-path "~/dev/otp/install/R14B03/bin")
-;(setq erlang-root-dir   "~/dev/otp/install/R14B03")
-(add-to-list 'load-path "/usr/local/lib/erlang/lib/tools-2.6.10/emacs")
-(add-to-list 'exec-path "/usr/local/bin")
-(setq erlang-root-dir   "/usr/local/lib/erlang")
-
-;(require 'erlang-start)
-(setq erlang-tab-mode          nil
-      erlang-indent-level      '2
-      erlang-electric-commands '(erlang-electric-semicolon
-                                 erlang-electric-comma
-                                 erlang-electric-arrow
-                                 erlang-electric-newline
-                               ; erlang-electric-gt        ; ...annoying
-                                 erlang-electric-lt))
-(add-to-list 'auto-mode-alist        '("\\.[eh]rl$" . erlang-mode))
-(add-to-list 'auto-mode-alist        '("\\.yaws$"   . erlang-mode))
-(add-to-list 'interpreter-mode-alist '("escript"    . erlang-mode))
-
-(add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
-(add-hook 'cider-repl-mode-hook 'show-paren-mode)
-(add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'cider-repl-mode-hook 'highlight-parentheses-mode)
-
-
-(defun my-erlang-mode-hook ()
-  (interactive)
-  (linum-mode)
-  (setq truncate-lines                 t
-        truncate-partial-width-windows nil
-        whitespace-style               '(face tabs lines-tail)
-        whitespace-action              nil
-        whitespace-line-column         80)
-  (whitespace-mode)
-  (highlight-todo)
-  (allout-mode))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Go mode
-(debug "Loading go-mode")
-(require 'go-mode-load)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Markdown mode
-(debug "Loading markdown-mode")
-(add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-(add-hook 'markdown-mode-hook '(lambda() (local-set-key (kbd "<backtab>") 'markdown-cycle)))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Ruby mode
-(debug "Loading ruby-mode")
-(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
-(autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
-(autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
-(add-hook 'ruby-mode-hook '(lambda () (inf-ruby-keys) (turn-on-font-lock)))
-(autoload 'rubydb "rubydb3x" "Ruby debugger" t)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; YAML mode
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml$"  . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; THEMES
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Color Themes
-(debug "Loading themes")
-;(setq solarized-termcolors 256)
-;(load-theme 'solarized-light t)
-;(load-theme 'solarized-dark t)
-;(load-theme 'less t)
-;(load-theme 'zenburn t)
-;(load-theme 'twilight t)
-;(load-theme 'drr t)
-;(load-theme 'almost-monokai t)
-;(load-theme 'empty-void t)
-;(load-theme 'wombat t)
-;(load-theme 'monokai t)
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa/github-theme-0.0.3")
-;(load-theme 'github t)
-(set-face-background 'default nil)
-(load-theme 'djui t)
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CUSTOMIZATION
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Custom set variables
-(debug "Loading custom variables")
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(allout-auto-activation "t")
- '(column-number-mode t)
- '(custom-safe-themes (quote ("39bd29a2d79f42e907dd60243aa85a3d8a352528a6460a4ca88ce41c64cf424a" "388b79a29145f779145215ba3d6d2857eafcac79785f82f9e8e35e2f88b3007e" "c582c1d99904ddc0677f87ba7eb6596cf9321a7e6233857dc4bd6ae587893194" "82cd267bd7a97d505f4c39869a8a952a217f077167ff096d935df1f4975b6182" default)))
- '(fringe-mode 0 nil (fringe))
- '(safe-local-variable-values (quote ((allout-layout . t) allout-layout t)))
- '(tooltip-mode nil))
+ '(custom-safe-themes (quote ("a3780105f37819a70a65c527f748f1c76293190c2aadd6014b01fcc8d5f555ee" "923faef2c7ed017e63f517703c846c6190c31400261e8abdb1be06d5b46ea19a" "dd4db38519d2ad7eb9e2f30bc03fba61a7af49a185edfd44e020aa5345e3dca7" "fb4bf07618eab33c89d72ddc238d3c30918a501cf7f086f2edf8f4edba9bd59f" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(font-lock-type-face ((t (:foreground "#FFFFFF" :weight normal)))))
- (if window-system
-    (custom-set-faces
-     '(default ((t (:inherit nil :stipple nil :background "#272821" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "unknown" :family "Terminus"))))
-     '(mode-line ((t (:box nil))))
-     '(mode-line-inactive ((t (:box nil))))
-     '(whitespace-line ((t (:background "gray20" :foreground "#D62E00"))))))
-
-(debug "Loading done.")
+ '(default ((t (:background nil)))))
