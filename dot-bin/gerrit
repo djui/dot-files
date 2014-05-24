@@ -1,3 +1,0 @@
-#!/bin/sh
-
-git push $1 origin HEAD:refs/for/master

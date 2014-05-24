@@ -2,7 +2,8 @@
   name = Uwe Dauernheim
   email = uwe@dauernheim.net
 [core]
-  editor = emacs -nw
+  # global per user gitignore file
+  excludesfile = /Users/uwe/.gitignore_global
 [alias]
   glog    = log --graph --abbrev-commit --pretty=oneline
   lol     = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -38,34 +39,6 @@
   who     = "!git shortlog -s -- | sort -n -k1"
   aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"
   swap    = checkout "@{-1}"
-  push-pr = "!sh -c 'hash=$(git rev-parse HEAD) ; \
-                               git push $* && echo $hash >> .git/PUSH_COMMITS' - " 
-  pr = "!sh -c 'if [ $1 ] ; then \
-                              amount=$1 ; \
-                          elif [ -f .git/PUSH_COMMITS ] ; then \
-                              lastpushcommit=$(tail -n 1 .git/PUSH_COMMITS) ; \
-                              amount=-$(git log --oneline $lastpushcommit.. | wc -l | tr -d \" \") ; \
-                          else \
-                              amount=-1 ; \
-                          fi ; \
-                          branch=$(git name-rev --name-only HEAD) ; \
-                          remote=$(git config --local branch.$branch.remote) ; \
-                          repo=$(git config --local remote.$remote.url) ; \
-                          ctexts=$(git log $amount HEAD --stat) ; \
-                          echo \"git pull $repo $branch\" ; \
-                          echo ; \
-                          echo \"$ctexts\"' - "
-  send-pr = "!sh -c 'if [ $1 ] ; then \
-                                   amount=$1 ; \
-                               elif [ -f .git/PUSH_COMMITS ] ; then \
-                                   lastpushcommit=$(tail -n 1 .git/PUSH_COMMITS) ; \
-                                   amount=-$(git log --oneline $lastpushcommit.. | wc -l | tr -d \" \") ; \
-                               else \
-                                   amount=-1 ; \
-                               fi ; \
-                               branch=$(git name-rev --name-only HEAD) ; \
-                               git pr $amount | \
-                               mail -s \"Pull request: $branch into $(git config remote.origin.url)\" $(git config pull-request.group)' - "
   ff = "pull --ff-only"
   #unmerged = "!git diff --name-status --diff-filter=U | cut -f 2"
   unmerged = "!git ls-files -u | cut -f 2 | sort -u"
@@ -83,7 +56,6 @@
   diff = auto
   interactive = auto
   status = auto
-[gui]
 [merge]
   summary = true
   tool = 
@@ -96,9 +68,6 @@
 [push]
   # instead of pushing all branches with git push, you only push the current one.
   default = current
-[core]
-  # global per user gitignore file
-  excludesfile = /Users/uwe/.gitignore_global
 [github]
   user = uwe@dauernheim.net
   token = c7a71dca362884293fbfadda4ae71d05
@@ -110,3 +79,5 @@
   templatedir = ~/.git_template
 [ghi]
 	token = 68ec08f34478a8596e123df825edea668b07f50f
+[hub]
+protocol = https

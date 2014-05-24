@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cat /dev/urandom | gtr -dc 'a-zA-Z0-9' | fold -w 1024 | head -n 1

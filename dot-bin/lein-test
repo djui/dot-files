@@ -1,0 +1,6 @@
+#!/bin/sh
+
+output=$(lein test 2>&1)
+code=$?
+echo "$output"
+[[ $code = 1 ]] && grep "Caused by.*compiling" <<< "$output" | grep --color "(.*)"

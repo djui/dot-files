@@ -1,7 +1,7 @@
 HashKnownHosts yes
 
 Host *
-  VisualHostKey yes
+#  VisualHostKey yes
   ServerAliveInterval 240
 #  GSSAPIAuthentication yes
 #  GSSAPIDelegateCredentials yes
@@ -31,5 +31,5 @@ Host *.spotify.net *-appstore-* *-appstoredb-* appstore-admin *.ash *.lon *.sto 
     ProxyCommand ssh -qax sptunnel 'nc %h %p -w 3600'
 Host sptunnel
     DynamicForward localhost:1080
-    Hostname jump1.lon.spotify.net
+    Hostname jump1.sto.spotify.net
     ProxyCommand none

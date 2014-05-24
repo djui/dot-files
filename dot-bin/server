@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+
+var http = require("http");
+var url = require("url");
+var path = require("path");
+var fs = require("fs");
+
+var mimeTypes = {
+  ".html": "text/html",
+  ".jpeg": "image/jpeg",
+  ".jpg":  "image/jpeg",
+  ".png":  "image/png",
+  ".js":   "text/javascript",
+  ".json": "application/json",
+  ".css":  "text/css"
+};
+
+var port = process.argv[2] || 8080;
+
+
+http.createServer(function(req, res) {
+  var uri = url.parse(req.url).pathname;
+  var filepath = path.join(process.cwd(), unescape(uri));
+  
+  fs.exists(filepath, function(exists) {
+    if (!exists) {
+      console.log("404 " + filepath);
+      res.writeHead(404);
+      res.end();
+      return;
+    }
+    
+    var mime = mimeTypes[path.extname(filepath)] || "text/plain";
+    console.log("200 " + filepath);
+    res.writeHead(200, {"Content-Type": mime});
+
+    fs.createReadStream(filepath).on("error", function() {
+      console.log("500 " + filepath);
+      res.writeHead(500);
+      res.end("500 Internal Server Error");
+      return;
+    }).pipe(res);
+  });
+}).listen(port);
