@@ -12,12 +12,15 @@ SRCITEMS=(
     gnupg
     lein
     login_conf
+    oh-my-zsh
+    oh-my-zsh_custom
     ssh
     tmux.conf
     vim
     vimrc
     w3m
     zshrc
+    zshrc.pre-oh-my-zsh
 )
 
 for SRCITEM in ${SRCITEMS[*]} ; do 

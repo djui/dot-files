@@ -1,0 +1,393 @@
+####################################################################
+## EXPORTS #########################################################
+####################################################################
+
+# Allow 256 colors in terminal
+# Also look here: http://www.xvx.ca/~awg/emacs-colors-howto.txt
+# sudo apt-get install ncurses-term
+export TERM=xterm-256color
+
+## Make the special character like Umlauts work through SSH on a Mac from Linux
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
+
+export EDITOR="emacs -nw"
+
+export GOROOT="/usr/local/Cellar/go/1.2"
+
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/.bin:$PATH"
+export PATH="/usr/local/Cellar/ruby/1.9.3-p385/bin:$PATH"
+export PATH="/usr/local/Cellar/ruby/2.0.0-p0/bin:$PATH"
+export PATH="$HOME/.cljr/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$PATH"
+export PATH="$GOROOT/bin:$PATH"
+export PATH="/opt/boxen/env.sh:$PATH"
+
+
+####################################################################
+## ZSH #############################################################
+####################################################################
+
+ZSH_THEME=agnoster
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+setopt hist_ignore_all_dups # ignore duplicate history entries
+setopt extendedhistory      # Add timestamp information to history
+setopt append_history       # Share history between sessions
+#setopt share_history       # Share history between processes
+setopt inc_append_history   # ?
+#setopt extended_glob       # Use extended globbing ("**") # Conflicts with e.g. "HEAD^"
+setopt prompt_subst         # Substitute the prompt with given commands
+setopt noauto_remove_slash  # ?
+setopt list_types           # ?
+setopt complete_in_word     # allow tab completion in the middle of a word
+setopt no_beep              # Don not beep
+setopt autocd               # "/etc" actually runs "cd /etc"
+#setopt correct             # Correct spelling mistakes
+setopt auto_list            # Automatically list tab-completion hits
+setopt auto_menu            # Automatically use menyu completion after the second consecutive request for completion
+#setopt always_to_end       # After tab completion always move to end
+setopt auto_pushd           # Always pushd when changing directory
+setopt pushd_to_home        # Have pushd with no arguments act like `pushd $HOME'
+
+autoload -Uz compinit && compinit
+autoload -U colors && colors
+autoload -Uz vcs_info
+
+zstyle ':completion:*' add-space true
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _list _oldlist _expand _complete _ignored _match _correct _approximate _prefix
+zstyle ':completion:*' completions 1
+zstyle ':completion:*' condition false
+zstyle ':completion:*' format '%B%d%b'
+zstyle ':completion:*' glob 0
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' insert-unambiguous true
+zstyle ':completion:*' list-colors "$(dircolors -b 2> /dev/null || gdircolors -b)"
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' max-errors 1
+zstyle ':completion:*' menu select=10
+zstyle ':completion:*' menu select=2 eval "$(dircolors -b 2> /dev/null || gdircolors -b)"
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*' substitute 1
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+zstyle ':completion:*' word true
+#zstyle ':completion:*' menu select=long
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:descriptions' format '%B%d%b'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle :compinstall filename '/Users/uwe/.zshrc'
+
+eval $(dircolors 2> /dev/null) || eval $(gdircolors)
+
+unlimit
+
+#bindkey -v # vi key bindings
+bindkey -e # emacs key bindings
+bindkey ' ' magic-space # also do history expansion on space
+
+bindkey "^[b" backward-char
+bindkey  "^b" backward-word
+bindkey "^[f" forward-char
+bindkey  "^f" forward-word
+bindkey "^[d" delete-char
+bindkey  "^d" delete-word
+bindkey "^[w" backward-delete-char
+bindkey  "^w" backward-delete-word
+
+####################################################################
+## AUTO COMPLETION #################################################
+####################################################################
+
+[ -f $HOME/.bin/git-completion.zsh ] && source $HOME/.bin/git-completion.zsh
+
+####################################################################
+## PROMPT SCRIPT ###################################################
+####################################################################
+
+zstyle ':vcs_info:*:prompt:*' formats "$VCSPROMPT" "%b"
+zstyle ':vcs_info:git:*' check-for-changes true
+
+__git_status() {
+    MODIFIED=$(git status --porcelain 2> /dev/null | grep -c "^M\|\\?" > /dev/null && echo "±")
+    ADDED=$(git status --porcelain 2> /dev/null | grep -c "^A" > /dev/null && echo "+")
+    STASHED=$(git stash list 2> /dev/null | wc -l | tr -d " " | grep -c "^[^0]" > /dev/null && echo "s")
+    CONFLICT=$(git status --porcelain 2> /dev/null | grep -c "^U" > /dev/null && echo "!")
+    [ ! "$MODIFIED$ADDED$CONFLICT" = "" ] && OUTPUT="$MODIFIED$ADDED$CONFLICT$STASHED"
+    [ ! "$OUTPUT" = "" ] && echo "($OUTPUT)"
+}
+
+precmd() {
+    vcs_info 'prompt'
+    # [ -n vcs_info_msg_0_ ] && RPS1="%B%F{red}${vcs_info_msg_1_} $(__git_status)%f %F{blue}%~%f %F{green}%m%f%b"
+    [ -n vcs_info_msg_0_ ] && PS1=$'\n%B%F{8}%n@%M:%~ %F{red}${vcs_info_msg_1_} $(__git_status)%f%b\n%B»%b '
+}
+
+#PS1="%B»%b "
+#RPS1="%F{green}%m%f"
+
+####################################################################
+## ALIASES #########################################################
+####################################################################
+
+#alias a=''
+alias b='emacs -nw ~/.bashrc ; source ~/.bashrc'
+alias c='clear'
+alias d='git diff'
+alias ed='/Applications/Emacs.app/Contents/MacOS/Emacs --daemon'
+alias e='emacs -nw' # '/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t -c'
+alias f='find'
+alias g='grep'
+alias h='history'
+alias i='hostname -I'
+##alias j='jumpstart'
+alias k=''
+#alias l='ls'
+#alias m=''
+#alias n=''
+##alias o=''
+alias p='ps aux'
+alias pg='ps aux | grep -i'
+#alias q=''
+#alias r=''
+#alias s=''
+alias t='tail'
+#alias u=''
+#alias v=''
+#alias w=''
+#alias x=''
+#alias y=''
+alias z='emacs -nw ~/.zshrc ; source ~/.zshrc'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias 80='grep -nr "^.\{81\}"'
+alias adn='brio'
+alias apt-search='apt-cache search'
+alias beep='mpg123 -q $HOME/Dropbox/Music/glass.mp3 &'
+alias ccat='pygmentize -O style=monokai -f terminal256 -g'
+alias cd..='cd ..'
+alias cpu='grep -c ^processor /proc/cpuinfo ; grep "^model name" /proc/cpuinfo | sort -u'
+alias diff='diff -u'
+alias dir='echo "It is time to let MS-DOS go and is Linux."'
+alias dirs='dirs -l -v -p'
+alias dl='download'
+alias edit='$EDITOR'
+alias erl2='rlwrap -A -i -r -p RED -a -- erl'
+alias erlgrep='find . -type f \( -name "*.erl" -o -name "*.hrl" \) | xargs grep --color=auto'
+alias eg='erlgrep'
+alias egrep='egrep --color=AUTO'
+alias ga='git add'
+alias gb='git branch -v'
+alias gca='git add . && git commit'
+alias gc='git commit -m'
+alias gac='git commit -a -m'
+alias gci='git commit --interactive'
+alias gcai='git add . && git commit --interactive'
+alias gd='git diff'
+alias gds='git diff --stat'
+alias gf='git fetch --all'
+alias gff='git stash && git pull --ff-only && git stash pop'
+alias gg='git gui'
+alias gh='git lola'
+alias gk='gitk'
+alias gl='git log --format="%h %ai %s (%an <%ae>)"'
+alias glp='git log --patch'
+alias gls='git log --stat'
+alias gp='git push'
+alias gr='git remote -v'
+alias gs='git status'
+alias gss='git stash show'
+alias gx='gitx'
+alias history='cat $HISTFILE'
+alias hudson='ssh hudson@hudson-slave10'
+alias hurl='jhurl'
+alias imac='ssh -Y 10.20.9.110'
+alias isodate='date -u +"%Y-%m-%dT%H:%M:%SZ"'
+alias joyent='ssh node@djui.no.de' # node@72.2.126.155
+alias less='less -R -N -x2'
+alias lines='wc -l'
+[ $(uname) = "Darwin" ] && alias locate='mdfind -name'
+[ $(uname) = "Linux" ] && alias locate='find / -mount -wholename "/proc" -prune -o -iname'
+function gcp {
+    git commit -m $1 && git push
+}
+function gacp {
+    git commit -a -m $1 && git push
+}
+function locate2 {
+    case $(uname) in
+        "Darwin") mdfind -name $* | grep "^$(pwd)" ;;
+        "Linux" ) find / -mount -wholename "/proc" -prune -o -iname $* | grep "^$(pwd)" ;;
+    esac
+}
+function klocate {
+    case $(uname) in
+        "Darwin") mdfind -name $* | grep "/kred/" ;;
+        "Linux" ) find / -mount -wholename "/proc" -prune -o -iname $* | grep "/kred/" ;;
+    esac
+}
+function k {
+    case $(uname) in
+        "Darwin") mdfind -name $* | grep "^$(pwd)" | head -n 1 | xargs emacs -nw ;;
+        "Linux" ) find / -mount -wholename "/proc" -prune -o -iname $* | grep "^$(pwd)" | head -n 1 | xargs emacs -nw ;;
+    esac
+}
+alias clean='git clean -fdx'
+alias la='ls -alhp'
+#alias ll='if [ "$_" = "-lh" ] ; then echo -e "\033[01;30mBored, nervous or unconcentrated?\033[00m" ; else ls -lh ; fi'
+alias ll='ls -lh'
+[ $(uname) = "Darwin" ] && alias ls='ls -G'
+[ $(uname) = "Linux" ] && alias ls='ls --color=auto'
+alias lt='tree -dCL 3'
+alias lsop='lsof -i'
+alias mg='mg -n'
+alias matrix='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS
+conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
+alias md='mkdir'
+alias mem='grep -o ^MemTotal.* /proc/meminfo'
+alias notify='mpg123 -q /home/uwe/Dropbox/Music/glass.mp3 &'
+[ $(uname) = "Linux" ] && alias open='xdg-open'
+alias otpgrep='find $(which erl)/../../lib -type f \( -name "*.erl" -o -name "*.hrl" -o -name "*.c" -o -name "*.h" \) | xargs grep --color=auto'
+alias pd='pushd'
+alias review=gerrit
+alias sl='cut -c -$(tput cols)'
+alias tips='e $HOME/Dropbox/_Life/_tips.md'
+alias tmux-pwn='tmux list-clients | sed "s|^\(/dev/ttys[0-9]\+\).*\[\([0-9]\+x[0-9]\+\).*$|\2 \1|" | sort -r -n | tail -n +2 | cut -d " " -f 2 | xargs -n 1 tmux detach-client -t'
+alias tree='tree -C'
+alias tree2='tree -CifF'
+alias vpn='[ $(nmcli con status | grep -c "Klarna") = 0 ] && nmcli con up id "Klarna"'
+alias whereis='find . -iname'
+
+# Power management saver
+alias standby='sudo pmset -a hibernatemode 0 && pmset sleepnow'
+alias hibernate='sudo pmset -a hibernatemode 25 && pmset sleepnow'
+
+####################################################################
+## FUNCTIONS #######################################################
+####################################################################
+
+echo_info() {
+    echo -e "\033[34m$1\033[0m"
+}
+
+echo_success() {
+    echo -e "\033[32m$1\033[0m"
+}
+
+echo_failure() {
+    echo -e "\033[31m$1\033[0m"
+}
+
+dups() {
+    f=/tmp/dup_checker.txt
+    p=${1:-.}
+
+    find $p \! -type d -exec shasum {} \; | sort -n | tee $f | cut -f 1 -d " " | uniq -d | grep -f /dev/stdin $f
+}
+
+download() {
+    pushd $HOME/Downloads
+    wget $1
+    popd
+}
+
+rebarify() {
+    wget http://cloud.github.com/downloads/basho/rebar/rebar && chmod u+x ./rebar
+    mkdir ebin include priv src test
+    echo "/ebin/*" >> .gitignore
+    echo "erl_crash.dump" >> .gitignore
+    touch ebin/.gitignore
+    touch rebar.config
+    ./rebar create-app appid="$(basename $(pwd))"
+}
+
+erlc2() {
+    erlc $* | \
+        perl -pe "s/^(.+?):/\033[37;1m\1\033[0m:/" | \
+        perl -pe "s/:(.+?): /:\033[37;1m\1\033[0m: /" | \
+        perl -pe "s/: (.+?)$/: \033[31;1m\1\033[0m/" | \
+        perl -pe "s/Warning: /\033[33;1mWarning\033[0m: /" | \
+        perl -pe "s/Warning: /\033[31;1mError\033[0m: /"
+}
+
+dialyze() {
+    erl_top=/usr/local/Cellar/erlang/R16B
+    apps=$(find $erl_top/lib/erlang/lib -name '*.app' | sed "s/^.*\/\(.*\)-.*$/\1/")
+    dialyzer --build_plt --apps $apps
+}
+
+# e() { if [ $SSH_TTY ] ; then emacsclient -nw -c -a "" $* ; else emacsclient -nw -a "" $* ; fi }
+movie() { date "+%Y-%m-%d $@" >> $HOME/Dropbox/_Life/_movies.md }
+rtfm() { help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@"; }
+cmdfu(){ curl "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ |
+openssl base64)/plaintext"; }
+google() { w3m "http://www.google.com/search?q=$@" }
+encrypt() { openssl aes-256-cbc -a -salt -in "$1" -out "$1.aes" ; shred --remove "$1" }
+decrypt() { openssl aes-256-cbc -d -a -salt -in "$1.aes" -out "$1" }
+title() { echo -ne "\033]0;$*\007" }
+title-pwd() { title $(basename $PWD) }
+www() { if [ $1 ] ; then w3m $* ; else w3m google.com ; fi }
+colortable() { for c in {0..255} ; do echo -e "\033[38;05;${c}m $c: Test" ; done }
+2sv() {
+    urlenctext="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$@")"
+    transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Csv" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
+    echo {${transtext#*:}
+}
+
+2en() {
+    urlenctext="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$@")"
+    transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Cen" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
+    echo {${transtext#*:}
+}
+
+throbbler() {
+    s="⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
+    while true ; do
+        for (( i=0; i<${#s}; i++ )) ; do
+            echo -n "${s:$i:1}"
+            sleep 0.1
+            tput cub1
+        done
+    done
+}
+
+function erlinstall {
+    VERSION=R16B01
+    mkdir $(pwd)/../../install/$VERSION && \
+        ./otp_build setup --prefix=$(pwd)/../../install/$VERSION && \
+        make && \
+        make install
+}
+
+####################################################################
+####################################################################
+####################################################################
+
+[ -f $HOME/.bin/resty ] && source $HOME/.bin/resty
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+[ -f $HOME/Dropbox/_Life/motd ] && $HOME/Dropbox/_Life/motd
+
+### VirtualEnv for Python
+
+export VIRTUALENVWRAPPER_PYTHON=$(brew --prefix)/bin/python
+if [ -f $(brew --prefix)/bin/virtualenvwrapper_lazy.sh ]; then
+    . $(brew --prefix)/bin/virtualenvwrapper_lazy.sh
+fi
+
+# export JAVA_HOME=$(/usr/libexec/java_home)
+export JAVA_HOME=/Library/Java/Home
+export MAVEN_COLOR=true
