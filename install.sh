@@ -10,6 +10,7 @@ SRCITEMS=(
     gitconfig
     gitignore_global
     gnupg
+    lein
     login_conf
     ssh
     tmux.conf
