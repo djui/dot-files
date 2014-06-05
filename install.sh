@@ -22,16 +22,16 @@ SRCITEMS=(
 
 for SRCITEM in ${SRCITEMS[*]} ; do 
     DESTITEM=$(echo $SRCITEM | tr '!' '/') # Take care of subdirectories
-    echo -n "Trying to link $DESTDIR/.${SRCITEM}..."
+    echo -n "Trying to link $DESTDIR/.${SRCITEM}... "
     if [ -L "$DESTDIR/.$DESTITEM" ] ; then
         echo " already linked."
         continue
     elif [ -e "$DESTDIR/.$DESTITEM" ] ; then
-        echo -n " conflict..."
+        echo -n "conflict... "
         mv "$DESTDIR/.$DESTITEM" "$DESTDIR/.$DESTITEM.bak"
-        echo " backed up."
+        echo -n "backed up. "
     fi
-    echo -n "linking..."
+    echo -n "linking... "
     ln -s "$SRCDIR/dot-$SRCITEM" "$DESTDIR/.$DESTITEM"
-    echo " done."
+    echo "done."
 done
