@@ -48,7 +48,7 @@
 #alias glp='git log --patch'
 #alias gls='git log --stat'
 #alias gp='git push'
-#alias gr='git remote -v'
+alias gr='git remote -v'
 alias gs='git status'
 #alias gss='git stash show'
 #alias gx='gitx'
