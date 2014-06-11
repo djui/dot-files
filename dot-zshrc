@@ -54,8 +54,31 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+export EDITOR="emacs -nw"
+
+export GOROOT="/usr/local/Cellar/go/1.2"
+
+export PATH="$PATH:$HOME/.bin"
+export PATH="$PATH:$GOROOT/bin"
+export PATH="$PATH:/usr/local/heroku/bin"
+export PATH="$PATH:/usr/local/bin"
+export PATH="$PATH:/usr/bin"
+export PATH="$PATH:/bin"
+export PATH="$PATH:/usr/local/sbin"
+export PATH="$PATH:/usr/sbin"
+export PATH="$PATH:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
+
+export JAVA_HOME=/Library/Java/Home
+export MAVEN_COLOR=true
+
+# VirtualEnv for Python
+
+export VIRTUALENVWRAPPER_PYTHON=$(brew --prefix)/bin/python
+if [ -f $(brew --prefix)/bin/virtualenvwrapper_lazy.sh ]; then
+    source $(brew --prefix)/bin/virtualenvwrapper_lazy.sh
+fi
+
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
