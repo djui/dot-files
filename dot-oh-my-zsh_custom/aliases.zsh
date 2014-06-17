@@ -11,7 +11,7 @@
 #alias apt-search='apt-cache search'
 #alias b='emacs -nw ~/.bashrc ; source ~/.bashrc'
 #alias beep='mpg123 -q $HOME/Dropbox/Music/glass.mp3 &'
-#alias c='clear'
+alias c='clear'
 #alias ccat='pygmentize -O style=monokai -f terminal256 -g'
 #alias cd..='cd ..'
 #alias clean='git clean -fdx'
