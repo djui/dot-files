@@ -171,17 +171,19 @@
 ;; Global keybindings
 ;; Not belowing to a specific mode.
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
-(global-set-key (kbd "M-g")         'goto-line)
+(global-set-key (kbd "M-g")    'goto-line)
+(global-set-key (kbd "M-p")    'backward-paragraph)
+(global-set-key (kbd "M-n")    'forward-paragraph)
 
-(global-set-key (kbd "C-a")         'back-to-indentation)
+(global-set-key (kbd "C-a")    'back-to-indentation)
 
-(global-set-key (kbd "C-c d")       'forward-duplicate-line)
-(global-set-key (kbd "C-c D")       'forward-duplicate-line)
-(global-set-key (kbd "C-c e")       'eval-buffer)
-(global-set-key (kbd "C-c j")       'join-next-line)
-(global-set-key (kbd "C-c J")       'join-previous-line)
-(global-set-key (kbd "C-c r")       'replace-regexp)
-(global-set-key (kbd "C-c /")       'comment-or-uncomment-region)
+(global-set-key (kbd "C-c d")  'forward-duplicate-line)
+(global-set-key (kbd "C-c D")  'backward-duplicate-line)
+(global-set-key (kbd "C-c e")  'eval-buffer)
+(global-set-key (kbd "C-c j")  'join-next-line)
+(global-set-key (kbd "C-c J")  'join-previous-line)
+(global-set-key (kbd "C-c r")  'replace-regexp)
+(global-set-key (kbd "C-c /")  'comment-or-uncomment-region)
 
 
 
