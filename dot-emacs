@@ -499,6 +499,7 @@
 
 ;; It can restore recently used files easily.
 ;; Courtesty to Robin "Rost" for this snippet.
+(require 'cl)
 (defun recentf-ido-find-file ()
   "Find a recent file using Ido."
   (interactive)
