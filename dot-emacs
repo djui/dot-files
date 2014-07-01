@@ -266,6 +266,27 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+(add-to-list 'interpreter-mode-alist '("bash"   . sh-mode))
+(add-to-list 'interpreter-mode-alist '("sh"     . sh-mode))
+(add-to-list 'interpreter-mode-alist '("zsh"    . sh-mode))
+(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+
+(add-to-list 'magic-mode-alist '("<!DOCTYPE html .+DTD XHTML .+>" . nxml-mode))
+(add-to-list 'magic-mode-alist '("<html>"                         . html-mode))
+
+(add-to-list 'auto-mode-alist '("\\.clj$"       . clojure-mode))
+(add-to-list 'auto-mode-alist '("\\.cljs$"      . clojure-mode))
+(add-to-list 'auto-mode-alist '("\\.conf$"      . js-mode))
+(add-to-list 'auto-mode-alist '("\\.gitconfig$" . gitconfig-mode))
+(add-to-list 'auto-mode-alist '("\\.gitignore$" . gitignore-mode))
+(add-to-list 'auto-mode-alist '("\\.js$"        . js-mode))
+(add-to-list 'auto-mode-alist '("\\.md$"        . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.pp$"        . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.py$"        . python-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$"      . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.ya?ml$"     . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.zsh$"       . sh-mode))
+;;(add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . magit-commit-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Clojure mode
@@ -274,8 +295,6 @@
 (add-hook 'clojure-mode-hook 'show-paren-mode)
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
-
-(setq auto-mode-alist (cons '("\\.cljs" . clojure-mode) auto-mode-alist))
 
 (setq completion-at-point-functions       '(auto-complete)
       nrepl-hide-special-buffers          t
