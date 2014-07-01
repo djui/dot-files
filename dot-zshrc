@@ -71,11 +71,9 @@ export PATH="$PATH:/usr/sbin"
 export PATH="$PATH:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
-export JAVA_HOME=/Library/Java/Home
-export MAVEN_COLOR=true
+export JAVA_HOME=$(/usr/libexec/java_home)
 
 # VirtualEnv for Python
-
 export VIRTUALENVWRAPPER_PYTHON=$(brew --prefix)/bin/python
 if [ -f $(brew --prefix)/bin/virtualenvwrapper_lazy.sh ]; then
     source $(brew --prefix)/bin/virtualenvwrapper_lazy.sh
