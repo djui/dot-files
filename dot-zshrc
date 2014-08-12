@@ -56,7 +56,7 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR="emacs -nw"
 
-export GOROOT="/usr/local/Cellar/go/1.2"
+export GOROOT="/usr/local/Cellar/go/1.3"
 
 export PATH=""
 export PATH="$PATH:$HOME/.bin"
