@@ -1,0 +1,10 @@
+#!/bin/sh
+
+IPHONE_USER_AGENT="Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53"
+
+src=$(curl -s -A "$IPHONE_USER_AGENT" "$1")
+title=$(echo "$src" | grep "<title>" | sed "s/<title>\(.*\)<\/title>/\1/" | sed "s/^ *\(.*\) *$/\1/")
+url=$(echo "$src" | grep ".mp4" | sed "s/.*\"\(.*\)\".*/\1/" | sed "s/^ *\(.*\) *$/\1/")
+file=$(basename "$url")
+filename="${title}-${file}"
+wget "$url" -O "$filename"
