@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ $# -eq 0 ] ; then
+    echo "Usage: download <URL>"
+    exit
+fi
+
+cd $HOME/Downloads
+
+if [[ $1 =~ youtube.com ]] ; then
+   youtube-dl "$1"
+elif [[ $1 =~ svtplay.se ]] ; then
+    svtplay-dl "$1"
+else
+    wget "$1"
+fi
