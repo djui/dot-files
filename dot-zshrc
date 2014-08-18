@@ -45,10 +45,12 @@ HIST_STAMPS="yyyy-mm-dd"
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$HOME/.oh-my-zsh_custom
 
+export ZSH_PLUGINS_ALIAS_TIPS_TEXT="Alias tip: "
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(zsh-syntax-highlighting osx brew git github tmux lein mvn urltools extract colorize motd)
+plugins=(zsh-syntax-highlighting osx brew git github tmux lein mvn urltools extract colorize motd alias-tips)
 
 source $ZSH/oh-my-zsh.sh
 
