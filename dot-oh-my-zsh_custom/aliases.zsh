@@ -5,31 +5,29 @@
 
 ## Git
 
+unalias g
+alias gb='git branch -v'
+alias gcam='git commit -a -m'
+alias gcm='git commit -m'
+alias gcp='git commit && git push'
+alias gci='git commit --interacive'
+alias gg='git gui'
+alias gf='git fetch --all'
+alias gpf='git push --force'
 alias gr='git remote -v'
 alias gri='git rebase --interactive'
 alias gs='git status'
-alias gpf='git push --force'
 
-#alias ga='git add'
-#alias gac='git commit -a -m'
-#alias gb='git branch -v'
 #alias gc='git commit -m'
 #alias gca='git add . && git commit'
 #alias gcai='git add . && git commit --interactive'
-#alias gci='git commit --interactive'
-#alias gd='git diff'
 #alias gds='git diff --stat'
-#alias gf='git fetch --all'
 #alias gff='git stash && git pull --ff-only && git stash pop'
-#alias gg='git gui'
 #alias gh='git lola'
-#alias gk='gitk'
 #alias gl='git log --format="%h %ai %s (%an <%ae>)"'
 #alias glp='git log --patch'
 #alias gls='git log --stat'
-#alias gp='git push'
 #alias gss='git stash show'
-#alias gx='gitx'
 
 
 ## Misc
