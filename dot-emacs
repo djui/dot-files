@@ -104,6 +104,11 @@
               fill-column                  80
               )
 
+(setq hl-paren-colors
+      '("orange1"    "yellow1"      "greenyellow"
+        "green1"     "springgreen1" "cyan1"
+        "slateblue1" "magenta1"     "purple"))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
