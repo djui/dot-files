@@ -1,0 +1,159 @@
+#!/bin/sh -e
+
+cmd=connect
+name=$(scutil --nc list | sed -n 's/^* \+.\+\? \+.\+\? \+IPSec \+"\(.\+\?\)" \+\[IPSec\]/\1/p')
+password=
+secret=
+token=
+
+_usage() {
+    echo "Usage: $(basename $0) <command> [-n name] [-p pass] [-s secret] [-t token] [-h]"
+    echo "Handle VPN connections with TOTP suffixed passwords."
+    echo
+    echo "Commands:"
+    echo
+    echo "  status               Status for VPN connection"
+    echo "  connect              Connect VPN connection"
+    echo "  disconnect           Disconnect VPN connection"
+    echo "  help                 Display this help and exit"
+    echo
+    echo "Options:"
+    echo
+    echo "  -n,--name name       VPN connection (default: $name)"
+    echo "  -p,--password pass   Password for the VPN connection"
+    echo "  -s,--secret secret   Secret for the TOTP token"
+    echo "  -t,--token token     TOTP Token (overrides secret)"
+    echo "  -h,--help            Display this help and exit"
+    echo
+    echo "Prerequisites:"
+    echo
+    echo "  If not given pass, use default Keychain item 'name' of kind 'Password',"
+    echo "    if not found, prompt for input."
+    echo "  If not given secret, use default Keychain item 'name' of kind 'TOTP Secret',"
+    echo "    if not found, prompt for input."
+    echo
+    echo "Additionally:"
+    echo
+    echo "  If not given token, calculates it from secret."
+    echo
+    echo "Security:"
+    echo
+    echo "  To connect, write permission to the System Keychain is required."
+}
+
+_totp() {
+    python <<EOF
+import base64,hashlib,hmac,struct,sys,time
+try:
+    key = base64.b32decode("$1")
+    num = int(time.time()) // 30
+    msg = struct.pack('>Q', num)
+    digest = hmac.new(key, msg, hashlib.sha1).digest()
+    offset = ord(digest[19]) & 15
+    token_base = digest[offset : offset+4]
+    token_val = struct.unpack('>I', token_base)[0] & 0x7fffffff
+    token_num = token_val % 1000000
+    print '{0:06d}'.format(token_num)
+except:
+    sys.exit('Invalid Secret')
+EOF
+}
+
+_status() {
+    status=$(scutil --nc status "$name")
+    msg=$(echo "$status" | head -n 1)
+    code=$(echo "$status" | sed -n 's/^  Status : \(.\+\)/\1/p')
+    echo $msg
+    exit $(expr 2 - $code)
+}
+
+_connect() {
+    if [ "$UID" -ne 0 ] ; then
+        echo "Require superuser. (Write permissions to System Keychain)"
+        exit 1
+    fi
+
+    service=$(scutil --nc show "$name" | sed -n 's/^  SharedSecret : \(.\+\).SS/\1.XAUTH/p')
+    user=$(scutil --nc show "$name" | sed -n 's/^  XAuthName : \(.\+\)/\1/p')
+
+    if [ -z "$password" ] ; then
+        password=$(security find-generic-password -w -a "$user" -l "$name" -D "Password")
+        if [ -z "$password" ] ; then
+            #read -s -p "VPN Password:" password
+            stty -echo
+            printf "VPN Password:"
+            read password
+            stty echo
+            echo
+        fi
+    fi
+    if [ -z "$token" ] ; then
+        if [ -z "$secret" ] ; then
+            secret=$(security find-generic-password -w -a "$user" -l "$name" -D "TOTP Secret")
+            if [ -z "$secret" ] ; then
+                #read -s -p "TOTP Secret or Token:" secret_or_token
+                stty -echo
+                printf "TOTP Secret or Token:"
+                read secret_or_token
+                stty echo
+                echo
+                if [ $(expr length $secret_or_token) -eq 6 ] ; then
+                    token="$secret_or_token"
+                else
+                    secret="$secret_or_token"
+                fi
+            fi
+        fi
+        if [ -z "$token" ] ; then
+            token=$(_totp "$secret")
+        fi
+    fi
+
+    security add-generic-password -U \
+             -w "$password$token" \
+             -s "$service" \
+             -a "$user" \
+             -l "$name" \
+             -D "IPSec XAuth Password" \
+             /Library/Keychains/System.keychain
+
+    # scutil --nc start "$name"  # Unreliable
+    # networksetup -connectpppoeservice "$name"  # Unreliable
+    osascript > /dev/null <<< "tell application \"System Events\" to tell current location of network preferences to connect service \"$name\""
+
+    while [ $(scutil --nc status "$name" | head -n 1) = "Connecting" ] ; do
+        printf "\r$(scutil --nc status "$name" | head -n 1)"
+        sleep 1
+    done
+
+    echo ; _status
+}
+
+_disconnect() {
+    # scutil --nc stop "$name"  # Unreliable
+    # networksetup -disconnectpppoeservice "$name"  # Unreliable
+    osascript > /dev/null <<< "tell application \"System Events\" to tell current location of network preferences to disconnect service \"$name\""
+    exit $?
+}
+
+while [ $# -gt 0 ] ; do
+    case "$1" in
+        status)         cmd=status         ; shift   ;;
+        connect)        cmd=connect        ; shift   ;;
+        disconnect)     cmd=disconnect     ; shift   ;;
+        -n|--name)      name="$2"          ; shift 2 ;;
+        -p|--password)  password="$2"      ; shift 2 ;;
+        -s|--secret)    secret="$2"        ; shift 2 ;;
+        -t|--token)     token="$2"         ; shift 2 ;;
+        -h|--help|help)                                     _usage ; exit 0 ;;
+        -*)             echo "Invalid option: $1\n"   >&2 ; _usage ; exit 1 ;;
+        *)              echo "Invalid argument: $1\n" >&2 ; _usage ; exit 1 ;;
+    esac
+done
+
+
+case "$cmd" in
+    status)     _status     ;;
+    connect)    _connect    ;;
+    disconnect) _disconnect ;;
+esac
