@@ -535,6 +535,13 @@
 
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Dockerfile mode
+(add-to-list 'load-path "~/.emacs.d/dockerfile-mode/")
+(require 'dockerfile-mode)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+
+
 ;; wedge-ws mode
 (load "~/.emacs.d/wedge-ws")
 (require 'wedge-ws)
