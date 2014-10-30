@@ -50,7 +50,7 @@ export ZSH_PLUGINS_ALIAS_TIPS_TEXT="💡 Alias tip: "
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(zsh-syntax-highlighting osx brew git github tmux lein mvn urltools extract colorize motd alias-tips)
+plugins=(zsh-syntax-highlighting autosuggestions osx brew git github tmux lein mvn urltools extract colorize motd alias-tips)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -99,3 +99,10 @@ fi
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+# zsh-autosuggestions
+zle-line-init() {
+    zle autosuggest-start
+}
+zle -N zle-line-init
+
