@@ -3,7 +3,9 @@
 WHITE=$(echo -e '\033[1;37m')
 NORMAL=$(echo -e '\033[0m')
 
-curl -s http://real.til.spotify.net:3000/api/article/random | \
-    sed "s/^TIL \(.*\) - \(.*\)$/\1 $WHITE--\2$NORMAL/" | \
-    fold -s -w 50 | \
-    sed "s/\(.*\)/  \1/"
+if ping -o -W 0.1 -c 1 -q real.til.spotify.net > /dev/null ; then
+    curl -s http://real.til.spotify.net:3000/api/article/random | \
+        sed "s/^TIL \(.*\) - \(.*\)$/\1 $WHITE--\2$NORMAL/" | \
+        fold -s -w 50 | \
+        sed "s/\(.*\)/  \1/"
+fi
