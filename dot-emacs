@@ -299,6 +299,7 @@
 ;;(add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . magit-commit-mode))
 
 
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Elisp mode
 (add-hook 'clojure-mode-hook 'paredit-mode)
@@ -569,7 +570,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("a3780105f37819a70a65c527f748f1c76293190c2aadd6014b01fcc8d5f555ee" "923faef2c7ed017e63f517703c846c6190c31400261e8abdb1be06d5b46ea19a" "dd4db38519d2ad7eb9e2f30bc03fba61a7af49a185edfd44e020aa5345e3dca7" "fb4bf07618eab33c89d72ddc238d3c30918a501cf7f086f2edf8f4edba9bd59f" default))))
+ '(custom-safe-themes
+   (quote
+    ("a3780105f37819a70a65c527f748f1c76293190c2aadd6014b01fcc8d5f555ee" "923faef2c7ed017e63f517703c846c6190c31400261e8abdb1be06d5b46ea19a" "dd4db38519d2ad7eb9e2f30bc03fba61a7af49a185edfd44e020aa5345e3dca7" "fb4bf07618eab33c89d72ddc238d3c30918a501cf7f086f2edf8f4edba9bd59f" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
