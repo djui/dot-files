@@ -1,8 +1,0 @@
-#!/bin/bash
-
-if [ "$#" = 0 ]; then
-  echo "usage: jump <cmds>"
-  exit 1
-fi
-
-ssh -A jump1.sto.spotify.net $*
