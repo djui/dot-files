@@ -42,6 +42,9 @@
    'djui
    ;; Frame
    `(default                          ((t ("nil"))))
+   ;`(default
+   ;   (((class color) (background dark)) (:foreground "gray"))
+   ;   (((class color) (background light)) (:foreground "black")))
    `(hl-line                          ((t (:background ,djui-gray-darkest))))
    `(minibuffer-prompt                ((t (:foreground ,djui-blue-light))))
    `(modeline                         ((t (:foreground ,djui-black :background ,djui-white))))
@@ -95,6 +98,27 @@
    ;`(ac-selection-face                ((t (:background ,djui-gray-lighter))))
    ;; highlight-parentheses-mode
    `(hl-paren-face                    ((t (:bold t :underline t))))
+   ;; markup-mode/adoc-mode
+   `(markup-title-0-face              ((t (:inherit font-lock-function-name-face :weight bold))))
+   `(markup-title-1-face              ((t (:inherit markup-title-0-face :foreground ,djui-red-light))))
+   `(markup-title-2-face              ((t (:inherit markup-title-0-face :weight normal))))
+   `(markup-title-3-face              ((t (:inherit markup-title-1-face :weight normal))))
+   `(markup-strong-face               ((t (:inherit font-lock-variable-name-face :weight bold))))
+   `(markup-verbatim-face             ((t (:inherit font-lock-constant-face))))
+   `(markup-typewriter-face           ((t (:inherit markup-verbatim-face))))
+   `(markup-code-face                 ((t (:inherit markup-verbatim-face))))
+   `(markup-list-face                 ((t (:inherit font-lock-builtin-face))))
+   `(markup-table-face                ((t (:inherit font-lock-string-face))))
+   `(markup-reference-face            ((t (:inherit font-lock-keyword-face))))
+   `(markup-internal-reference-face   ((t (:inherit font-lock-string-face))))
+   `(markup-attribute-face            ((t (:inherit font-lock-doc-face))))
+   `(markup-meta-face                 ((t (:inherit font-lock-comment-face))))
+   `(markup-meta-hide-face            ((t (:inherit markup-meta-face))))
+   ;; markdown-mode
+   `(markdown-header-face-1           ((t (:inherit markup-title-0-face))))
+   `(markdown-header-face-2           ((t (:inherit markup-title-1-face))))
+   `(markdown-header-face-3           ((t (:inherit markup-title-2-face))))
+   `(markdown-header-face-4           ((t (:inherit markup-title-3-face))))
    ;; flymake-mode
    `(flymake-errline                  ((t (:background ,djui-red-darker))))
    `(flymake-warnline                 ((t (:background ,djui-orange-dark))))
@@ -113,11 +137,6 @@
    `(rcirc-track                      ((t (:foreground ,djui-unknown :underline t)))) ; ???
    `(rcirc-track-keyword              ((t (:foreground ,djui-unknown :bold t)))) ; ???
    `(rcirc-url                        ((t (:underline t))))
-   ;; markdown-mode
-   `(markdown-header-face-1           ((t (:inherit markdown-header-face))))
-   `(markdown-header-face-2           ((t (:inherit markdown-header-face :foreground ,djui-red-light))))
-   `(markdown-header-face-3           ((t (:inherit markdown-header-face-1 :weight normal))))
-   `(markdown-header-face-4           ((t (:inherit markdown-header-face-2 :weight normal))))
    ;; twittering-mode
    `(twittering-username-face         ((t (:bold t))))
    ;; w3m-mode

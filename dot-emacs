@@ -274,6 +274,7 @@
 (add-to-list 'magic-mode-alist '("<!DOCTYPE html .+DTD XHTML .+>" . nxml-mode))
 (add-to-list 'magic-mode-alist '("<html>"                         . html-mode))
 
+(add-to-list 'auto-mode-alist '("\\.asciidoc$"  . adoc-mode))
 (add-to-list 'auto-mode-alist '("\\.clj$"       . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.cljs$"      . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.conf$"      . js-mode))
