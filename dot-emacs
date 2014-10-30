@@ -185,6 +185,10 @@
 (global-set-key (kbd "C-c r")  'replace-regexp)
 (global-set-key (kbd "C-c /")  'comment-or-uncomment-region)
 
+(if (and (<= emacs-major-version 24) (< emacs-minor-version 4))
+  (global-set-key (kbd "C-x SPSP") 'rm-set-mark)
+  (global-set-key (kbd "C-x w")    'eww))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
