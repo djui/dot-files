@@ -36,6 +36,7 @@ alias gs='git status'
 ## Misc
 
 alias c='clear'
+alias ll='ls -lh --color'
 alias lt='tree -hDFC'
 
 
