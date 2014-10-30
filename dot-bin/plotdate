@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+
+## Plots a list of dates in a files using pyplot; tolerates comment lines.
+
+import csv
+import dateutil.parser
+import matplotlib.pyplot as pyplot
+import sys
+import time
+
+if (sys.argv) < 2:
+    sys.exit('Usage: plotdate <filename> ...')
+
+def date_to_timestamp(s):
+    d = dateutil.parser.parse(s)
+    t = time.mktime(d.timetuple())
+    return int(t)
+
+for filename in sys.argv[1:]:
+    with open(filename) as f:
+        reader = csv.reader(filter(lambda row: row[0] != '#', f), delimiter=',')
+        rows = []
+        for row in reader:
+            val = int(row[1]) if len(row) > 1 else 1
+            date = date_to_timestamp(row[0])
+            rows.append((date, val))
+        start = min([row[0] for row in rows]) # Make it relative time instead of absolute time
+        table = [(row[0] - start, row[1]) for row in rows]
+        pyplot.bar([row[0] for row in table], [row[1] for row in table])
+pyplot.show()
