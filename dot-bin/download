@@ -14,5 +14,5 @@ elif [[ $1 =~ svtplay.se ]] ; then
 elif [[ $1 =~ infoq.com ]] ; then
     infoq-dl "$1"
 else
-    wget "$1"
+    wget $*
 fi
