@@ -83,6 +83,8 @@ if [ -f $(brew --prefix)/bin/virtualenvwrapper_lazy.sh ]; then
     source $(brew --prefix)/bin/virtualenvwrapper_lazy.sh
 fi
 
+# Docker
+export DOCKER_HOST=tcp://192.168.59.103:2375
 
 # You may need to manually set your language environment
 export LC_ALL="en_US.UTF-8"
