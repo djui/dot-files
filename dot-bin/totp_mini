@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+import base64,hashlib,hmac,struct,time,sys
+if not len(sys.argv[1:]): sys.exit('usage: totp <secret>')
+digest = hmac.new(base64.b32decode(sys.argv[1]), struct.pack('>Q', int(time.time()) // 30), hashlib.sha1).digest()
+offset = ord(digest[19]) & 15
+print '06d' % (struct.unpack('>I', digest[offset:offset+4])[0] & 0x7fffffff % 1000000)
