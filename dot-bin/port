@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ -z $1 ] ; then
+    echo "List processes listening on a given port."
+    echo "usage: port [<protocol>] <port>"
+    exit 1
+fi
+
+if [ -z $2 ] ; then
+    lsof -n -i ":$1" | grep 'LISTEN'
+else
+    lsof -n -i "$1:$2" | grep 'LISTEN'
+fi
