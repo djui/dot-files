@@ -8,7 +8,7 @@ import matplotlib.pyplot as pyplot
 import sys
 import time
 
-if (sys.argv) < 2:
+if len(sys.argv) < 2:
     sys.exit('Usage: plotdate <filename> ...')
 
 def date_to_timestamp(s):
