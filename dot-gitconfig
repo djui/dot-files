@@ -1,9 +1,41 @@
 [user]
 	name = Uwe Dauernheim
 	email = uwe@dauernheim.net
+[push]
+ 	# instead of pushing all branches with git push, you only push the current one.
+	default = current
 [core]
 	# global per user gitignore file
 	excludesfile = /Users/uwe/.gitignore_global
+[init]
+	templatedir = ~/.git_template
+[diff]
+    renames	= copies
+[merge]
+	summary = true
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[github]
+	user = uwe@dauernheim.net
+	token = c7a71dca362884293fbfadda4ae71d05
+[hub]
+	protocol = https
+	host = ghe.spotify.net
+[ghi]
+	token = 68ec08f34478a8596e123df825edea668b07f50f
+[url "https://github.com/"]
+	insteadOf = "gh:"
+[guitool "Ignore file"]
+	cmd = echo "$FILENAME" >> .gitignore
+	needsfile = yes
+[guitool "Delete file"]
+	cmd = git rm $FILENAME
+	needsfile = yes
+[pull-request]
+	group = uwe@dauernheim.net
 [alias]
 	glog    = log --graph --abbrev-commit --pretty=oneline
 	lol     = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -49,36 +81,3 @@
 	sp-clone = "!sh -c 'git clone $0 && scp git.spotify.net:hooks/commit-msg $0/.git/hooks/ > /dev/null && echo \"Gerrit hook installed.\"'"
 	zz-init = "!sh -c 'ssh salmon \"git init --bare /home/uwe/public_git/$0\" && echo \"Use git clone git.hq.kred:~/public_git/$0 or checkout http://git/?p=zz/uwe/$0\"'"
 	zz-clone= "!sh -c 'git clone git.hq.kred:~/public_git/$0'"
-[pull-request]
-	group = uwe@dauernheim.net
-[color]
-	branch = auto
-	diff = auto
-	interactive = auto
-	status = auto
-[merge]
-	summary = true
-	tool = 
-[guitool "Ignore file"]
-	cmd = echo "$FILENAME" >> .gitignore
-	needsfile = yes
-[guitool "Delete file"]
-	cmd = git rm $FILENAME
-	needsfile = yes
-[push]
- 	# instead of pushing all branches with git push, you only push the current one.
-	default = current
-[github]
-	user = uwe@dauernheim.net
-	token = c7a71dca362884293fbfadda4ae71d05
-[diff]
-	# external = meld
-[url "https://github.com/"]
-	insteadOf = "gh:"
-[init]
-	templatedir = ~/.git_template
-[ghi]
-	token = 68ec08f34478a8596e123df825edea668b07f50f
-[hub]
-	protocol = https
-	host = ghe.spotify.net
