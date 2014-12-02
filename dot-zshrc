@@ -68,7 +68,10 @@ export PATH="$PATH:/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/sbin"
 export PATH="$PATH:/sbin"
+
 # export MANPATH="/usr/local/man:$MANPATH"
+
+export GREP_OPTIONS='--exclude-dir=.git'
 
 #export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
