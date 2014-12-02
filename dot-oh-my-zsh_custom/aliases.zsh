@@ -33,6 +33,13 @@ alias gs='git status'
 #alias gss='git stash show'
 
 
+## Java
+
+alias java6='JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
+alias java7='JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
+alias java8='JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
+
+
 ## Misc
 
 alias c='clear'

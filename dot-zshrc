@@ -74,8 +74,8 @@ export PATH="$PATH:/sbin"
 export GREP_OPTIONS='--exclude-dir=.git'
 
 #export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
-#export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+#export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 
 # VirtualEnv for Python
 export VIRTUALENVWRAPPER_PYTHON=$(brew --prefix)/bin/python
