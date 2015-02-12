@@ -20,6 +20,8 @@ alias gn='git number'
 alias gpf='git push --force'
 alias gpt='git push --tags'
 alias gr='git remote -v'
+alias gra='git rebase --abort'
+alias grc='git rebase --continue'
 alias gri='git rebase --interactive'
 alias gs='git status'
 
