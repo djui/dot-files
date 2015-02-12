@@ -46,7 +46,7 @@ alias java8='JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 ## Misc
 
 alias c='clear'
-alias ll='ls -lh --color'
+alias ll='ls -lh --color --full-time'
 alias lt='tree -hDFC'
 
 
