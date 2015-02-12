@@ -1,0 +1,7 @@
+#!/bin/sh
+
+git apply --stat $*
+git apply --check $*
+if [ $? = 0 ] ; then
+    git am $*
+fi
