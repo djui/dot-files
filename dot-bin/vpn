@@ -119,7 +119,12 @@ _connect() {
 
     # scutil --nc start "$name"  # Unreliable
     # networksetup -connectpppoeservice "$name"  # Unreliable
-    osascript > /dev/null <<< "tell application \"System Events\" to tell current location of network preferences to connect service \"$name\""
+    res=$(osascript <<< "tell application \"System Events\" to tell current location of network preferences to connect service \"$name\"")
+
+    if [ "$res" = "missing value" ] ; then
+        echo "Failed to connect: $res"
+        exit 1
+    fi
 
     while [ $(scutil --nc status "$name" | head -n 1) = "Connecting" ] ; do
         printf "\r$(scutil --nc status "$name" | head -n 1)"
