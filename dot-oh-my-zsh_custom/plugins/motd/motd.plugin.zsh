@@ -1,2 +1,1 @@
-[ -f $HOME/Dropbox/_Life/motd ] && $HOME/Dropbox/_Life/motd
-[ -f $HOME/.bin/til ] && $HOME/.bin/til
+[ -f $HOME/Dropbox/Life/motd ] && $HOME/Dropbox/Life/motd

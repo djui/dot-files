@@ -39,10 +39,6 @@ function dups() {
     find $p \! -type d -exec shasum {} \; | sort -n | tee $f | cut -f 1 -d " " | uniq -d | grep -f /dev/stdin $f
 }
 
-function movie() {
-    date "+%Y-%m-%d $@" >> $HOME/Dropbox/_Life/_movies.md
-}
-
 function rtfm() {
     help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@";
 }
