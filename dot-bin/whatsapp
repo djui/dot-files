@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Login using '/L'
+$HOME/dev/yowsup/yowsup-cli demos --yowsup --config $HOME/dev/yowsup/config.conf
