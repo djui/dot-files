@@ -1,0 +1,25 @@
+#!/bin/bash
+
+MVN_CMD=/usr/local/bin/mvn
+
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+BLUE=$(tput setaf 4)
+RESET_COLOR=$(tput sgr0)
+
+echo -ne $RESET_COLOR
+TMP_FILE=$(mktemp)
+
+($MVN_CMD $@ ; echo $? > $TMP_FILE) | sed \
+    -e "s/Tests run: \([^,]*\), Failures: \([^,]*\), Errors: \([^,]*\), Skipped: \([^,]*\)/Tests run: $GREEN\1$RESET_COLOR, Failures: $RED\2$RESET_COLOR, Errors: $YELLOW\3$RESET_COLOR, Skipped: $BLUE\4$RESET_COLOR/g" \
+    -e "s/\(\[\{0,1\}WARN\(ING\)\{0,1\}\]\{0,1\}.*\)/$YELLOW\1$RESET_COLOR/g" \
+    -e "s/\(\[ERROR\].*\)/$RED\1$RESET_COLOR/g" \
+    -e "s/\(\(BUILD \)\{0,1\}FAILURE.*\)/$RED\1$RESET_COLOR/g" \
+    -e "s/\(\(BUILD \)\{0,1\}SUCCESS.*\)/$GREEN\1$RESET_COLOR/g"
+
+echo -ne $RESET_COLOR
+read MVN_EXIT_CODE < $TMP_FILE
+rm -f $TMP_FILE
+
+exit $MVN_EXIT_CODE
