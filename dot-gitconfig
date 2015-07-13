@@ -20,12 +20,10 @@
 	status = auto
 [github]
 	user = uwe@dauernheim.net
-	token = c7a71dca362884293fbfadda4ae71d05
+	token = 
 [hub]
 	protocol = https
 	host = github.com
-[ghi]
-	token = 68ec08f34478a8596e123df825edea668b07f50f
 [url "https://github.com/"]
 	insteadOf = "gh:"
 [guitool "Ignore file"]
