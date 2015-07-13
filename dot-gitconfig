@@ -23,7 +23,7 @@
 	token = c7a71dca362884293fbfadda4ae71d05
 [hub]
 	protocol = https
-	host = ghe.spotify.net
+	host = github.com
 [ghi]
 	token = 68ec08f34478a8596e123df825edea668b07f50f
 [url "https://github.com/"]
@@ -77,7 +77,4 @@
 	conflicts = "!git ls-files -u | cut -f 2 | sort -u" # alias for unmerged
 	untracked = "!git ls-files --other --exclude-standard"
 	# Work related
-	sp-init = "!sh -c 'git init $0 && scp git.spotify.net:hooks/commit-msg $0/.git/hooks/ > /dev/null && echo \"Gerrit hook installed.\"'"
-	sp-clone = "!sh -c 'git clone $0 && scp git.spotify.net:hooks/commit-msg $0/.git/hooks/ > /dev/null && echo \"Gerrit hook installed.\"'"
-	zz-init = "!sh -c 'ssh salmon \"git init --bare /home/uwe/public_git/$0\" && echo \"Use git clone git.hq.kred:~/public_git/$0 or checkout http://git/?p=zz/uwe/$0\"'"
-	zz-clone= "!sh -c 'git clone git.hq.kred:~/public_git/$0'"
+	
