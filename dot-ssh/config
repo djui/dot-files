@@ -2,6 +2,7 @@ HashKnownHosts yes
 
 Host *
 #  VisualHostKey yes
+#  StrictHostKeyChecking no
   ServerAliveInterval 240
 #  GSSAPIAuthentication yes
 #  GSSAPIDelegateCredentials yes
