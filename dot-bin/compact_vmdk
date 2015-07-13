@@ -1,0 +1,44 @@
+#!/bin/sh -e
+
+if [ "$#" -ne 2 ] ; then
+    echo "Usage: compact_vmdk <VM_NAME> <IMAGE_PATH>"
+    echo
+    echo "Compacts VMDK images by converting it temporarily to a VDI image, compacting it,"
+    echo "and then converting it back."
+    echo
+    echo "Example:"
+    echo
+    echo "    $ compact_vmdk boot2docker-vm '/Users/uwe/VirtualBox VMs/boot2docker-vm/boot2docker-vm.vmdk'"
+    exit 1
+fi
+
+VM_NAME="$1"
+IMAGE_PATH="$2"
+TEMP_PATH="/tmp/image.vdi"
+SIZE_BEFORE=$(du -sb "$IMAGE_PATH" | awk '{print $1}')
+SIZE_AFTER=
+
+echo "[INFO] STEP 1/7: Detaching original VM storage..."
+vboxmanage storageattach "$VM_NAME" --storagectl SATA --port 1 --device 0 --type hdd --medium none
+
+echo "[INFO] STEP 2/7: Cloning original VM image..."
+vboxmanage clonehd --format vdi "$IMAGE_PATH" "$TEMP_PATH"
+
+echo "[INFO] STEP 3/7: Deleting original VM image..."
+vboxmanage closemedium disk "$IMAGE_PATH" --delete
+
+echo "[INFO] STEP 4/7: Compacting temp VM image..."
+vboxmanage modifyhd "$TEMP_PATH" --compact
+
+echo "[INFO] STEP 5/7: Cloning temp VM image to original VM image...."
+vboxmanage clonehd --format vmdk "$TEMP_PATH" "$IMAGE_PATH"
+
+echo "[INFO] STEP 6/7: Deleting temp VM image..."
+vboxmanage closemedium disk "$TEMP_PATH" --delete
+
+echo "[INFO] STEP 7/7: Attaching original VM storage..."
+vboxmanage storageattach "$VM_NAME" --storagectl SATA --port 1 --device 0 --type hdd --medium "$IMAGE_PATH"
+
+echo "[INFO] Done."
+SIZE_AFTER=$(du -sb "$IMAGE_PATH" | awk '{print $1}')
+echo "Compression: $SIZE_BEFORE => $SIZE_AFTER"
