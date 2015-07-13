@@ -1,0 +1,9 @@
+#!/bin/sh
+
+movies_file=$HOME/Dropbox/Life/_movies.md
+
+if [ -z "$1" ] ; then
+    $EDITOR $movies_file
+else
+    date "+%Y-%m-%d $*" >> $movies_file
+fi

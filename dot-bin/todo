@@ -1,0 +1,38 @@
+#!/bin/bash
+
+TODO_FILE=$HOME/.todo
+
+
+_list() {
+    echo -e "\033[37mTODOs:\033[0m"
+    echo
+    cat $TODO_FILE | \
+        fold -s -w 50 | \
+        sed "s/\(.*\)/  \1/" 2> /dev/null
+}
+
+
+_add() {
+    echo "[ ] $*" >> $TODO_FILE
+}
+
+
+_delete() {
+    echo $1
+    number='^[0-9]+$'
+    if [[ "$1" =~ $number ]] ; then
+        sed -i "${1}s/^\[ \]/[x]/" $TODO_FILE
+    else
+        echo "Error: Input requires a line number"
+    fi
+}
+
+
+cmd=$1
+shift
+
+case $cmd in
+    add|-a|--add) _add $* ; _list ;;
+    delete|remove|rm|mark|-d|--delete|--remove) _delete $* ; _list ;;
+    list|-l|--list|*) _list ;;
+esac

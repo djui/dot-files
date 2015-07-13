@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -z $1 ] ; then
+   echo "Usage: docker-search <term>"
+   exit 1
+fi
+
+
+## No JSON and no description
+# docker search 'registry.spotify.net/$1'
+
+curl -s http://registry.spotify.net:5000/v1/search?q=$1
