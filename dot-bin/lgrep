@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+case $OSTYPE in
+    darwin*) date=gdate ;;
+    *      ) date=date  ;;
+esac
+
+START_DATETIME=$($date -u -I -d "today")
+END_DATETIME=$($date -u -I -d "tomorrow")
+LOG_LEVEL=info
+PATTERN=
+LOG_PATH=
+GREP_OPTS=
+
+_usage() {
+    echo "lgrep, a datetime aware grep wrapper for syslogs."
+    echo
+    echo "Usage: lgrep [--level <level>] [--since <datetime>] [--until <datetime>] pattern path"
+    echo
+    echo "  -l, --level <level>      Log level (default: info)"
+    echo "  -s, --since <datetime>   Datetime since when to include logs (default: today)"
+    echo "  -u, --until <datetime>   Datetime until when to include logs (dfault: tomorrow)"
+    echo
+    echo "Note: remaining options are passed on to \`grep\`."
+    echo
+    echo "Examples:"
+    echo
+    echo "  lgrep foo logs"
+    echo "  lgrep -l warn foo logs"
+    echo "  lgrep -s yesterday foo logs"
+    echo "  lgrep -l err -s 2013-12-1 -u yesterday foo logs"
+    echo "  lgrep foo logs -i"
+}
+
+_is_gzip() {
+    [ "${1##*.}" == "gz" ]
+}
+
+if [ $# -eq 0 ] ; then
+    _usage ; exit 0
+fi
+
+while [ $# -ge 1 ] ; do
+    case "$1" in
+        -s|--since) START_DATETIME="$2" ; shift 2 ;;
+        -u|--until) END_DATETIME="$2"   ; shift 2 ;;
+        -l|--level) LOG_LEVEL="$2"  ; shift 2 ;;
+        -h|--help)  _usage ; exit 0 ;;
+        *)
+            if [ -z "$PATTERN" ] ; then
+                PATTERN="$1"
+            elif [ -z "$LOG_PATH" ] ; then
+                LOG_PATH="$1"
+            else
+                GREP_OPTS="$GREP_OPTS $1"
+            fi
+            shift ;;
+    esac
+done
+
+if [ -z "$PATTERN" ] ; then
+    echo "Missing pattern." ; _usage ; exit 1
+elif [ -z "$LOG_PATH" ] ; then
+    echo "Missing path." ; _usage ; exit 1
+fi
+
+for log in $(ls $LOG_PATH/$LOG_LEVEL.log* | sort -n -t . -k 3) ; do
+    if _is_gzip $log ; then
+        # No Timezone, older GNU date don't support it
+        head_datetime=$(gunzip -d -c $log | head -c 23)
+    else
+        head_datetime=$(head -c 23 $log)
+    fi
+    
+    head_datetime_seconds=$($date -d $head_datetime +%s)
+    start_datetime_seconds=$($date -d $START_DATETIME +%s)
+    end_datetime_seconds=$($date -d $END_DATETIME +%s)
+    if [ $head_datetime_seconds -ge $start_datetime_seconds ] && \
+       [ $head_datetime_seconds -le $end_datetime_seconds ] ; then
+        if [ "${log##*.}" == "gz" ] ; then
+            zgrep $GREP_OPTS "$PATTERN" $log
+        else
+            grep $GREP_OPTS "$PATTERN" $log
+        fi
+    fi
+done
