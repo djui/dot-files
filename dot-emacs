@@ -322,6 +322,15 @@ downcased, no preceding underscore.
 ;;(add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . magit-commit-mode))
 
 
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Parenthesis mode
+(define-globalized-minor-mode global-parentheses-mode
+  highlight-parentheses-mode
+  (lambda ()
+    (show-paren-mode t)
+    (highlight-parentheses-mode t)
+    (rainbow-delimiters-mode t)))
+(global-parentheses-mode t)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Elisp mode
