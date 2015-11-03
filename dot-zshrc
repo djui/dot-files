@@ -88,14 +88,12 @@ if [ -f $(brew --prefix)/bin/virtualenvwrapper_lazy.sh ]; then
     source $(brew --prefix)/bin/virtualenvwrapper_lazy.sh
 fi
 
-# Docker
-#$(boot2docker shellinit) 2> /dev/null
-export DOCKER_CERT_PATH=/Users/uwe/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_HOST_RAW=192.168.59.103:2376
-export DOCKER_HOST_ADDRESS=192.168.59.103
-export HELIOS_URI=http://192.168.59.103:5801
+## Docker
+# eval "$(docker-machine env default)"
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/uwe/.docker/machine/machines/default"
+export DOCKER_MACHINE_NAME="default"
 
 
 # You may need to manually set your language environment
