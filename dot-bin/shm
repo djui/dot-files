@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SizeInMB=512
+NumSectors=$((2*1024*SizeInMB))
+DeviceName=$(hdid -nomount ram://$NumSectors)
+VolumeName="RAMDisk"
+
+diskutil eraseVolume HFS+ $VolumeName $DeviceName > /dev/null
+sudo ln -s /Volumes/$VolumeName /dev/shm
