@@ -1,21 +1,20 @@
 HashKnownHosts yes
-
 Host *
+#  PubkeyAuthentication no
+  IdentitiesOnly yes
 #  VisualHostKey yes
 #  StrictHostKeyChecking no
   ServerAliveInterval 240
 #  GSSAPIAuthentication yes
 #  GSSAPIDelegateCredentials yes
+Host *.scraperwiki.com *.pdftables.com
+  IdentityFile ~/.ssh/github_rsa
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/github_rsa
 Host djui.no.de
   IdentityFile ~/.ssh/joyent_rsa
-Host github.com
-  IdentityFile ~/.ssh/github_rsa
-Host git.hq.kred
-  IdentityFile ~/.ssh/kit_rsa
-Host salmon.hq.kred
-  IdentityFile ~/.ssh/kit_rsa
-Host samir-dev
-  IdentityFile ~/.ssh/kit_rsa
 Host heroku.com
   IdentityFile ~/.ssh/heroku_rsa
 Host virtualbox
