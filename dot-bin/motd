@@ -1,0 +1,98 @@
+#!/usr/bin/env node
+// -*- mode:javascript -*-
+
+var path = require("path")
+  , exec = require("child_process").exec
+  , fs   = require("fs")
+
+// Constants
+var _quotesFilename = path.join(path.dirname(process.argv[1]), "_quotes.json")
+var _width          = 52
+var _margin         = 2
+var _separator      = "-- "
+
+// Code
+exec("tput cols", function (err0, stdout) {
+  var filename = process.argv.length > 2 ? process.argv[2] : _quotesFilename
+  fs.readFile(filename, function (err, data) {
+    assert(err)
+    try {
+      var quotes          = JSON.parse(data)
+      var randomIndex     = Math.floor(Math.random() * quotes.length)
+      var quote           = quotes[randomIndex].text
+      var author          = quotes[randomIndex].author
+      var width           = err0 !== null || parseInt(stdout) > _width ? _width : parseInt(stdout)
+      var formattedQuote  = formatQuote(quote, width, _margin)
+      var formattedAuthor = formatAuthor(author, _separator, quoteEnd(formattedQuote), width, _margin)
+      var motd            = formattedQuote + formattedAuthor
+      console.log("\n" + motd + "\n")
+    } catch (err) {
+      assert(err)
+    }
+  })
+})
+
+// Helper
+function formatAuthor(author, separator, startPos, width, margin) {
+  var formattedAuthor
+  
+  if (author === undefined) return ""
+
+  if (startPos < width - margin - separator.length - author.length)
+    formattedAuthor = (separator + author).lpad(" ", startPos + author.length + separator.length + 1)
+  else
+    formattedAuthor = (space(margin) + separator + author).lpad(" ", width - margin)
+
+  return "\n\n\033[1m" + formattedAuthor + "\033[0m"
+}
+
+function formatQuote(quote, width, margin) {
+  // Newline formatted quote have precedence over (screen) width limitation
+  if (quote.match(/\n/g)) {
+    var lines = quote.split(/\n/)
+    var block = ""
+    for (i = 0; i < lines.length; i++) {
+      block += space(margin) + lines[i] + '\n'
+    }
+  } else {  
+    var words = quote.split(/ /)
+    var block = space(margin) + words[0]
+    var lineLength = block.length
+    
+    for (i = 1; i < words.length; i++) {
+      if (lineLength + (" " + words[i]).length <= width - margin) {
+        block += " " + words[i]
+        lineLength += words[i].length + 1
+      } else {
+        block += "\n" + space(margin) + words[i]
+        lineLength = space(margin).length + words[i].length
+      }    
+    }
+  }
+  
+  return block.replace(/\n\n$/g, "\n")
+}
+
+function quoteEnd(quote) {
+  formattedQuote = quote.split(/\n/)
+  lastLine = formattedQuote[formattedQuote.length-1]
+  return lastLine.length
+}
+
+function space(width) {
+  return "".lpad(" ", width)
+}
+
+function assert(err) {
+  if (err !== null) {
+    console.error(err.toString())
+    process.exit(1)
+  }
+}
+
+String.prototype.lpad = function(padString, length) {
+  var str = this;
+  while (str.length < length)
+    str = padString + str;
+  return str;
+}

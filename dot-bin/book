@@ -1,0 +1,9 @@
+#!/bin/sh
+
+file=$HOME/Dropbox/Lists/Books.md
+
+if [ -z "$1" ] ; then
+    $EDITOR $file
+else
+    date "+%Y-%m-%d $*" >> $file
+fi

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+say="/usr/bin/say -v Ava -r 220"
+
+if [ -z $1 ] ; then
+    pbpaste | $say -i
+else
+    $say $@
+fi

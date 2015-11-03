@@ -1,0 +1,49 @@
+#!/bin/sh
+
+INTERVAL=60
+
+if [ -z "$1" ] ; then
+    echo "Usage: detect-change URL [INTERVAL]" 1>&2
+    exit 1
+fi
+
+URL="$1"
+
+if [ "$2" ] ; then
+    INTERVAL="$2"
+fi
+
+NEW_TMP_FILE=$(mktemp)
+OLD_TMP_FILE=$(mktemp)
+
+_cleanup() {
+    echo "leaning up..."  # ^C usually prefixed
+    rm -rf $OLD_TMP_FILE
+    rm -rf $NEW_TMP_FILE
+    echo "Cleaned up."
+    echo "Quitting."
+}
+
+trap _cleanup EXIT
+
+NEW=
+echo "Caching current state..."
+OLD=$(curl -s $URL)
+echo "Current state cached."
+echo "Start detecting changes every $INTERVAL seconds..."
+
+while : ; do
+    NEW=$(curl -s $URL)
+    if [ "$NEW" != "$OLD" ] ; then
+        #osascript -e 'display notification "$URL" with title "Website changed"'
+        terminal-notifier -title "Website changed" -message "$URL" -sender com.apple.Safari
+
+        echo "$OLD" > $OLD_TMP_FILE
+        echo "$NEW" > $NEW_TMP_FILE
+
+        #opendiff $OLD_TMP_FILE $NEW_TMP_FILE 2> /dev/null
+        diff -u $OLD_TMP_FILE $NEW_TMP_FILE
+    fi
+    OLD="$NEW"
+    sleep 60
+done

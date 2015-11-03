@@ -1,0 +1,33 @@
+#!/usr/bin/env python3
+
+import os
+import plistlib
+import sys
+from datetime import datetime
+
+
+def main(args):
+    books_path = '~/Library/Containers/com.apple.BKAgentService/Data/Documents/iBooks/Books/Books.plist'
+    plist = plistlib.readPlist(os.path.expanduser(books_path))
+
+    for book in plist['Books']:
+        title = book.get('itemName')
+        author = book.get('artistName')
+        if not author and not title:
+            title, _ = book.get('BKDisplayName').split('.epub')
+
+        try:
+            mtime = os.path.getmtime(book.get('path'))
+        except:
+            epoche = 978307200  # 12:00am Jan 1, 2001 GMT
+            mtime = epoche + book.get('BKInsertionDate')
+        mtime = datetime.fromtimestamp(mtime)
+        
+        print(mtime.strftime('%Y-%m-%d'), title, '-', author or '')
+    
+
+if __name__ == '__main__':
+    try:
+        sys.exit(main(sys.argv[1:]))
+    except KeyboardInterrupt:
+        sys.exit(1)
