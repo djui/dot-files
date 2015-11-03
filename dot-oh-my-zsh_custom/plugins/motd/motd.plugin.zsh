@@ -1,1 +1,1 @@
-[ -f $HOME/Dropbox/Life/motd ] && $HOME/Dropbox/Life/motd
+$HOME/.bin/motd $HOME/Dropbox/Lists/Quotes.json
