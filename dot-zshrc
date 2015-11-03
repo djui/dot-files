@@ -83,11 +83,6 @@ export GREP_OPTIONS='--exclude-dir=.git'
 #export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 
-# VirtualEnv for Python
-export VIRTUALENVWRAPPER_PYTHON=$(brew --prefix)/bin/python
-if [ -f $(brew --prefix)/bin/virtualenvwrapper_lazy.sh ]; then
-    source $(brew --prefix)/bin/virtualenvwrapper_lazy.sh
-fi
 # Go workspace
 export GOPATH="$HOME/dev/go"
 export GO15VENDOREXPERIMENT=1
