@@ -1,3 +1,9 @@
 #!/bin/sh
 
-emacs $HOME/Dropbox/Life/_tips.md
+file=$HOME/Dropbox/Lists/Tips.md
+
+if [ -z "$1" ] ; then
+    $EDITOR $file
+else
+    ag "$*" $file
+fi

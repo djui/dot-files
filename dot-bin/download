@@ -1,18 +1,31 @@
 #!/bin/sh
 
 if [ $# -eq 0 ] ; then
-    echo "Usage: download <URL>"
+    echo "Usage: download|dl URL"
+    echo "Downloads files from Youtube, SVT Play, InfoQ, etc. to your Download folder with Notification."
     exit
 fi
 
+url="$*"
+
+_notify() {
+    case "$?" in
+        "0")   terminal-notifier -message "$url" -title "Download finished"  -open "file:///Users/uwe/Downloads" ;; #-sender "com.googlecode.iterm2"
+        "130") terminal-notifier -message "$url" -title "Download cancelled" -open "file:///Users/uwe/Downloads" ;; #-sender "com.googlecode.iterm2"
+        *)     terminal-notifier -message "$url" -title "Download failed"    -open "file:///Users/uwe/Downloads" ;; #-sender "com.googlecode.iterm2"
+    esac
+}
+
+trap _notify EXIT
+
 cd $HOME/Downloads
 
-if [[ $1 =~ youtube.com ]] ; then
-   youtube-dl --no-check-certificate "$1"
-elif [[ $1 =~ svtplay.se ]] ; then
-    svtplay-dl "$1"
-elif [[ $1 =~ infoq.com ]] ; then
-    infoq-dl "$1"
+if [[ "$url" =~ youtube.com ]] ; then
+   youtube-dl --no-check-certificate "$url"
+elif [[ "$url" =~ svtplay.se ]] ; then
+    svtplay-dl "$url"
+elif [[ "$url" =~ infoq.com ]] ; then
+    infoq-dl "$url"
 else
-    wget --no-check-certificate $*
+    wget --no-check-certificate "$url"
 fi
