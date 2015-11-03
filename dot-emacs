@@ -189,6 +189,8 @@
 (global-set-key (kbd "C-c /")  'comment-or-uncomment-region)
 (global-set-key (kbd "C-c c")  'un-camelcase-word-at-point)
 
+(global-set-key (kbd "C-c g")  'magit-status)
+
 (if (and (<= emacs-major-version 24) (< emacs-minor-version 4))
   (global-set-key (kbd "C-x SPSP") 'rm-set-mark)
   (global-set-key (kbd "C-x w")    'eww))
