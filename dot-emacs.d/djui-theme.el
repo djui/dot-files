@@ -77,10 +77,12 @@
    `(font-lock-variable-name-face     ((t (:foreground ,djui-green-light))))
    `(font-lock-warning-face           ((t (:foreground "Red" :bold t)))) ; FIXME, TODO, ...
    ;; whitespace-mode
-   `(whitespace-line                  ((t (:foreground ,djui-red :background ,djui-gray-darkest))))
-   `(whitespace-tab                   ((t (:background ,djui-gray-darkest))))
+   `(whitespace-line                  nil)
+   `(whitespace-tab                   ((t (:background ,djui-gray-darker))))
    `(whitespace-trailing              ((t (:background ,djui-red-darker))))
-   `(trailing-whitespace              ((t (:background ,djui-red-darker))))
+   ;; highlight-chars
+   `(hc-tab                           ((t (:background ,djui-gray-darker))))
+   `(hc-trailing-whitespace           ((t (:background ,djui-red-darker))))
    ;; diff-mode
    `(diff-added                       ((t (:foreground "Green"))))
    `(diff-changed                     ((t (:foreground "Yellow"))))

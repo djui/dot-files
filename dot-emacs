@@ -12,17 +12,11 @@
       (mouse-wheel-mode  t)))
 (menu-bar-mode           -1) ; nil would only toggle
 
-(global-hl-line-mode     t)
-;(global-linum-mode      t)
-;(global-whitespace-mode t)
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEFAULTS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
 
 ;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
 (setq-default user-full-name               "Uwe Dauernheim"
@@ -58,19 +52,13 @@
               global-visual-line-mode      t
               line-number-mode             t
               column-number-mode           t
-              linum-format                 "%3d "
               truncate-lines               -1
               ;; Syntax-, region mark-, parentals-Highlighting
               global-font-lock-mode        t
               font-lock-maximum-decoration t
-              highlight-todo               t
               ;; Default tab width
               indent-tabs-mode             nil
               tab-width                    4 ; to show old style correctly
-              c-basic-offset               2
-              py-indent-offset             2
-              js-indent-level              2
-              rust-indent-unit             2
               ;; Have a border above and below the cursor while scrolling
               scroll-margin                5
               ;; Only scroll by 1 line a time
@@ -98,9 +86,6 @@
               ;; Use Chromium as default browser for links instead of Firefox
               ; browse-url-browser-function  'browse-url-generic
               ; browse-url-generic-program   "chromium-browser"
-              ;; Initial modes
-              ; initial-major-mode        'erlang-mode
-              ; default-major-mode        'erlang-mode
               fill-column                  80
               )
 
@@ -115,8 +100,6 @@
 ;; ENCODINGS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
 (set-terminal-coding-system 'utf-8)
@@ -129,8 +112,6 @@
 ;; ALIASES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom aliases
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -138,31 +119,8 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; PACKAGE MANAGER
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Package manager
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
-
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Use-package
-(eval-when-compile
-  (require 'use-package))
-(require 'diminish)
-(require 'bind-key)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; THEMES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Color Themes
@@ -174,8 +132,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GLOBAL KEYBINDINGS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
@@ -234,8 +190,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FUNCTIONS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom functions
@@ -331,104 +285,273 @@ downcased, no preceding underscore.
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PACKAGE MANAGER
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Package manager
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Use-package
+(eval-when-compile
+  (require 'use-package))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MODES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-package html-mode
+  :mode ("\\.html$" . nxml-mode)
+  :init (add-to-list 'magic-mode-alist '("<html>" . html-mode)))
 
-(add-to-list 'interpreter-mode-alist '("bash"   . sh-mode))
-(add-to-list 'interpreter-mode-alist '("sh"     . sh-mode))
-(add-to-list 'interpreter-mode-alist '("zsh"    . sh-mode))
-(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+(use-package nxml-mode
+  :mode
+  ("\\.gpx$"   . nxml-mode)
+  ("\\.plist$" . nxml-mode)
+  ("\\.rng$"   . nxml-mode)
+  ("\\.rss$"   . nxml-mode)
+  ("\\.sch$"   . nxml-mode)
+  ("\\.svg$"   . nxml-mode)
+  ("\\.tcx$"   . nxml-mode)
+  ("\\.xml$"   . nxml-mode)
+  ("\\.xsd$"   . nxml-mode)
+  ("\\.xslt$"  . nxml-mode)
 
-(add-to-list 'magic-mode-alist '("<!DOCTYPE html .+DTD XHTML .+>" . nxml-mode))
-(add-to-list 'magic-mode-alist '("<html>"                         . html-mode))
+  :init
+  (add-to-list 'magic-mode-alist '("<!DOCTYPE html .+DTD XHTML .+>" . nxml-mode))
+  (add-to-list 'magic-mode-alist '("<\\?xml " . nxml-mode))
+  (setq nxml-slash-auto-complete-flag t))
 
-(add-to-list 'auto-mode-alist '("\\.asciidoc$"  . adoc-mode))
-(add-to-list 'auto-mode-alist '("\\.clj$"       . clojure-mode))
-(add-to-list 'auto-mode-alist '("\\.cljs$"      . clojure-mode))
-(add-to-list 'auto-mode-alist '("\\.conf$"      . js-mode))
-(add-to-list 'auto-mode-alist '("\\.gitconfig$" . gitconfig-mode))
-(add-to-list 'auto-mode-alist '("\\.gitignore$" . gitignore-mode))
-(add-to-list 'auto-mode-alist '("\\.js$"        . js-mode))
-(add-to-list 'auto-mode-alist '("\\.md$"        . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.pp$"        . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.py$"        . python-mode))
-(add-to-list 'auto-mode-alist '("\\.yaml$"      . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.ya?ml$"     . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.zsh$"       . sh-mode))
-;;(add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . magit-commit-mode))
+(use-package yaml-mode
+  :mode
+  ("\\.yaml$" . yaml-mode)
+  ("\\.yml$"  . yaml-mode))
+
+(use-package cc-mode
+  :config (setq c-basic-offset 2))
+
+(use-package js2-mode
+  :mode "\\.js$"
+  ("\\.js$"   . js-mode)
+  ("\\.conf$" . js-mode)
+  :init
+  (setq-default js2-basic-offset 2)
+  (setq-default js2-bounce-indent-p nil)
+  :config
+  (js2-imenu-extras-mode)
+  (use-package js2-refactor)
+  (use-package skewer-mode
+    :commands skewer-mode))
+
+(use-package json-mode
+  :mode "\\.json$"
+  :config
+  (defun my-json-mode-hook ()
+    (interactive)
+    (setq js-indent-level 2)
+    (rainbow-delimiters-mode))
+  (add-hook 'json-mode-hook 'my-json-mode-hook))
 
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Git-Gutter+ mode
+(use-package rust-mode
+  :config
+  (setq rust-indent-unit 2)
+  ;;(use-package cargo)
+  (use-package rustfmt))
+
+(use-package sh-mode
+  :interpreter ("bash" . sh-mode)
+  :interpreter ("csh"  . sh-mode)
+  :interpreter ("dash" . sh-mode)
+  :interpreter ("sh"   . sh-mode)
+  :interpreter ("zsh"  . sh-mode))
+
+(use-package adoc-mode
+  :mode ("\\.asciidoc$" . adoc-mode))
+
+(use-package lisp-mode
+  :mode (("\\.cl$" . lisp-mode))
+  :config
+  (defun my-elisp-mode-hook ()
+    (paredit-mode t)
+    (autopair-mode t)
+    (show-paren-mode t)
+    (rainbow-delimiters-mode t)
+    (highlight-parentheses-mode t))
+  (add-hook 'emacs-lisp-mode-hook 'my-elisp-mode-hook))
+
+(use-package clojure-mode
+  :mode
+  ("\\.clj$" . clojure-mode)
+  ("\\.cljs$" . clojure-mode)
+  ("\\.cljx$" . clojure-mode)
+  :config
+  (setq completion-at-point-functions '(auto-complete))
+  (setq nrepl-hide-special-buffers t)
+  (setq cider-repl-pop-to-buffer-on-connect nil)
+  (setq cider-repl-popup-stacktraces nil)
+  (setq cider-auto-select-error-buffer nil)
+  (setq cider-popup-stacktraces t)
+  (defun my-clojure-mode-hook ()
+    (cider-mode t)
+    (paredit-mode t)
+    (autopair-mode t)
+    (show-paren-mode t)
+    (rainbow-delimiters-mode t)
+    (highlight-parentheses-mode t))
+  (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)
+  :bind
+  ("M-<left>" . paredit-backward-slurp-sexp)
+  ("M-<right>" . paredit-forward-slurp-sexp))
+
+(use-package python
+  :mode ("\\.py$" . python-mode)
+  :interpreter ("python" . python-mode)
+  :config (setq py-indent-offset 2))
+
+(use-package ruby-mode
+  :mode "\\.rb$|\\.pp$"
+  :interpreter "ruby")
+
+(use-package go-mode
+  :config
+  (use-package auto-complete-config)
+  (use-package go-autocomplete)
+  (use-package go-complete)
+  (use-package go-dlv)
+  (use-package go-eldoc)
+  (use-package go-errcheck)
+  (use-package go-stacktracer)
+  (use-package golint)
+  (use-package gotest)
+  (use-package govet)
+  (defun my-go-mode-hook ()
+    (ac-config-default)
+    (flycheck-mode t)
+    (autopair-mode t)
+    (highlight-parentheses-mode t)
+    (setq gofmt-command "goimports")
+    (add-hook 'before-save-hook 'gofmt-before-save)
+    (local-set-key (kbd "M-.") 'godef-jump)
+    (local-set-key (kbd "M-,") 'pop-tag-mark))
+  (add-hook 'go-mode-hook 'my-go-mode-hook))
+
+(use-package dockerfile-mode
+  :mode ("^Dockerfile" . dockerfile-mode))
+
+(use-package linum
+  :init (global-linum-mode)
+  :config (setq linum-format "%3d "))
+
+(use-package hl-line
+  :init (global-hl-line-mode))
+
+(use-package hl-todo
+  :init (global-hl-todo-mode))
+
+(use-package highlight-chars
+  :config
+  ;;(add-hook 'font-lock-mode-hook 'hc-highlight-tabs)
+  (add-hook 'font-lock-mode-hook 'hc-highlight-trailing-whitespace))
+
+(use-package markdown-mode
+  :mode ("\\.md$" . markdown-mode))
+
+(use-package nginx-mode)
+
+(use-package protobuf-mode)
+
+(use-package apples-mode)
+
+(use-package crontab-mode
+  :mode "\\.?cron\\(tab\\)?$")
+
+(use-package git-commit)
+
+(use-package gitconfig-mode
+  :mode ("\\.gitconfig$" . gitconfig-mode))
+
+(use-package gitignore-mode
+  :mode ("\\.gitignore$" . gitignore-mode))
+
+(use-package magit)
+
 (use-package git-gutter+
-  :ensure t
   :init (global-git-gutter+-mode)
-  :config (progn
-            (setq git-gutter+-modified-sign "±")
-            (set-face-foreground 'git-gutter+-modified "yellow4")
-            (set-face-foreground 'git-gutter+-added    "green4")
-            (set-face-foreground 'git-gutter+-deleted  "red4")
-            (setq git-gutter+-window-width 2)
-
-            (setq git-gutter+-disabled-modes '())
-
-            (define-key git-gutter+-mode-map (kbd "C-x n")   'git-gutter+-next-hunk)
-            (define-key git-gutter+-mode-map (kbd "C-x p")   'git-gutter+-previous-hunk)
-            (define-key git-gutter+-mode-map (kbd "C-x v =") 'git-gutter+-show-hunk)
-            (define-key git-gutter+-mode-map (kbd "C-x r")   'git-gutter+-revert-hunks)
-            (define-key git-gutter+-mode-map (kbd "C-x t")   'git-gutter+-stage-hunks)
-            (define-key git-gutter+-mode-map (kbd "C-x c")   'git-gutter+-commit)
-            (define-key git-gutter+-mode-map (kbd "C-x C")   'git-gutter+-stage-and-commit)
-            (define-key git-gutter+-mode-map (kbd "C-x C-y") 'git-gutter+-stage-and-commit-whole-buffer)
-            (define-key git-gutter+-mode-map (kbd "C-x U")   'git-gutter+-unstage-whole-buffer))
+  :config
+  (setq git-gutter+-modified-sign "±")
+  (setq git-gutter+-window-width 2)
+  (setq git-gutter+-disabled-modes '())
+  (set-face-foreground 'git-gutter+-modified "yellow4")
+  (set-face-foreground 'git-gutter+-added    "green4")
+  (set-face-foreground 'git-gutter+-deleted  "red4")
+  (define-key git-gutter+-mode-map (kbd "C-x n")   'git-gutter+-next-hunk)
+  (define-key git-gutter+-mode-map (kbd "C-x p")   'git-gutter+-previous-hunk)
+  (define-key git-gutter+-mode-map (kbd "C-x v =") 'git-gutter+-show-hunk)
+  (define-key git-gutter+-mode-map (kbd "C-x r")   'git-gutter+-revert-hunks)
+  (define-key git-gutter+-mode-map (kbd "C-x t")   'git-gutter+-stage-hunks)
+  (define-key git-gutter+-mode-map (kbd "C-x c")   'git-gutter+-commit)
+  (define-key git-gutter+-mode-map (kbd "C-x C")   'git-gutter+-stage-and-commit)
+  (define-key git-gutter+-mode-map (kbd "C-x C-y") 'git-gutter+-stage-and-commit-whole-buffer)
+  (define-key git-gutter+-mode-map (kbd "C-x U")   'git-gutter+-unstage-whole-buffer)
   :diminish (git-gutter+-mode . "gg"))
 
+(use-package recentf
+  :init (recentf-mode t)
+  :config
+  (setq recentf-auto-cleanup    300)
+  (setq recentf-max-saved-items 1000)
+  (setq recentf-max-menu-items  100)
+  (setq recentf-keep '(file-remote-p file-readable-p))
+  (add-to-list 'recentf-exclude "\\.ido\\.last"))
 
+(use-package wedge-ws
+  :bind
+  ("C-c f" . wedge-ws-inc)
+  ("C-c b" . wedge-ws-dec))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Parenthesis mode
-(define-globalized-minor-mode global-parentheses-mode
-  highlight-parentheses-mode
-  (lambda ()
-    (show-paren-mode t)
-    (highlight-parentheses-mode t)
-    (rainbow-delimiters-mode t)
-    (autopair-mode t)))
-(global-parentheses-mode t)
+(use-package ido
+  :init (ido-mode t)
+  :bind
+  ("M-x"     . ido-mx-completion)
+  ("C-x C-k" . ido-kill-buffer)
+  ("C-x f"   . recentf-ido-find-file)
+  :config
+  (setq ido-enable-flex-matching t)
+  (setq ido-max-prospects        75)
+  (defun ido-mx-completion ()
+    (interactive)
+    (call-interactively
+     (intern
+      (ido-completing-read "M-x " (all-completions "" obarray 'commandp)))))
 
+  ;; It can restore recently used files easily.
+  ;; Courtesty to Robin "Rost" for this snippet.
+  (require 'cl)
+  (defun recentf-ido-find-file ()
+    "Find a recent file using Ido."
+    (interactive)
+    (let* ((file-assoc-list
+            (mapcar (lambda (x) (cons (file-name-nondirectory x) x)) recentf-list))
+           (filename-list
+            (remove-duplicates (mapcar #'car file-assoc-list) :test #'string=))
+           (filename
+            (ido-completing-read "Choose recent file: " filename-list nil t)))
+      (when filename
+        (find-file (cdr (assoc filename file-assoc-list)))))))
 
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Elisp mode
-(add-hook 'clojure-mode-hook 'paredit-mode)
-(add-hook 'clojure-mode-hook 'show-paren-mode)
-(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
-
-
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Recentf mode
-(recentf-mode t)
-(setq recentf-auto-cleanup    300
-      recentf-max-saved-items 1000
-      recentf-max-menu-items  100
-      recentf-keep '(file-remote-p file-readable-p))
-(add-to-list 'recentf-exclude "\\.ido\\.last")
-
-
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; iBuffer mode
-(provide 'ibuffer-config)
-(require 'ibuffer-config)
-
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-(eval-after-load 'ibuffer
-  '(progn
+(use-package ibuffer
+  :load-path "~/.emacs.d/ibuffer-git"
+  :bind ("C-x C-b" . ibuffer)
+  :config
+  (use-package ibuffer-config)
+  (use-package ibuffer-git)
+  (progn
      (setq ibuffer-show-empty-filter-groups nil
            ibuffer-always-show-last-buffer  t
            ibuffer-view-ibuffer             t
@@ -558,123 +681,33 @@ downcased, no preceding underscore.
                     (name . "^\\*gnus")
                     (name . "^\\*BBDB\\*$")
                     (name . "^\\.bbdb$")
-                    (name . "^\\.newsrc-dribble"))))))))
+                    (name . "^\\.newsrc-dribble")))))))
 
-(eval-after-load 'ibuffer
-  '(progn
-     (add-hook 'ibuffer-mode-hook
-               (lambda ()
-                 (local-set-key (kbd "C-g") 'ibuffer-quit)
-                 (ibuffer-switch-to-saved-filter-groups "default")))))
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-g") 'ibuffer-quit)
+              (ibuffer-switch-to-saved-filter-groups "default")))
 
-(eval-after-load 'ibuffer
-  '(progn
-     ;; switching to ibuffer puts the cursor on the most recent buffer
-     (defadvice ibuffer (around ibuffer-point-to-most-recent activate) ()
-       "Open ibuffer with cursor pointed to most recent buffer name"
-       (let ((recent-buffer-name (buffer-name)))
-         ad-do-it
-         (ibuffer-jump-to-buffer recent-buffer-name)))))
+  ;; switching to ibuffer puts the cursor on the most recent buffer
+  (defadvice ibuffer (around ibuffer-point-to-most-recent activate) ()
+             "Open ibuffer with cursor pointed to most recent buffer name"
+             (let ((recent-buffer-name (buffer-name)))
+               ad-do-it
+               (ibuffer-jump-to-buffer recent-buffer-name)))
 
-(eval-after-load 'ibuffer
-  '(progn
-     ;; show git status in ibuffer
-     (add-to-list 'load-path "~/.emacs.d/ibuffer-git")
-     (when (require 'ibuffer-git)
-       (setq ibuffer-formats
-             '((mark modified read-only
-                     git-status-mini " "
-                     (name 18 18 :left :elide) " "
-                     (size 9 -1 :right) " "
-                     (mode 16 16 :left :elide) " "
-                     ;; (eproject 16 16 :left :elide) " "
-                     (git-status 8 8 :left) " "
-                     filename-and-process)
-               (mark " "
-                     (name 16 -1) " "
-                     filename))))))
-
-
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; IDo mode, better than iswitch mode
-(require 'ido)
-(ido-mode t)
-(setq ido-enable-flex-matching t
-      ido-max-prospects        75)
-(global-set-key (kbd "M-x")     'ido-mx-completion)
-(global-set-key (kbd "C-x C-k") 'ido-kill-buffer)
-(global-set-key (kbd "C-x f")   'recentf-ido-find-file)
-
-(defun ido-mx-completion ()
-  (interactive)
-  (call-interactively
-   (intern
-    (ido-completing-read "M-x " (all-completions "" obarray 'commandp)))))
-
-;; It can restore recently used files easily.
-;; Courtesty to Robin "Rost" for this snippet.
-(require 'cl)
-(defun recentf-ido-find-file ()
-  "Find a recent file using Ido."
-  (interactive)
-  (let* ((file-assoc-list
-          (mapcar (lambda (x) (cons (file-name-nondirectory x) x)) recentf-list))
-         (filename-list
-          (remove-duplicates (mapcar #'car file-assoc-list) :test #'string=))
-         (filename
-          (ido-completing-read "Choose recent file: " filename-list nil t)))
-    (when filename
-      (find-file (cdr (assoc filename file-assoc-list))))))
-
-
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Clojure mode
-(add-hook 'clojure-mode-hook 'cider-mode)
-(add-hook 'clojure-mode-hook 'paredit-mode)
-(add-hook 'clojure-mode-hook 'show-paren-mode)
-(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
-
-(setq completion-at-point-functions       '(auto-complete)
-      nrepl-hide-special-buffers          t
-      cider-repl-pop-to-buffer-on-connect nil
-      cider-repl-popup-stacktraces        nil
-      cider-auto-select-error-buffer      nil
-      cider-popup-stacktraces             t)
-
-(global-set-key (kbd "\e <left>")  'paredit-backward-slurp-sexp)
-(global-set-key (kbd "\e <right>") 'paredit-forward-slurp-sexp)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Dockerfile mode
-(add-to-list 'load-path "~/.emacs.d/dockerfile-mode/")
-(require 'dockerfile-mode)
-(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
-
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; wedge-ws mode
-(load "~/.emacs.d/wedge-ws")
-(require 'wedge-ws)
-(global-set-key (kbd "C-c f")    'wedge-ws-inc)
-(global-set-key (kbd "C-c b")    'wedge-ws-dec)
-
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; go mode
-(defun my-go-mode-hook ()
-  (require 'go-autocomplete)
-  (require 'auto-complete-config)
-  (ac-config-default)
-  (flycheck-mode t)
-  (highlight-parentheses-mode t)
-  (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  (local-set-key (kbd "M-.") 'godef-jump)
-  (local-set-key (kbd "M-,") 'pop-tag-mark))
-(add-hook 'go-mode-hook 'my-go-mode-hook)
+  ;; show git status in ibuffer
+  (setq ibuffer-formats
+        '((mark modified read-only
+                git-status-mini " "
+                (name 18 18 :left :elide) " "
+                (size 9 -1 :right) " "
+                (mode 16 16 :left :elide) " "
+                ;; (eproject 16 16 :left :elide) " "
+                (git-status 8 8 :left) " "
+                filename-and-process)
+          (mark " "
+                (name 16 -1) " "
+                filename))))
 
 
 
