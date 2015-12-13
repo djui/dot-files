@@ -357,14 +357,18 @@ downcased, no preceding underscore.
 
 
 
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Parenthesis mode
 (define-globalized-minor-mode global-parentheses-mode
   highlight-parentheses-mode
   (lambda ()
     (show-paren-mode t)
     (highlight-parentheses-mode t)
-    (rainbow-delimiters-mode t)))
+    (rainbow-delimiters-mode t)
+    (autopair-mode t)))
 (global-parentheses-mode t)
+
+
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Elisp mode
