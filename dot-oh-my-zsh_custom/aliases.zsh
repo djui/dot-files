@@ -9,6 +9,7 @@ unalias -r g 2> /dev/null
 alias -r gb='git branch -v'
 alias -r gbd="git for-each-ref --sort=-committerdate --format='%(color:green)%(HEAD)%(color:reset) %(refname:short)%09%(objectname:short)%09%(subject)' refs/heads | sed 's|refs/heads/||' | column -t -s $'\t'"
 alias -r gc='git clone'
+alias -r gca='git commit -a --amend'
 alias -r gcam='git commit -a -m'
 alias -r gcb='git checkout -b'
 alias -r gcm='git commit -m'
@@ -21,6 +22,7 @@ alias -r gl='git log --format="%h %ai %s (%an <%ae>)"'
 alias -r gn='git number'
 alias -r gpf='git push --force'
 alias -r gpt='git push --tags'
+alias -r gpr='git push && hub pull-request'
 alias -r gr='git remote -v'
 alias -r gra='git rebase --abort'
 alias -r grc='git rebase --continue'
@@ -28,7 +30,9 @@ alias -r gri='git rebase --interactive'
 alias -r grh='git reset --hard'
 alias -r grhh='git reset --hard HEAD'
 alias -r grhm='git reset --hard origin/master'
-alias -r gs='git status'
+#alias -r gs='git status'
+alias -r gs='git number'
+alias -r gu='git pull --ff-only'
 #alias -r gc='git commit -m'
 #alias -r gca='git add . && git commit'
 #alias -r gcai='git add . && git commit --interactive'
@@ -38,12 +42,56 @@ alias -r gs='git status'
 #alias -r glp='git log --patch'
 #alias -r gls='git log --stat'
 #alias -r gss='git stash show'
-alias -r hp='git push && hub pull-request'
+
+
+### >>>>>>>>>>>>>>>>> CLEAN UP LATER
+# glog    = log --graph --abbrev-commit --pretty=oneline
+# lol     = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+# lola    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
+# # Called from the top-level dir. Pull from git://HOST/.
+# serv    = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+# st      = status --ignore-submodules
+# ci      = commit
+# br      = branch
+# co      = checkout
+# df      = diff --ignore-submodules
+# lg      = log -p
+# # all new commits after you fetched, with stats, but excluding merges
+# lc      = log ORIG_HEAD.. --stat --no-merges
+# lin     = log HEAD..origin/master
+# lout    = log origin/master..HEAD
+# din     = diff HEAD..origin/master
+# dout    = diff origin/master..HEAD
+# in      = !git fetch && git log HEAD..origin/master
+# pullsh  = !git pull && git push
+# # Recall that the commit which will be committed after we resolve this conflict
+# # will have two parents instead of the usual one: one parent will be HEAD, the
+# # tip of the current branch; the other will be the tip of the other branch,
+# # which is stored temporarily in MERGE_HEAD.
+# gitkconflict = !gitk --left-right HEAD...MERGE_HEAD
+# # "pull" or "merge" always leaves the original tip of the current branch in ORIG_HEAD.
+# # Hence, to see what a merge brought in, use the mdiff alias:
+# mdiff   = !gitk --left-right HEAD...ORIG_HEAD
+# # Remove a file from the index: git unstage <file>
+# unstage = reset HEAD --
+# last    = log -1 HEAD
+# whois   = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+# who     = "!git shortlog -s -- | sort -n -k1"
+# aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"
+# swap    = checkout "@{-1}"
+# ff = "pull --ff-only"
+# #unmerged = "!git diff --name-status --diff-filter=U | cut -f 2"
+# unmerged = "!git ls-files -u | cut -f 2 | sort -u"
+# conflicts = "!git ls-files -u | cut -f 2 | sort -u" # alias for unmerged
+# untracked = "!git ls-files --other --exclude-standard"
+### <<<<<<<<<<<<<<<<< CLEAN UP LATER
+
 
 ## Docker
 
-alias -r dms='docker-machine start default'
-alias -r dme='docker-machine env default'
+alias -r dm='docker-machine'
+alias -r dms='docker-machine start dev'
+alias -r dme='docker-machine env dev'
 
 ## Java
 
@@ -63,6 +111,8 @@ alias -r ll='ls -lh --color' # --full-time'
 alias -r lt='tree -hDFC'
 alias -r reset="clear && printf '\e[3J'"
 alias -r ux='chmod u+x'
+alias -r tiga='tig --all'
+alias -r w='watch -n 1 -d'
 
 ## Deprecated
 
