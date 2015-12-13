@@ -182,6 +182,10 @@
 ;; Not belowing to a specific mode.
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
 
+;; Don't kill but delete
+;;(global-set-key (kbd "C-d")  'delete-word) ; See usage below
+(global-set-key (kbd "M-DEL")  'backward-delete-word)
+
 ;; Swap Ctrl and Alt for more useability. Keep in sync with shell
 (global-set-key (kbd "C-b")    'backward-word)
 (global-set-key (kbd "M-b")    'backward-char)
@@ -235,6 +239,19 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom functions
+
+(defun delete-word (arg)
+    "Delete characters forward until encountering the end of a word.
+With argument, do this that many times."
+    (interactive "p")
+    (delete-region (point) (progn (forward-word arg) (point))))
+
+(defun backward-delete-word (arg)
+    "Delete characters backward until encountering the end of a word.
+With argument, do this that many times."
+    (interactive "p")
+    (delete-word (- arg)))
+
 (defun forward-duplicate-line ()
   (interactive)
   (let ((col (current-column)))
