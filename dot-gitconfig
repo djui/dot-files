@@ -6,7 +6,7 @@
 	default = current
 [core]
 	# global per user gitignore file
-	excludesfile = /Users/uwe/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [init]
 	templatedir = ~/.git_template
 [diff]
@@ -24,55 +24,9 @@
 [hub]
 	protocol = https
 	host = github.com
-[url "https://github.com/"]
-	insteadOf = "gh:"
 [guitool "Ignore file"]
 	cmd = echo "$FILENAME" >> .gitignore
 	needsfile = yes
 [guitool "Delete file"]
 	cmd = git rm $FILENAME
 	needsfile = yes
-[pull-request]
-	group = uwe@dauernheim.net
-[alias]
-	glog    = log --graph --abbrev-commit --pretty=oneline
-	lol     = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	lola    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
-	# Called from the top-level dir. Pull from git://HOST/.
-	serv    = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git 
-	st      = status --ignore-submodules
-	ci      = commit
-	br      = branch
-	co      = checkout
-	df      = diff --ignore-submodules
-	lg      = log -p
-	# all new commits after you fetched, with stats, but excluding merges
-	lc      = log ORIG_HEAD.. --stat --no-merges
-	lin     = log HEAD..origin/master
-	lout    = log origin/master..HEAD
-	din     = diff HEAD..origin/master
-	dout    = diff origin/master..HEAD
-	in      = !git fetch && git log HEAD..origin/master
-	pullsh  = !git pull && git push
-	# Recall that the commit which will be committed after we resolve this conflict
-	# will have two parents instead of the usual one: one parent will be HEAD, the 
-	# tip of the current branch; the other will be the tip of the other branch, 
-	# which is stored temporarily in MERGE_HEAD.
-	gitkconflict = !gitk --left-right HEAD...MERGE_HEAD
-	# "pull" or "merge" always leaves the original tip of the current branch in ORIG_HEAD.
-	# Hence, to see what a merge brought in, use the mdiff alias:
-	mdiff   = !gitk --left-right HEAD...ORIG_HEAD
-	# Remove a file from the index: git unstage <file>
-	unstage = reset HEAD --
-	last    = log -1 HEAD
-	whois   = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-	who     = "!git shortlog -s -- | sort -n -k1"
-	aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"
-	swap    = checkout "@{-1}"
-	ff = "pull --ff-only"
-	#unmerged = "!git diff --name-status --diff-filter=U | cut -f 2"
-	unmerged = "!git ls-files -u | cut -f 2 | sort -u"
-	conflicts = "!git ls-files -u | cut -f 2 | sort -u" # alias for unmerged
-	untracked = "!git ls-files --other --exclude-standard"
-	# Work related
-	
