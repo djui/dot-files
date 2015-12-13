@@ -119,9 +119,9 @@
    `(markdown-header-face-2           ((t (:inherit markup-title-1-face))))
    `(markdown-header-face-3           ((t (:inherit markup-title-2-face))))
    `(markdown-header-face-4           ((t (:inherit markup-title-3-face))))
-   ;; flymake-mode
-   `(flymake-errline                  ((t (:background ,djui-red-darker))))
-   `(flymake-warnline                 ((t (:background ,djui-orange-dark))))
+   ;; flycheck-mode
+   `(flycheck-error                   ((t (:background ,djui-red-darker))))
+   `(flycheck-warning                 ((t (:background ,djui-orange-dark))))
    ;; rcirc-mode
    `(rcirc-bright-nick                ((t (:foreground "Yellow" :bold t))))
    `(rcirc-dim-nick                   ((t (:foreground ,djui-gray-darker :bold t))))
