@@ -638,6 +638,8 @@ downcased, no preceding underscore.
   (require 'go-autocomplete)
   (require 'auto-complete-config)
   (ac-config-default)
+  (flycheck-mode t)
+  (highlight-parentheses-mode t)
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save)
   (local-set-key (kbd "M-.") 'godef-jump)
