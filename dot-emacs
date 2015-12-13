@@ -183,12 +183,12 @@
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
 
 ;; Swap Ctrl and Alt for more useability. Keep in sync with shell
-(global-set-key (kbd "C-b")  'backward-word)
-(global-set-key (kbd "M-b")  'backward-char)
-(global-set-key (kbd "C-f")  'forward-word)
-(global-set-key (kbd "M-f")  'forward-char)
-(global-set-key (kbd "C-d")  'kill-word)
-(global-set-key (kbd "M-d")  'delete-char)
+(global-set-key (kbd "C-b")    'backward-word)
+(global-set-key (kbd "M-b")    'backward-char)
+(global-set-key (kbd "C-f")    'forward-word)
+(global-set-key (kbd "M-f")    'forward-char)
+(global-set-key (kbd "C-d")    'delete-word)
+(global-set-key (kbd "M-d")    'delete-char)
 
 (global-set-key (kbd "M-g")    'goto-line)
 (global-set-key (kbd "M-p")    'backward-paragraph)
@@ -204,21 +204,14 @@
 (global-set-key (kbd "C-c r")  'replace-regexp)
 (global-set-key (kbd "C-c /")  'comment-or-uncomment-region)
 (global-set-key (kbd "C-c c")  'un-camelcase-word-at-point)
-
 (global-set-key (kbd "C-c g")  'magit-status)
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
-
-(if (and (<= emacs-major-version 24) (< emacs-minor-version 4))
-  (global-set-key (kbd "C-x SPSP") 'rm-set-mark)
-  (global-set-key (kbd "C-x w")    'eww))
 
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GLOBAL MOUSE/TRACKPAD MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
 
 (unless window-system
   (require 'mouse)
