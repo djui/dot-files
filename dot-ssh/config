@@ -7,8 +7,13 @@ Host *
   ServerAliveInterval 240
 #  GSSAPIAuthentication yes
 #  GSSAPIDelegateCredentials yes
+
 Host *.scraperwiki.com *.pdftables.com
   IdentityFile ~/.ssh/github_rsa
+Host bitbucket.org
+  HostName bitbucket.org
+  User git
+  IdentityFile ~/.ssh/bitbucket_rsa
 Host github.com
   HostName github.com
   User git
