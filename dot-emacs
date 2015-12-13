@@ -206,6 +206,7 @@
 (global-set-key (kbd "C-c c")  'un-camelcase-word-at-point)
 
 (global-set-key (kbd "C-c g")  'magit-status)
+(global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
 (if (and (<= emacs-major-version 24) (< emacs-minor-version 4))
   (global-set-key (kbd "C-x SPSP") 'rm-set-mark)
@@ -298,6 +299,25 @@ downcased, no preceding underscore.
       (replace-regexp "\\([A-Z]\\)" "_\\1" nil
                       (1+ (car bounds)) (cdr bounds))
       (downcase-region (car bounds) (cdr bounds)))))
+
+(defun indent-buffer ()
+  "Indent the currently visited buffer."
+  (interactive)
+  (delete-trailing-whitespace)
+  (indent-region (point-min) (point-max)))
+
+(defun indent-region-or-buffer ()
+  "Indent a region if selected, otherwise the whole buffer."
+  (interactive)
+  (save-excursion
+    (if (region-active-p)
+        (progn
+          (indent-region (region-beginning) (region-end))
+          (message "Indented selected region."))
+      (progn
+        (indent-buffer)
+        (message "Indented buffer.")))))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
