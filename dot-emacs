@@ -65,8 +65,6 @@
               frame-title-format                (setq icon-title-format
                                                       (format "%%b - %semacs"
                                                               (if (featurep 'xemacs) "x" "")))
-              ;; Mac specific options
-              mac-command-modifier              'meta
               ;; Use Chromium as default browser for links instead of Firefox
               ; browse-url-browser-function  'browse-url-generic
               ; browse-url-generic-program   "chromium-browser"
@@ -88,6 +86,8 @@
     (progn
       ;; See https://github.com/Homebrew/homebrew/commit/49c85b89753d42cc4ec2fee9607a608b3b14ab33?w=1
       (setq ns-use-srgb-colorspace t)
+      ;; Change modifier key
+      (setq mac-command-modifier 'meta)
       ;; Trash
       (setq trash-directory (expand-file-name "~/.Trash"))))
 
