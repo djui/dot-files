@@ -81,7 +81,15 @@
                                                   "magenta1"
                                                   "purple"))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; OSX specific
 
+(if (equal system-type 'darwin)
+    (progn
+      ;; See https://github.com/Homebrew/homebrew/commit/49c85b89753d42cc4ec2fee9607a608b3b14ab33?w=1
+      (setq ns-use-srgb-colorspace t)
+      ;; Trash
+      (setq trash-directory (expand-file-name "~/.Trash"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Configurations
