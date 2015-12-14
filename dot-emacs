@@ -2,9 +2,91 @@
 ;; GLOBAL CONFIGURATION
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
+(setq-default user-full-name               "Uwe Dauernheim"
+              user-mail-address            "uwe@dauernheim.net"
+              ;; Annoying   stuff
+              inhibit-startup-echo-area-message t
+              inhibit-startup-screen            t
+              inhibit-startup-message           t
+              initial-scratch-message           nil
+              visible-bell                      nil
+              ;; Show date and time
+              ;; Not needed at the moment due to tmux
+              display-time-day-and-date         nil
+              display-time-24hr-format          t
+              ;; Save session to reopen next time
+              desktop-save-mode                 t
+              ;; Compilation help
+              byte-compile-warnings             nil
+              compilation-scroll-output         t
+              compilation-window-height         10
+              ;; Combine killring and X clipboard
+              ;; We don't want this if we don't really need X
+              ; x-select-enable-clipboard    t
+              ; interprogram-paste-function  'x-cut-buffer-or-selection-value
+              ;; Completion
+              completion-ignore-case            t
+              pcomplete-ignore-case             t
+              ;; Selection mode - note: doesn't work in emacs -nw
+              shift-select-mode                 t
+              delete-selection-mode             t
+              transient-mark-mode               t
+              ;; Line numbering mode
+              global-visual-line-mode           t
+              line-number-mode                  t
+              column-number-mode                t
+              truncate-lines                    -1
+              ;; Syntax-, region mark-, parentals-Highlighting
+              global-font-lock-mode             t
+              font-lock-maximum-decoration      t
+              ;; Default tab width
+              indent-tabs-mode                  nil
+              tab-width                         4 ; to show old style correctly
+              ;; Have a border above and below the cursor while scrolling
+              scroll-margin                     5
+              ;; Only scroll by 1 line a time
+              scroll-up-aggressively            0.1
+              scroll-down-aggressively          0.1
+              scroll-conservatively             most-positive-fixnum
+              scroll-preserve-screen-position   t
+              ;; Keep old backups of changed files
+              make-backup-files                 t
+              backup-by-copying                 t
+              version-control                   t
+              delete-old-versions               t
+              kept-new-versions                 10
+              kept-old-versions                 10
+              backup-directory-alist            '(("." . "~/.emacs.d/backups"))
+              undo-limit                        100000
+              ;; Version control
+              vc-follow-symlinks                nil
+              ;; Change frame title
+              frame-title-format                (setq icon-title-format
+                                                      (format "%%b - %semacs"
+                                                              (if (featurep 'xemacs) "x" "")))
+              ;; Mac specific options
+              mac-command-modifier              'meta
+              ;; Use Chromium as default browser for links instead of Firefox
+              ; browse-url-browser-function  'browse-url-generic
+              ; browse-url-generic-program   "chromium-browser"
+              fill-column                       80
+              hl-paren-colors                   '("orange1"
+                                                  "yellow1"
+                                                  "greenyellow"
+                                                  "green1"
+                                                  "springgreen1"
+                                                  "cyan1"
+                                                  "slateblue1"
+                                                  "magenta1"
+                                                  "purple"))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Configurations
 ;; These do not work with setq(-default)
+
 (if window-system
     (progn
       (tool-bar-mode     -1) ; nil would only toggle
@@ -12,129 +94,45 @@
       (mouse-wheel-mode  t)))
 (menu-bar-mode           -1) ; nil would only toggle
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Global Mouse/Trackpad mode
 
+(unless window-system
+  (require 'mouse)
+  (xterm-mouse-mode t)
+  (global-set-key [mouse-4] '(lambda () (interactive) (scroll-down 1)))
+  (global-set-key [mouse-5] '(lambda () (interactive) (scroll-up 1)))
+  (defun track-mouse (e))
+  (setq mouse-sel-mode t)
+  ;; Trackpad taming
+  (setq mouse-wheel-scroll-amount '(0.0001))
+  (setq mouse-wheel-progressive-speed nil)
+  (setq scroll-step 1)
+  ;;(setq scroll-conservatively 10000)
+  ;;(setq auto-window-vscroll nil)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; DEFAULTS
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Custom aliases
 
-;; List of useful settings: http://www.emacswiki.org/emacs/EmacsCrashCode
-(setq-default user-full-name               "Uwe Dauernheim"
-              user-mail-address            "uwe@dauernheim.net"
-              ;; Annoying stuff
-              inhibit-startup-echo-area-message t
-              inhibit-startup-screen       t
-              inhibit-startup-message      t
-              initial-scratch-message      nil
-              visible-bell                 nil
-              ;; Show date and time
-              ;; Not needed at the moment due to tmux
-              display-time-day-and-date    nil
-              display-time-24hr-format     t
-              ;; Save session to reopen next time
-              desktop-save-mode            t
-              ;; Compilation help
-              byte-compile-warnings        nil
-              compilation-scroll-output    t
-              compilation-window-height    10
-              ;; Combine killring and X clipboard
-              ;; We don't want this if we don't really need X
-              ; x-select-enable-clipboard    t
-              ; interprogram-paste-function  'x-cut-buffer-or-selection-value
-              ;; Completion
-              completion-ignore-case       t
-              pcomplete-ignore-case        t
-              ;; Selection mode - note: doesn't work in emacs -nw
-              shift-select-mode            t
-              delete-selection-mode        t
-              transient-mark-mode          t
-              ;; Line numbering mode
-              global-visual-line-mode      t
-              line-number-mode             t
-              column-number-mode           t
-              truncate-lines               -1
-              ;; Syntax-, region mark-, parentals-Highlighting
-              global-font-lock-mode        t
-              font-lock-maximum-decoration t
-              ;; Default tab width
-              indent-tabs-mode             nil
-              tab-width                    4 ; to show old style correctly
-              ;; Have a border above and below the cursor while scrolling
-              scroll-margin                5
-              ;; Only scroll by 1 line a time
-              scroll-up-aggressively       0.1
-              scroll-down-aggressively     0.1
-              scroll-conservatively        most-positive-fixnum
-              scroll-preserve-screen-position t
-              ;; Keep old backups of changed files
-              make-backup-files            t
-              backup-by-copying            t
-              version-control              t
-              delete-old-versions          t
-              kept-new-versions            10
-              kept-old-versions            10
-              backup-directory-alist       '(("." . "~/.emacs.d/backups"))
-              undo-limit                   100000
-              ;; Version control
-              vc-follow-symlinks           nil
-              ;; Change frame title
-              frame-title-format           (setq icon-title-format
-                                                 (format "%%b - %semacs"
-                                                         (if (featurep 'xemacs) "x" "")))
-              ;; Mac specific options
-              mac-command-modifier         'meta
-              ;; Use Chromium as default browser for links instead of Firefox
-              ; browse-url-browser-function  'browse-url-generic
-              ; browse-url-generic-program   "chromium-browser"
-              fill-column                  80
-              )
-
-(setq hl-paren-colors
-      '("orange1"    "yellow1"      "greenyellow"
-        "green1"     "springgreen1" "cyan1"
-        "slateblue1" "magenta1"     "purple"))
-
-
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ENCODINGS
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Encoding type
+
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system       'utf-8)
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ALIASES
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Custom aliases
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; THEMES
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Color Themes
+
 (load-theme 'djui t)
 ;;(load-theme 'github t)
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; GLOBAL KEYBINDINGS
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global keybindings
+
 ;; Not belowing to a specific mode.
 ;; See: http://wttools.sourceforge.net/emacs-stuff/emacs-keybindings.html
 
@@ -170,29 +168,8 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; GLOBAL MOUSE/TRACKPAD MODE
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(unless window-system
-  (require 'mouse)
-  (xterm-mouse-mode t)
-  (global-set-key [mouse-4] '(lambda ()
-                               (interactive)
-                               (scroll-down 1)))
-  (global-set-key [mouse-5] '(lambda ()
-                               (interactive)
-                               (scroll-up 1)))
-  (defun track-mouse (e))
-  (setq mouse-sel-mode t))
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FUNCTIONS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Custom functions
 
 (defun delete-word (arg)
     "Delete characters forward until encountering the end of a word.
@@ -288,14 +265,16 @@ downcased, no preceding underscore.
 ;; PACKAGE MANAGER
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package manager
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Use-package
+
 (eval-when-compile
   (require 'use-package))
 
@@ -445,14 +424,16 @@ downcased, no preceding underscore.
   :mode ("^Dockerfile" . dockerfile-mode))
 
 (use-package linum
-  :init (global-linum-mode)
+  :disabled t
+  :init (global-linum-mode t)
   :config (setq linum-format "%3d "))
 
 (use-package hl-line
-  :init (global-hl-line-mode))
+  :init (global-hl-line-mode t))
 
 (use-package hl-todo
-  :init (global-hl-todo-mode))
+  :init (global-hl-todo-mode t)
+  :config (setq hl-todo-activate-in-modes '(go-mode clojure-mode)))
 
 (use-package highlight-chars
   :config
@@ -714,6 +695,7 @@ downcased, no preceding underscore.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CUSTOMIZATION
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
