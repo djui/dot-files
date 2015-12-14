@@ -65,6 +65,9 @@
               frame-title-format                (setq icon-title-format
                                                       (format "%%b - %semacs"
                                                               (if (featurep 'xemacs) "x" "")))
+
+              ;; Use inferior shell that was not customized
+              shell-file-name                   "/bin/sh"
               ;; Use Chromium as default browser for links instead of Firefox
               ; browse-url-browser-function  'browse-url-generic
               ; browse-url-generic-program   "chromium-browser"
