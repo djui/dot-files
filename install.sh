@@ -12,9 +12,11 @@ SRCITEMS=(
     gnupg
     lein
     login_conf
+    necdrc
     oh-my-zsh
     oh-my-zsh_custom
     ssh
+    tigrc
     tmux.conf
     vim
     vimrc
@@ -23,7 +25,7 @@ SRCITEMS=(
     zshrc.pre-oh-my-zsh
 )
 
-for SRCITEM in ${SRCITEMS[*]} ; do 
+for SRCITEM in ${SRCITEMS[*]} ; do
     DESTITEM=$(echo $SRCITEM | tr '!' '/') # Take care of subdirectories
     echo -n "Trying to link $DESTDIR/.${SRCITEM}... "
     if [ -L "$DESTDIR/.$DESTITEM" ] ; then

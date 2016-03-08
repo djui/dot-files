@@ -1,0 +1,11 @@
+[config]
+if=en0
+interval=5
+
+[ssid:ScraperWiki]
+brightness=0
+volume=0.1
+
+[ssid:Wall-E]
+brightness=0.5
+volume=0.5
