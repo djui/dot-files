@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+
+import glob
+import json
+import sys
+
+
+def main(args):
+    if not args:
+        print("Usage: go-funclen BASEDIR", file=sys.stderr)
+        return 1
+
+    basedir = args[0]
+    files = glob.iglob(basedir + '/*/*.go')
+    res = []
+
+    for f in files:
+        i = 0
+        marker_n = 0
+        marker_sig = ''
+        for line in open(f).readlines():
+            i += 1
+            if line.startswith('func '):
+                marker_n = i
+                marker_sig = line.strip()[5:-1]
+            if line.startswith('}'):
+                if marker_n > 0:
+                    res.append((f, marker_sig, i-marker_n-1))
+                    marker_n = -1
+                    marker_sig = ''
+
+    for e in sorted(res, key=lambda x: x[2]):
+        print('{: >3} {: <35} {}'.format(e[2], e[0], e[1]))
+
+
+if __name__ == '__main__':
+    try:
+        sys.exit(main(sys.argv[1:]))
+    except KeyboardInterrupt:
+        sys.exit(1)

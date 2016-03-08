@@ -1,0 +1,3 @@
+#!/bin/sh
+
+docker run -h dr --rm -i -v $HOME:$HOME -w $PWD -v $PWD:$PWD -v /etc/passwd:/etc/passwd -v /etc/group:/etc/group -u $(id -u):$(id -g)'
