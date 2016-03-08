@@ -22,8 +22,7 @@
               compilation-scroll-output         t
               compilation-window-height         10
               ;; Combine killring and X clipboard
-              ;; We don't want this if we don't really need X
-              ; x-select-enable-clipboard    t
+              x-select-enable-clipboard         t
               ; interprogram-paste-function  'x-cut-buffer-or-selection-value
               ;; Completion
               completion-ignore-case            t
@@ -151,6 +150,9 @@
 ;;(global-set-key (kbd "C-d")  'delete-word) ; See usage below
 (global-set-key (kbd "M-DEL")  'backward-delete-word)
 
+;;(global-set-key (kbd "M-<up>")   'move-line-up)
+;;(global-set-key (kbd "M-<down>") 'move-line-down)
+
 ;; Swap Ctrl and Alt for more useability. Keep in sync with shell
 (global-set-key (kbd "C-b")    'backward-word)
 (global-set-key (kbd "M-b")    'backward-char)
@@ -166,7 +168,8 @@
 (global-set-key (kbd "C-a")    'back-to-indentation)
 
 (global-set-key (kbd "C-c d")  'forward-duplicate-line)
-(global-set-key (kbd "C-c D")  'backward-duplicate-line)
+;;(global-set-key (kbd "C-c D")  'backward-duplicate-line)
+(global-set-key (kbd "C-c D")  'dash-at-point)
 (global-set-key (kbd "C-c e")  'eval-buffer)
 (global-set-key (kbd "C-c j")  'join-next-line)
 (global-set-key (kbd "C-c J")  'join-previous-line)
@@ -175,6 +178,7 @@
 (global-set-key (kbd "C-c c")  'un-camelcase-word-at-point)
 (global-set-key (kbd "C-c g")  'magit-status)
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
+
 
 
 
@@ -269,6 +273,21 @@ downcased, no preceding underscore.
       (progn
         (indent-buffer)
         (message "Indented buffer.")))))
+
+(defun move-line-up ()
+  "Move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+    (indent-according-to-mode))
 
 
 
@@ -485,7 +504,7 @@ downcased, no preceding underscore.
   (define-key git-gutter+-mode-map (kbd "C-x n")   'git-gutter+-next-hunk)
   (define-key git-gutter+-mode-map (kbd "C-x p")   'git-gutter+-previous-hunk)
   (define-key git-gutter+-mode-map (kbd "C-x v =") 'git-gutter+-show-hunk)
-  (define-key git-gutter+-mode-map (kbd "C-x r")   'git-gutter+-revert-hunks)
+  (define-key git-gutter+-mode-map (kbd "C-x R")   'git-gutter+-revert-hunks)
   (define-key git-gutter+-mode-map (kbd "C-x t")   'git-gutter+-stage-hunks)
   (define-key git-gutter+-mode-map (kbd "C-x c")   'git-gutter+-commit)
   (define-key git-gutter+-mode-map (kbd "C-x C")   'git-gutter+-stage-and-commit)
