@@ -1,3 +1,5 @@
+# !!! DEPRECATED !!! Left for reference and cherry-pick
+
 #HISTSIZE=1000
 #SAVEHIST=1000
 #HISTFILE=~/.zsh_history

@@ -23,28 +23,6 @@ function mp3 {
                --audio-quality=1 "$*"
 }
 
-function gcp() {
-    git commit -m $1 && git push
-}
-
-function gacp() {
-    git commit -a -m $1 && git push
-}
-
-function locate2() {
-    case $(uname) in
-        "Darwin") mdfind -name $* | grep "^$(pwd)" ;;
-        "Linux" ) find / -mount -wholename "/proc" -prune -o -iname $* | grep "^$(pwd)" ;;
-    esac
-}
-
-function klocate() {
-    case $(uname) in
-        "Darwin") mdfind -name $* | grep "/kred/" ;;
-        "Linux" ) find / -mount -wholename "/proc" -prune -o -iname $* | grep "/kred/" ;;
-    esac
-}
-
 function echo_info() {
     echo -e "\033[34m$1\033[0m"
 }

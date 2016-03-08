@@ -18,9 +18,13 @@
 	diff = auto
 	interactive = auto
 	status = auto
+[pager]
+	log  = diff-highlight
+	show = diff-highlight
+	diff = diff-highlight
 [github]
 	user = uwe@dauernheim.net
-	token = 
+	token =
 [hub]
 	protocol = https
 	host = github.com
@@ -30,3 +34,12 @@
 [guitool "Delete file"]
 	cmd = git rm $FILENAME
 	needsfile = yes
+
+[alias]
+	authors       = "!git shortlog -s -- | sort -n -k1"
+	conflicts     = "!git ls-files -u | cut -f 2 | sort -u" # alias for unmerged
+	last          = log -1 HEAD
+	unmerged      = "!git ls-files -u | cut -f 2 | sort -u"
+	unmerged-diff = "!git diff --name-status --diff-filter=U | cut -f 2"
+	unstage       = reset HEAD --
+	untracked     = "!git ls-files --other --exclude-standard"
