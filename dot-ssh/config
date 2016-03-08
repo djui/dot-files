@@ -8,7 +8,7 @@ Host *
 #  GSSAPIAuthentication yes
 #  GSSAPIDelegateCredentials yes
 
-Host *.scraperwiki.com *.pdftables.com
+Host *.scraperwiki.com *.pdftables.com 10.* 127.* 192.*
   IdentityFile ~/.ssh/github_rsa
 Host bitbucket.org
   HostName bitbucket.org
