@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/sh
 
 docker ps -a -q | xargs -n 1 -I {} docker rm {}
 docker rmi $(docker images | awk '$1 == "<none>" {print $3}')
