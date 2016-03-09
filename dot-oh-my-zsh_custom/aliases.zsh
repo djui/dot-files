@@ -36,12 +36,13 @@ alias -r w='watch -n 1 -d'
 
 unalias -r g 2> /dev/null
 
-alias -r gb='git branch -v'
+alias -r gb='git branch -vv'
 alias -r gbd="git for-each-ref --sort=-committerdate --format='%(color:green)%(HEAD)%(color:reset) %(refname:short)%09%(objectname:short)%09%(subject)' refs/heads | sed 's|refs/heads/||' | column -t -s $'\t'"
 alias -r gci='git commit --interacive'
+alias -r gcm='git commit -m' # alias for gcmsg alias
 alias -r gcp='git commit && git push'
-alias -r gd='_() { git diff $@ | diff-highlight | diff-ss } ; _'
 alias -r gds='git diff --stat'
+alias -r gdss='_() { git diff $@ | diff-highlight | diff-ss } ; _'
 alias -r gg='2>/dev/null git gui &'
 alias -r ggb='2>/dev/null git gui blame'
 alias -r ggc='2>/dev/null git gui citool'
@@ -52,8 +53,10 @@ alias -r gn='git number'
 alias -r gpf='git push --force'
 alias -r gpr='git push && hub pull-request'
 alias -r gpt='git push --tags'
+alias -r grho='git reset --hard $(git rev-parse --abbrev-ref --symbolic-full-name @{u})'
+alias -r gro='git reset $(git rev-parse --abbrev-ref --symbolic-full-name @{u})'
+alias -r gs='git number -s'
 alias -r gserv='git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git'
-alias -r gss='git number -s'  # Override gss (git status -s with git-number)
 
 
 ## Deprecated
