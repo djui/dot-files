@@ -1,0 +1,38 @@
+"*":
+  "atom-beautify":
+    _analyticsUserId: "fba89aa7-eae3-4353-8c7a-a64bbd6968fc"
+  "auto-update-packages":
+    intervalMinutes: 60
+  core:
+    audioBeep: false
+    projectHome: "/Users/uwe/dev"
+  editor:
+    backUpBeforeSaving: true
+    fontSize: 12
+    invisibles: {}
+    showIndentGuide: true
+  "exception-reporting":
+    userId: "275731f4-a46c-4ed9-3d11-f06d6553ac7c"
+  "go-plus":
+    goPath: "~/dev/go"
+  linter: {}
+  "linter-docker": {}
+  "linter-rust":
+    cargoPath: "/usr/local/bin/cargo"
+  minimap:
+    absoluteMode: true
+    plugins:
+      "highlight-selected": true
+      "highlight-selectedDecorationsZIndex": 0
+      "minimap-autohide": true
+      "minimap-autohideDecorationsZIndex": 0
+  "one-dark-ui": {}
+  pigments: {}
+  racer: {}
+  "rust-api-docs-helper": {}
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  "w3c-validation": {}
+  welcome:
+    showOnStartup: false
+  wrap: {}
