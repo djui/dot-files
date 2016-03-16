@@ -19,4 +19,22 @@
 '.source.go':
   'Error handler':
     'prefix': 'err'
-    'body': 'if err != nil {\n\t${1:log.Fatalln("Error:", err)}\n}'
+    'body': """
+      if err != nil {
+        ${1:log.Fatalln("Error:", err)}
+      }
+    """
+  'Const':
+    'prefix': 'const'
+    'body': """
+      // $1 defines ...
+      $1 = $2
+    """
+  'Func':
+    'prefix': 'func'
+    'body': """
+      // $1 ...
+      func $1($2) $3 {
+        $4
+      }
+    """
