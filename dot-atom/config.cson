@@ -32,7 +32,9 @@
   "rust-api-docs-helper": {}
   "tree-view":
     hideVcsIgnoredFiles: true
-  "w3c-validation": {}
+  "w3c-validation":
+    validateOnChange: false
+    validateOnSave: false
   welcome:
     showOnStartup: false
   wrap: {}
