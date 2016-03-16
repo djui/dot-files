@@ -63,56 +63,23 @@ ZSH_CUSTOM=$HOME/.oh-my-zsh_custom
 
 export ZSH_PLUGINS_ALIAS_TIPS_TEXT="💡 Alias tip: "
 export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="_"
-export ZSH_PLUGINS_ALIAS_TIPS_EXPAND=1
+#export ZSH_PLUGINS_ALIAS_TIPS_EXPAND=1
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-#plugins=(zsh-syntax-highlighting autosuggestions osx brew git github tmux lein mvn urltools extract colorize motd potd alias-tips)
 plugins=(zsh-syntax-highlighting autosuggestions osx brew git github tmux lein mvn urltools extract colorize alias-tips)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-export GREP_OPTIONS='--exclude-dir=.git'
-
-#export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)
-#export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
-
-# Go workspace
-export GOPATH="$HOME/dev/go"
-export GO15VENDOREXPERIMENT=1
-
-## Docker
-eval $(docker-machine env dev)
-
-
-# You may need to manually set your language environment
-export LC_ALL="en_US.UTF-8"
-export LANG="en_US.UTF-8"
-export LANGUAGE="en_US.UTF-8"
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='emacs -nw'
-else
-    export EDITOR='emacs -nw'
-fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
 # zsh-autosuggestions
 zle-line-init() {
     zle autosuggest-start
 }
 zle -N zle-line-init
+
+eval "$(direnv hook zsh)"
 
 source /Users/uwe/.iterm2_shell_integration.zsh
