@@ -38,7 +38,7 @@ unalias -r g 2> /dev/null
 
 alias -r gb='git branch -vv'
 alias -r gbd="git for-each-ref --sort=-committerdate --format='%(color:green)%(HEAD)%(color:reset) %(refname:short)%09%(objectname:short)%09%(subject)' refs/heads | sed 's|refs/heads/||' | column -t -s $'\t'"
-alias -r gci='git commit --interacive'
+alias -r gci='git commit --interactive'
 alias -r gcm='git commit -m' # alias for gcmsg alias
 alias -r gcp='git commit && git push'
 alias -r gds='git diff --stat'
