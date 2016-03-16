@@ -1,14 +1,16 @@
 HashKnownHosts yes
-Host *
-#  PubkeyAuthentication no
-  IdentitiesOnly yes
-#  VisualHostKey yes
-#  StrictHostKeyChecking no
-  ServerAliveInterval 240
-#  GSSAPIAuthentication yes
-#  GSSAPIDelegateCredentials yes
 
-Host *.scraperwiki.com *.pdftables.com 10.* 127.* 192.*
+Host *
+ #GSSAPIAuthentication yes
+ #GSSAPIDelegateCredentials yes
+  IdentitiesOnly yes
+ #PubkeyAuthentication no
+ #StrictHostKeyChecking no
+  ServerAliveInterval 240
+ #VisualHostKey yes
+Host 10.* 127.* 192.*
+  IdentityFile ~/.ssh/github_rsa
+Host *.scraperwiki.com *.pdftables.com
   IdentityFile ~/.ssh/github_rsa
 Host bitbucket.org
   HostName bitbucket.org
@@ -18,17 +20,12 @@ Host github.com
   HostName github.com
   User git
   IdentityFile ~/.ssh/github_rsa
-Host djui.no.de
-  IdentityFile ~/.ssh/joyent_rsa
 Host heroku.com
   IdentityFile ~/.ssh/heroku_rsa
-Host virtualbox
-  Hostname 192.168.0.10
-  IdentityFile ~/.ssh/aws_ecdsa_521
-Host ec2
-  Hostname ec2-46-51-151-2.eu-west-1.compute.amazonaws.com
-  IdentityFile ~/.ssh/ec2_rsa_2048
-Host rpi # raspberry raspberrypi raspberry-pi
-# Hostname 89.160.7.10
-  Hostname djui.dyndns.org
-  IdentityFile ~/.ssh/rpi_ecdsa_521
+# begin dlite
+Host docker.local
+  HostName 192.168.64.12
+  IdentityFile /Users/uwe/.dlite/docker
+  User docker
+  StrictHostKeyChecking no
+# end dlite
