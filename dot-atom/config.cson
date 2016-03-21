@@ -16,6 +16,15 @@
     userId: "275731f4-a46c-4ed9-3d11-f06d6553ac7c"
   "go-plus":
     goPath: "~/dev/go"
+  "gometalinter-linter":
+    args: [
+      "--vendor"
+      "--fast"
+      "--json"
+      "--disable=deadcode"
+      "--disable=gotype"
+      "./..."
+    ]
   linter: {}
   "linter-docker": {}
   "linter-rust":
