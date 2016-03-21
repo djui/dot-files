@@ -3,6 +3,8 @@
 .DS_Store
 *.beam
 
+/dot-bin/imgcat
+
 /dot-emacs.d/.mc-lists.el
 /dot-emacs.d/ac-comphist.dat/
 /dot-emacs.d/ac-comphist.dat
@@ -16,6 +18,8 @@
 /dot-emacs.d/rcirc-log/
 /dot-emacs.d/smex-items
 /dot-emacs.d/url/
+
+/dot-gnupg/trustdb.gpg
 
 /dot-ssh/*
 !/dot-ssh/config
