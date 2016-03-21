@@ -11,6 +11,7 @@
     fontSize: 12
     invisibles: {}
     showIndentGuide: true
+    tabLength: 4
   "exception-reporting":
     userId: "275731f4-a46c-4ed9-3d11-f06d6553ac7c"
   "go-plus":
