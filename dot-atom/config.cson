@@ -5,6 +5,9 @@
     intervalMinutes: 60
   core:
     audioBeep: false
+    disabledPackages: [
+      "bottom-dock"
+    ]
     projectHome: "/Users/uwe/dev"
   editor:
     backUpBeforeSaving: true
