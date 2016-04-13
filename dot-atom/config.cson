@@ -48,3 +48,5 @@
   welcome:
     showOnStartup: false
   wrap: {}
+  "file-types":
+    "dot-gitconfig": "source.git-config"
