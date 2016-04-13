@@ -1,6 +1,7 @@
 [alias]
 	authors       = "!git shortlog -s -- | sort -n -k1"
 	conflicts     = "!git ls-files -u | cut -f 2 | sort -u" # alias for unmerged
+	deploy        = "!git log --grep 'Merge p' --oneline origin/master.. --format='%s %b' | sed -r 's/[^#]+(#[0-9]+) [^ ]+ [^ ]+ /- \\1 /' | sort -n"
 	last          = log -1 HEAD
 	unmerged      = "!git ls-files -u | cut -f 2 | sort -u"
 	unmerged-diff = "!git diff --name-status --diff-filter=U | cut -f 2"
