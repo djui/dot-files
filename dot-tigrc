@@ -4,3 +4,5 @@ set main-view-author-display = email-user
 set main-view-id-display = yes
 
 bind generic | :toggle vertical-split
+bind generic ! !git reset --hard %(commit)
+bind generic 9 !@sh -c "git show -s --format=%h %(commit) | pbcopy"
