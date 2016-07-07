@@ -14,9 +14,12 @@
     fontSize: 12
     invisibles: {}
     showIndentGuide: true
+    showInvisibles: true
     tabLength: 4
   "exception-reporting":
     userId: "275731f4-a46c-4ed9-3d11-f06d6553ac7c"
+  "file-types":
+    "dot-gitconfig": "source.git-config"
   "go-plus":
     goPath: "~/dev/go"
   "gometalinter-linter":
@@ -30,6 +33,10 @@
     ]
   linter: {}
   "linter-docker": {}
+  "linter-pep8":
+    ignoreErrorCodes: [
+      "E501"
+    ]
   "linter-rust":
     cargoPath: "/usr/local/bin/cargo"
   minimap:
@@ -39,7 +46,8 @@
       "highlight-selectedDecorationsZIndex": 0
       "minimap-autohide": true
       "minimap-autohideDecorationsZIndex": 0
-  "one-dark-ui": {}
+  "one-dark-ui":
+    layoutMode: "Compact"
   pigments: {}
   racer: {}
   "rust-api-docs-helper": {}
@@ -51,5 +59,3 @@
   welcome:
     showOnStartup: false
   wrap: {}
-  "file-types":
-    "dot-gitconfig": "source.git-config"
