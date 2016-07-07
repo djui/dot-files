@@ -1,3 +1,4 @@
+# -*- mode: sh -*-
 # Pure
 # by Sindre Sorhus
 # https://github.com/sindresorhus/pure
@@ -78,7 +79,8 @@ prompt_pure_precmd() {
 		# check if we're in a git repo
 		command git rev-parse --is-inside-work-tree &>/dev/null &&
 		# check check if there is anything to pull
-		command git fetch &>/dev/null &&
+		## DON'T DO NETWORKING!
+		##command git fetch &>/dev/null &&
 		# check if there is an upstream configured for this branch
 		command git rev-parse --abbrev-ref @'{u}' &>/dev/null && {
 			local arrows=''
