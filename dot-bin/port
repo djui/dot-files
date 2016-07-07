@@ -1,13 +1,15 @@
 #!/bin/sh
 
 if [ -z $1 ] ; then
-    echo "List processes listening on a given port."
-    echo "usage: port [<protocol>] <port>"
-    exit 1
-fi
-
-if [ -z $2 ] ; then
-    lsof -n -i ":$1" | grep 'LISTEN'
+    if [ "$1" == "-h" ]; then
+        echo "List processes listening on a given port."
+        echo "usage: port [<protocol>] <port>"
+        exit
+    else
+        lsof -i 'TCP' -s 'TCP:LISTEN' -n -P
+    fi
+elif [ -z $2 ] ; then
+    lsof -i ":$1" -s ':LISTEN' -n -P
 else
-    lsof -n -i "$1:$2" | grep 'LISTEN'
+    lsof -i "$1:$2" -s ':LISTEN' -n -P
 fi
