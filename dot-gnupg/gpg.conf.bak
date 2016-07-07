@@ -230,7 +230,7 @@ keyserver-options auto-key-retrieve
 # You may also list arbitrary keyservers here by URL.
 #
 # Try CERT, then PKA, then LDAP, then hkp://keys.gnupg.net:
-auto-key-locate cert pka ldap keyserver
+auto-key-locate cert pka ldap hkp://keys.gnupg.net
 
 #comment
 cert-digest-algo SHA512
