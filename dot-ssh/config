@@ -10,6 +10,8 @@ Host *
  #VisualHostKey yes
 Host 10.* 127.* 192.*
   IdentityFile ~/.ssh/github_rsa
+Host ds-ec2.scraperwiki.com
+  IdentityFile ~/.ssh/id_rsa
 Host *.scraperwiki.com *.pdftables.com
   IdentityFile ~/.ssh/github_rsa
 Host bitbucket.org
@@ -22,10 +24,3 @@ Host github.com
   IdentityFile ~/.ssh/github_rsa
 Host heroku.com
   IdentityFile ~/.ssh/heroku_rsa
-# begin dlite
-Host docker.local
-  HostName 192.168.64.12
-  IdentityFile /Users/uwe/.dlite/docker
-  User docker
-  StrictHostKeyChecking no
-# end dlite
