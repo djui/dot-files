@@ -6,9 +6,13 @@
 
 ## Docker
 
-alias -r dm='docker-machine'
-alias -r dms='docker-machine start dev'
-alias -r dme='docker-machine env dev'
+alias -r de='docker exec'
+alias -r di='docker images'
+alias -r dr='docker run'
+alias -r drit='docker run -it'
+alias -r dritrm='docker run -it --rm'
+alias -r ds='docker ps'
+
 
 ## Java
 

@@ -10,10 +10,6 @@ export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 # Go
 export GOPATH="$HOME/dev/go"
 
-## Docker
-# Deprecated: Using dlite for now
-eval $(docker-machine env dev)
-
 # Localization
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
