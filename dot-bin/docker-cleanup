@@ -1,8 +1,9 @@
-#!/bin/sh
+#!/bin/sh -x
 
 # Remove stopped containers
-docker ps -a -q | xargs -n 1 -I {} docker rm {}
-# Remove intermediate images
-docker rmi $(docker images | awk '$1 == "<none>" {print $3}')
-# Remove intermediate volumes
-docker volume ls | awk '{print $2}' | xargs docker volume rm
+docker ps --quiet --filter="status=exited" | xargs -n 1 docker rm
+# Remove intermediate dangling images
+docker images --quiet --filter="dangling=true" | xargs -n 1 docker rmi
+# Remove intermediate dangling volumes
+[ "$1" == "-v" ] && \
+    docker volume ls --quiet --filter="dangling=true" | xargs -n 1 docker volume rm
