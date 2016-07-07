@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ "$#" = 0 ]; then
+   echo "Usage: yamllint FILE"
+   exit 1
+fi
+
+ruby -e "require \"yaml\";YAML.load_file(\"$1\")"
