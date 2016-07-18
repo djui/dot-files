@@ -20,10 +20,10 @@
 	excludesfile = ~/.gitignore_global
 
 [diff]
-    renames	= copies
+    renames = copies
 
 [github]
-	user = uwe@dauernheim.net
+	user = djui
 	token =
 
 [guitool "Ignore file"]
