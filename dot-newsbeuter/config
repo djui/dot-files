@@ -1,0 +1,27 @@
+show-read-feeds no
+download-full-page yes
+refresh-on-startup yes
+suppress-first-reload yes
+reload-threads 3
+
+ignore-article "*" "title =~ \"[Sponsor]\""
+
+browser "w3m %u" # "open %u"
+download-path "~/Downloads/%N"
+
+bind-key j down feedlist
+bind-key k up feedlist
+bind-key j next articlelist
+bind-key k prev articlelist
+bind-key J next-feed articlelist
+bind-key K prev-feed articlelist
+bind-key j down article
+bind-key k up article
+
+color background          default default
+color listnormal          default default
+color listfocus           default default reverse
+color listnormal_unread   default default bold
+color listfocus_unread    default default reverse bold
+color info                default default reverse bold
+color article             default default
