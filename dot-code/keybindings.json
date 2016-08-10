@@ -1,0 +1,27 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+    {
+        "key": "alt+cmd+g",
+        "command": "editor.action.goToDeclaration",
+        "when": "editorTextFocus"
+    },{
+        "key": "shift+alt+cmd+g",
+        "command": "workbench.action.navigateBack",
+        "when": "editorTextFocus"
+    },{
+        "key": "shift+cmd+d",
+        "command": "editor.action.copyLinesDownAction",
+        "when": "editorTextFocus"
+    },{
+        "key": "ctrl+t",
+        "command": "extension.transpose"
+    },{
+        "key": "alt+]",
+        "command": "editor.action.smartSelect.grow",
+        "when": "editorTextFocus"
+    },{
+        "key": "alt+[",
+        "command": "editor.action.smartSelect.shrink",
+        "when": "editorTextFocus"
+    }
+]

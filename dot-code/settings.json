@@ -1,0 +1,29 @@
+// Place your settings in this file to overwrite the default settings
+{
+
+// Editor
+
+    "editor.renderWhitespace": true,
+    "editor.renderIndentGuides": true,
+    "editor.rulers": [80],
+
+    "files.trimTrailingWhitespace": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+
+// Telemetry
+
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false,
+
+// External Terminal
+
+    "terminal.external.osxExec": "iTerm.app",
+
+// Extensions
+
+    "vsicons.icons": "https://github.com/jedmao/vscode-icons/raw/grayscale-icons/icons.zip",
+
+// Languages
+
+    "go.useCodeSnippetsOnFunctionSuggest": true
+}
