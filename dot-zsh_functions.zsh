@@ -1,4 +1,6 @@
-function play {
+[ -f ~/.zsh_functions_scraperwiki.zsh ] && source ~/.zsh_functions_scraperwiki.zsh
+
+play() {
     # Skip DASH manifest for speed purposes. This might actually disable
     # being able to specify things like 'bestaudio' as the requested format,
     # but try anyway.
@@ -12,7 +14,7 @@ function play {
                --exec=afplay "$*"
 }
 
-function mp3 {
+mp3() {
     # Get the best audio, convert it to MP3, and save it to the current
     # directory.
     youtube-dl --default-search=ytsearch: \
@@ -23,54 +25,54 @@ function mp3 {
                --audio-quality=1 "$*"
 }
 
-function echo_info() {
+echo_info() {
     echo -e "\033[34m$1\033[0m"
 }
 
-function echo_success() {
+echo_success() {
     echo -e "\033[32m$1\033[0m"
 }
 
-function echo_failure() {
+echo_failure() {
     echo -e "\033[31m$1\033[0m"
 }
 
-function dups() {
+dups() {
     f=/tmp/dup_checker.txt
     p=${1:-.}
 
     find $p \! -type d -exec shasum {} \; | sort -n | tee $f | cut -f 1 -d " " | uniq -d | grep -f /dev/stdin $f
 }
 
-function rtfm() {
+rtfm() {
     help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@";
 }
 
-function cmdfu() {
+cmdfu() {
     curl "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ | openssl base64)/plaintext";
 }
 
-function google() {
+google() {
     w3m "http://www.google.com/search?q=$@"
 }
 
-function encrypt() {
+encrypt() {
     openssl aes-256-cbc -a -salt -in "$1" -out "$1.aes" ; shred --remove "$1"
 }
 
-function decrypt() {
+decrypt() {
     openssl aes-256-cbc -d -a -salt -in "$1.aes" -out "$1"
 }
 
-function title() {
+title() {
     echo -ne "\033]0;$*\007"
 }
 
-function title-pwd() {
+title-pwd() {
     title $(basename $PWD)
 }
 
-function www() {
+www() {
     if [ $1 ] ; then
         w3m $*
     else
@@ -78,25 +80,25 @@ function www() {
     fi
 }
 
-function colortable() {
+colortable() {
     for c in {0..255} ; do
         echo -e "\033[38;05;${c}m $c: Test"
     done
 }
 
-function 2sv() {
+2sv() {
     urlenctext="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$@")"
     transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Csv" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
     echo {${transtext#*:}
 }
 
-function 2en() {
+2en() {
     urlenctext="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$@")"
     transtext=`curl --silent "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$urlenctext&langpair=%7Cen" | grep -o "\{\"translatedText\":\"\(.*\)\"\}"`
     echo {${transtext#*:}
 }
 
-function throbbler() {
+throbbler() {
     s="⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
     while true ; do
         for (( i=0; i<${#s}; i++ )) ; do

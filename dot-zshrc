@@ -1,85 +1,42 @@
-unset PATH
-export PATH="$HOME/.bin"
-export PATH="$PATH:$HOME/dev/go/bin"
-export PATH="$PATH:$HOME/Dropbox/CLI"
-export PATH="$PATH:$HOME/.gem/ruby/2.2.0/bin"
-export PATH="$PATH:/usr/local/heroku/bin"
-export PATH="$PATH:/opt/X11/bin"
-export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
-export PATH="$PATH:/usr/local/opt/gnu-sed/libexec/gnubin"
-export PATH="$PATH:/usr/local/bin"
-export PATH="$PATH:/usr/bin"
-export PATH="$PATH:/bin"
-export PATH="$PATH:/usr/local/sbin"
-export PATH="$PATH:/usr/sbin"
-export PATH="$PATH:/sbin"
+# Zsh
 
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+[ -f ~/.zsh_options.zsh     ] && source ~/.zsh_options.zsh
+[ -f ~/.zsh_exports.zsh     ] && source ~/.zsh_exports.zsh
+[ -f ~/.zsh_keybindings.zsh ] && source ~/.zsh_keybindings.zsh
+[ -f ~/.zsh_functions.zsh   ] && source ~/.zsh_functions.zsh
+[ -f ~/.zsh_aliases.zsh     ] && source ~/.zsh_aliases.zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="djui2"
+# Zgen
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+source "${HOME}/.zgen/zgen.zsh"
+if ! zgen saved; then
+    zgen load RobSis/zsh-completion-generator
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+    zgen load zsh-users/zsh-completions src
+    zgen load zsh-users/zsh-autosuggestions
+    zgen load zsh-users/zsh-history-substring-search
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen load djui/alias-tips
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+    zgen oh-my-zsh
+    zgen oh-my-zsh plugins/git
+    zgen oh-my-zsh plugins/github
+    zgen oh-my-zsh plugins/colored-man-pages
+    zgen oh-my-zsh plugins/brew
+    zgen oh-my-zsh plugins/osx
+    #zgen oh-my-zsh themes/simple
+    
+    zgen save
+fi
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# Gets overriden by zgen
+setopt MENU_COMPLETE
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+# Misc
 
-# Uncomment the following line to disable command auto-correction.
-# DISABLE_CORRECTION="true"
+## Prompt theme
+[ -e ~/.zsh_themes_djui.zsh ] && source ~/.zsh_themes_djui.zsh
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HIST_STAMPS="yyyy-mm-dd"
-
-# Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=$HOME/.oh-my-zsh_custom
-
-export ZSH_PLUGINS_ALIAS_TIPS_TEXT="💡 Alias tip: "
-export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="_"
-export ZSH_PLUGINS_ALIAS_TIPS_EXPAND=1
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(zsh-syntax-highlighting autosuggestions osx brew git github tmux lein mvn urltools extract colorize alias-tips)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# zsh-autosuggestions
-zle-line-init() {
-    zle autosuggest-start
-}
-zle -N zle-line-init
-
-eval "$(direnv hook zsh)"
-
-source /Users/uwe/.iterm2_shell_integration.zsh
+## Direnv
+if hash direnv &> /dev/null; then eval "$(direnv hook zsh)"; fi
