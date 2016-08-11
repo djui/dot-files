@@ -23,5 +23,9 @@
         "key": "alt+[",
         "command": "editor.action.smartSelect.shrink",
         "when": "editorTextFocus"
+    },{
+        "key": "alt+cmd+q",
+        "command": "rewrap.rewrapComment",
+        "when": "editorTextFocus"
     }
 ]
