@@ -14,9 +14,13 @@ export TERM=xterm-256color
 # Go
 export GOPATH="$HOME/dev/go"
 
+# Rust
+export RUST_SRC_PATH="/usr/local/Cellar/rust/1.10.0/src"
+
 unset PATH
 export PATH="$HOME/.bin"
 export PATH="$PATH:$GOPATH/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/Dropbox/CLI"
 export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
 export PATH="$PATH:/usr/local/opt/gnu-sed/libexec/gnubin"
