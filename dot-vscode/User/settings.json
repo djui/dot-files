@@ -1,6 +1,4 @@
-// Place your settings in this file to overwrite the default settings
 {
-
 // Editor
 
     "editor.renderWhitespace": true,
@@ -22,6 +20,7 @@
 // Extensions
 
     "vsicons.icons": "https://github.com/jedmao/vscode-icons/raw/grayscale-icons/icons.zip",
+    "files.insertFinalNewline": true,
 
 // Languages
 

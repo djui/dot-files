@@ -1,0 +1,85 @@
+{
+    "lastKnownKeybindings": {
+        "workbench.action.openGlobalSettings": "Cmd+,",
+        "workbench.action.files.newUntitledFile": "Cmd+N",
+        "workbench.action.files.openFileFolder": "Cmd+O",
+        "workbench.action.reopenClosedEditor": "Shift+Cmd+T",
+        "workbench.action.files.save": "Cmd+S",
+        "workbench.action.files.saveAs": "Shift+Cmd+S",
+        "workbench.action.newWindow": "Shift+Cmd+N",
+        "workbench.action.closeWindow": "Shift+Cmd+W",
+        "workbench.action.closeActiveEditor": "Cmd+W",
+        "undo": "Cmd+Z",
+        "redo": "Shift+Cmd+Z",
+        "editor.action.clipboardCutAction": "Cmd+X",
+        "editor.action.clipboardCopyAction": "Cmd+C",
+        "editor.action.clipboardPasteAction": "Cmd+V",
+        "editor.action.selectAll": "Cmd+A",
+        "actions.find": "Cmd+F",
+        "editor.action.startFindReplaceAction": "Alt+Cmd+F",
+        "workbench.view.search": "Shift+Cmd+F",
+        "workbench.action.replaceInFiles": "Shift+Cmd+H",
+        "workbench.view.explorer": "Shift+Cmd+E",
+        "workbench.view.git": "Ctrl+Shift+G",
+        "workbench.view.debug": "Shift+Cmd+D",
+        "workbench.view.extensions": "Shift+Cmd+X",
+        "workbench.action.output.toggleOutput": "Shift+Cmd+U",
+        "workbench.debug.action.toggleRepl": "Shift+Cmd+Y",
+        "workbench.action.terminal.toggleTerminal": "Ctrl+`",
+        "workbench.actions.view.problems": "Shift+Cmd+M",
+        "workbench.action.showCommands": "Shift+Cmd+P",
+        "workbench.action.toggleFullScreen": "Ctrl+Cmd+F",
+        "workbench.action.toggleSidebarVisibility": "Cmd+\\",
+        "workbench.action.togglePanel": "Cmd+J",
+        "editor.action.toggleWordWrap": "Alt+Z",
+        "workbench.action.zoomIn": "Cmd+=",
+        "workbench.action.zoomOut": "Cmd+-",
+        "workbench.action.navigateBack": "Shift+Alt+Cmd+G",
+        "workbench.action.navigateForward": "Ctrl+Shift+-",
+        "workbench.action.nextEditor": "Alt+Cmd+Right",
+        "workbench.action.previousEditor": "Alt+Cmd+Left",
+        "workbench.action.openNextRecentlyUsedEditorInGroup": "Ctrl+Tab",
+        "workbench.action.openPreviousRecentlyUsedEditorInGroup": "Ctrl+Shift+Tab",
+        "workbench.action.focusFirstEditorGroup": "Cmd+1",
+        "workbench.action.focusSecondEditorGroup": "Cmd+2",
+        "workbench.action.focusThirdEditorGroup": "Cmd+3",
+        "workbench.action.quickOpen": "Cmd+P",
+        "workbench.action.gotoSymbol": "Shift+Cmd+O",
+        "editor.action.goToDeclaration": "Alt+Cmd+G",
+        "workbench.action.gotoLine": "Ctrl+G"
+    },
+    "windowsState": {
+        "openedFolders": [],
+        "lastActiveWindow": {
+            "workspacePath": "/Users/abc/dev/go/src/pdftables.com",
+            "uiState": {
+                "mode": 1,
+                "x": 0,
+                "y": 0,
+                "width": 960,
+                "height": 796
+            }
+        }
+    },
+    "pickerWorkingDir": "/Users/abc/dev/go/src",
+    "openedPathsList": {
+        "folders": [
+            "/Users/abc/dev/go/src/pdftables.com",
+            "/Users/abc/dev/go/src/github.com/djui/pkg",
+            "/Users/abc/dev/scraperwiki/rust-pdftables-api"
+        ],
+        "files": [
+            "/Users/abc/.vscode/extensions/ms-vscode.Theme-TomorrowKit-0.1.3/themes/Tomorrow.tmTheme",
+            "/Users/abc/dev/go/src/pdftables.com/pkg/invoice/xero_client.go",
+            "/Users/abc/dev/go/src/github.com/djui/pkg/time/time.go",
+            "/Users/abc/Downloads/www.betalo.se.chain+root.crt",
+            "/Users/abc/Downloads/www.betalo.se.chain+root-2.crt",
+            "/Users/abc/dev/go/src/github.com/scraperwiki/pdftables.com-stats/beta_invites_with_country.tsv",
+            "/Users/abc/dev/scraperwiki/rust-pdftables-api/api.rs",
+            "/Users/abc/Downloads/EndOfTheLine.vsix",
+            "/Users/abc/dev/go/src/github.com/scraperwiki/pdftables.com-stats/join_beta_db_mixpanel.py",
+            "/Users/abc/dev/go/src/github.com/scraperwiki/pdftables.com-stats/download_formats.py"
+        ]
+    },
+    "theme": "vs vscode-theme-solarized-light-themes-Solarized-light-tmTheme"
+}

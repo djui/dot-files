@@ -27,5 +27,8 @@
         "key": "alt+cmd+q",
         "command": "rewrap.rewrapComment",
         "when": "editorTextFocus"
+    },{
+        "key": "cmd+\\",
+        "command": "workbench.action.toggleSidebarVisibility"
     }
 ]
