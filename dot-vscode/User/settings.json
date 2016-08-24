@@ -1,7 +1,8 @@
 {
 // Editor
 
-    "editor.renderWhitespace": true,
+    // Default: false: ctrl+shift+i
+    "editor.renderWhitespace": false,
     "editor.renderIndentGuides": true,
     "editor.rulers": [80],
 
