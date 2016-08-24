@@ -2,6 +2,7 @@ set line-graphics = utf-8
 set main-view-date-display = relative
 set main-view-author-display = email-user
 set main-view-id-display = yes
+set mailmap = yes
 
 bind generic | :toggle vertical-split
 bind generic ! !git reset --hard %(commit)
