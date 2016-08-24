@@ -15,7 +15,7 @@ export TERM=xterm-256color
 export GOPATH="$HOME/dev/go"
 
 # Rust
-export RUST_SRC_PATH="/usr/local/Cellar/rust/1.10.0/src"
+export RUST_SRC_PATH="/usr/local/Cellar/rust/1.11.0/src"
 
 unset PATH
 export PATH="$HOME/.bin"
