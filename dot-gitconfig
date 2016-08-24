@@ -1,7 +1,7 @@
 [alias]
 	authors       = "!git shortlog -s -- | sort -n -k1"
 	conflicts     = "!git ls-files -u | cut -f 2 | sort -u" # alias for unmerged
-	deploy        = "!git log --grep 'Merge p' --oneline origin/master.. --format='%s %b' | sed -r 's/[^#]+(#[0-9]+) [^ ]+ [^ ]+ /- \\1 /' | sort -n"
+	deploy        = "!git log --merges --oneline origin/master.. --format='%s %b' | sed -r 's/[^#]+(#[0-9]+) [^ ]+ [^ ]+ /- \\1 /' | sort -n"
 	last          = log -1 HEAD
 	prune         = "!git branch --merged | grep -v '\\*\\|master\\|dev' | xargs -n 1 git branch -d"
 	unmerged      = "!git ls-files -u | cut -f 2 | sort -u"
