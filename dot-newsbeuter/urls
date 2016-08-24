@@ -1,14 +1,25 @@
-http://hnrss.org/newest?points=50&link=comments tech en
-https://www.infoq.com/feed/presentations tech en
-https://feeds.feedburner.com/Techcrunch/europe tech en
+http://atp.fm/episodes?format=rss apple tech en iphone
+http://blog.rust-lang.org/feed.xml infrequent tech must-read rust en
+http://chrome.blogspot.com/atom.xml tech must-read en google
+http://dave.cheney.net/feed infrequent tech must-read en go
+http://deepmind-ai.blogspot.com/feeds/posts/default infrequent tech en google
+http://dmitryvorobev.blogspot.com/feeds/posts/default infrequent tech must-read en go
+http://elithrar.github.io/atom.xml infrequent tech must-read en go
+http://feeds.feedburner.com/Techcrunch/europe tech en
+http://gmailblog.blogspot.com/atom.xml infrequent tech must-read en
+http://golangnews.com/index.xml tech must-read en go
+http://googleblog.blogspot.com/atom.xml infrequent tech must-read en google
+http://googleresearch.blogspot.com/atom.xml infrequent tech must-read en google
+http://hnrss.org/newest?points=50&link=comments tech must-read en
+http://joyent.com/blog/feed infrequent tech must-read en
+http://littlebigdetails.com/rss infrequent tech en
+http://nathanleclaire.com/index.xml infrequent tech must-read en go
+http://newsfeed.zeit.de/serie/fischer-im-recht law infrequent must-read rust de
 http://rss.golem.de/rss.php?feed=ATOM1.0 tech de
-https://www.iphoneblog.de/feed/ tech iphone apple de
-https://www.iphone-ticker.de/feed/ tech iphone apple de
-http://newsfeed.zeit.de/serie/fischer-im-recht law de
-https://atp.fm/episodes?format=rss tech iphone apple en podcast
-https://nathanleclaire.com/index.xml tech go en
-https://elithrar.github.io/atom.xml tech go en
-https://www.goinggo.net/index.xml tech go en
-http://dave.cheney.net/feed tech go en
-https://golangnews.com/index.xml tech go en
-https://feedity.com/bourgon-org/W1ZTWlRU.rss tech go en
+http://www.infoq.com/feed/presentations tech must-read en
+http://www.iphone-ticker.de/feed/ apple tech iphone de
+http://www.iphoneblog.de/feed/ apple tech iphone de
+https://eng.uber.com/feed/ infrequent tech must-read en go
+https://feedity.com/bourgon-org/W1ZTWlRU.rss infrequent tech must-read en go
+https://github.com/blog/ship.atom infrequent tech must-read en
+https://www.goinggo.net/index.xml infrequent tech must-read en go
