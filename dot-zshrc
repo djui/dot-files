@@ -2,9 +2,6 @@
 
 [ -f ~/.zsh_options.zsh     ] && source ~/.zsh_options.zsh
 [ -f ~/.zsh_exports.zsh     ] && source ~/.zsh_exports.zsh
-[ -f ~/.zsh_keybindings.zsh ] && source ~/.zsh_keybindings.zsh
-[ -f ~/.zsh_functions.zsh   ] && source ~/.zsh_functions.zsh
-[ -f ~/.zsh_aliases.zsh     ] && source ~/.zsh_aliases.zsh
 
 # Zgen
 
@@ -31,6 +28,10 @@ fi
 
 # Gets overriden by zgen
 setopt MENU_COMPLETE
+
+[ -f ~/.zsh_keybindings.zsh ] && source ~/.zsh_keybindings.zsh
+[ -f ~/.zsh_functions.zsh   ] && source ~/.zsh_functions.zsh
+[ -f ~/.zsh_aliases.zsh     ] && source ~/.zsh_aliases.zsh
 
 
 # Misc
