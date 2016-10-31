@@ -1,13 +1,18 @@
 {
 // Editor
 
-    // Default: false: ctrl+shift+i
-    "editor.renderWhitespace": false,
+    "editor.renderWhitespace": true, // ctrl+shift+i
     "editor.renderIndentGuides": true,
     "editor.rulers": [80],
+    "editor.scrollBeyondLastLine": false,
 
     "files.trimTrailingWhitespace": true,
     "diffEditor.ignoreTrimWhitespace": false,
+    // Fira Code
+    "editor.fontFamily": "FiraCode-Retina",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 13,
+    "editor.lineHeight": 17,
 
 // Telemetry
 
@@ -22,8 +27,12 @@
 
     "vsicons.icons": "https://github.com/jedmao/vscode-icons/raw/grayscale-icons/icons.zip",
     "files.insertFinalNewline": true,
+    "todoScanRegex": "(?:TODO|FIXME)\\s*\\W{0,1}(\\s+.*|(?:\\w|\\d).*)$",
 
 // Languages
 
-    "go.useCodeSnippetsOnFunctionSuggest": true
+    "go.useCodeSnippetsOnFunctionSuggest": true,
+
+    "phpformatter.pharPath": "php-cs-fixer",
+    "phpformatter.onSave": true
 }
