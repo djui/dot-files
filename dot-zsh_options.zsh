@@ -3,8 +3,9 @@
 ## Changing Directories
 setopt AUTO_CD
 setopt AUTO_PUSHD
-setopt CHASE_DOTS
-setopt CHASE_LINKS
+# Often to annoying when switching between symlinked and non-symlinked in the same directories.
+#setopt CHASE_DOTS
+#setopt CHASE_LINKS
 setopt CDABLE_VARS
 setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
