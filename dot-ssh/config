@@ -1,19 +1,14 @@
 HashKnownHosts yes
-
 Host *
- #GSSAPIAuthentication yes
- #GSSAPIDelegateCredentials yes
+#  PubkeyAuthentication no
   IdentitiesOnly yes
- #PubkeyAuthentication no
- #StrictHostKeyChecking no
+#  VisualHostKey yes
+#  StrictHostKeyChecking no
   ServerAliveInterval 240
- #VisualHostKey yes
-Host 10.* 127.* 192.*
-  IdentityFile ~/.ssh/github_rsa
-Host ds-ec2.scraperwiki.com
-  IdentityFile ~/.ssh/id_rsa
-Host *.scraperwiki.com *.pdftables.com
-  IdentityFile ~/.ssh/github_rsa
+#  GSSAPIAuthentication yes
+#  GSSAPIDelegateCredentials yes
+  IPQoS 0x00
+
 Host bitbucket.org
   HostName bitbucket.org
   User git
