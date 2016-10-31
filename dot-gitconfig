@@ -20,7 +20,7 @@
 	excludesfile = ~/.gitignore_global
 
 [diff]
-    renames = copies
+	renames = copies
 
 [github]
 	user = djui
@@ -56,3 +56,6 @@
 [user]
 	name = Uwe Dauernheim
 	email = uwe@dauernheim.net
+[gui]
+	tabsize = 4
+	newbranchtemplate = dev-XXX-
