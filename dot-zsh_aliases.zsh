@@ -4,6 +4,11 @@
 [ $(uname) = "Darwin" ] && alias -r standby='sudo pmset -a hibernatemode 0 && pmset sleepnow'
 
 
+## Go
+
+alias -r gorun='gorram'
+
+
 ## Docker
 
 alias -r de='docker exec'
@@ -12,6 +17,9 @@ alias -r dr='docker run'
 alias -r drit='docker run -it'
 alias -r dritrm='docker run -it --rm'
 alias -r ds='docker ps'
+alias -r dv='docker volume'
+alias -r dvl='docker volume ls'
+alias -r dvr='docker volume rm'
 
 
 ## Java
@@ -25,7 +33,9 @@ alias -r java8='JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 
 alias -r \?='echo $?'
 alias -r 80='grep -n "^.\{81\}"'
-alias -r bu='brew update && for f in $(brew outdated) ; do brew upgrade $f ; done'
+alias -r bg='brew upgrade'
+alias -r bo='brew outdated'
+alias -r bu='brew update'
 alias -r ccat='pygmentize -O style=monokai -f terminal256 -g'
 alias -r cd..='cd ..'
 alias -r isodate='date -u +"%Y-%m-%dT%H:%M:%SZ"'
