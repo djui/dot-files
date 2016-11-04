@@ -9,9 +9,9 @@
       "bottom-dock"
     ]
     projectHome: "/Users/uwe/dev"
+    telemetryConsent: "limited"
   editor:
     backUpBeforeSaving: true
-    fontSize: 12
     invisibles: {}
     showIndentGuide: true
     showInvisibles: true
@@ -20,6 +20,9 @@
     userId: "275731f4-a46c-4ed9-3d11-f06d6553ac7c"
   "file-types":
     "dot-gitconfig": "source.git-config"
+  "git-diff-details":
+    enableSyntaxHighlighting: true
+  "go-config": {}
   "go-plus":
     goPath: "~/dev/go"
   "gometalinter-linter":
