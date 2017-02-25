@@ -41,3 +41,6 @@ setopt MENU_COMPLETE
 
 ## Direnv
 if hash direnv &> /dev/null; then eval "$(direnv hook zsh)"; fi
+
+## Unlock SSH Agent's keys
+{ eval `ssh-agent`; ssh-add -A; } &>/dev/null
