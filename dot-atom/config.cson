@@ -1,6 +1,7 @@
 "*":
   "atom-beautify":
-    _analyticsUserId: "fba89aa7-eae3-4353-8c7a-a64bbd6968fc"
+    general:
+      _analyticsUserId: "fba89aa7-eae3-4353-8c7a-a64bbd6968fc"
   "auto-update-packages":
     intervalMinutes: 60
   core:
@@ -12,6 +13,7 @@
     telemetryConsent: "limited"
   editor:
     backUpBeforeSaving: true
+    fontFamily: "Fira Code"
     invisibles: {}
     showIndentGuide: true
     showInvisibles: true
@@ -22,19 +24,36 @@
     "dot-gitconfig": "source.git-config"
   "git-diff-details":
     enableSyntaxHighlighting: true
+  "git-plus":
+    general:
+      _analyticsUserId: "2db7fe5b-81eb-409e-985e-d6af9c096137"
   "go-config": {}
   "go-plus":
+    currentPanelHeight: "24.392296185489904vh"
+    currentPanelWidth: "31.084656084656086vw"
+    format:
+      tool: "goreturns"
     goPath: "~/dev/go"
+    navigator: {}
+    panelDisplayMode: "closed"
+    test:
+      coverageDisplayMode: "gutter"
+      coverageHighlightMode: "covered"
+      runTestsOnSave: false
   "gometalinter-linter":
     args: [
+      "--json"
       "--vendor"
       "--fast"
-      "--json"
-      "--disable=deadcode"
+      "--tests"
+      "--disable=gocyclo"
+      "--disable=dupl"
       "--disable=gotype"
+      "--disable=gas"
       "./..."
     ]
-  linter: {}
+  linter:
+    errorPanelHeight: 685
   "linter-docker": {}
   "linter-pep8":
     ignoreErrorCodes: [
@@ -49,11 +68,16 @@
       "highlight-selectedDecorationsZIndex": 0
       "minimap-autohide": true
       "minimap-autohideDecorationsZIndex": 0
+      "minimap-autohider": true
+      "minimap-autohiderDecorationsZIndex": 0
   "one-dark-ui":
     layoutMode: "Compact"
   pigments: {}
   racer: {}
   "rust-api-docs-helper": {}
+  "tester-go":
+    coverageHighlightMode: "covered"
+    runTestsOnSave: false
   "tree-view":
     hideVcsIgnoredFiles: true
   "w3c-validation":
