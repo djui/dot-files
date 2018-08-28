@@ -33,12 +33,13 @@ alias -r java8='JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 
 alias -r \?='echo $?'
 alias -r 80='grep -n "^.\{81\}"'
-alias -r bg='brew upgrade'
-alias -r bo='brew outdated'
 alias -r bu='brew update'
+alias -r bo='brew outdated'
+alias -r bp='brew upgrade'
 alias -r ccat='pygmentize -O style=monokai -f terminal256 -g'
 alias -r cd..='cd ..'
 alias -r isodate='date -u +"%Y-%m-%dT%H:%M:%SZ"'
+alias -r lower="tr '[:upper:]' '[:lower:]'"
 alias -r lsop='lsof -i'
 alias -r ls='ls --color'
 alias -r lt='tree -hDFC'
@@ -46,7 +47,9 @@ alias -r matrix='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unb
 alias -r go-repl='gore'
 alias -r gorepl='gore'
 alias -r grepl='gore'
+alias -r pw='cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 50'
 alias -r tiga='tig --all'
+alias -r uuid='uuidgen | lower'
 alias -r ux='chmod u+x'
 alias -r w='watch -n 1 -d'
 
@@ -65,7 +68,7 @@ alias -r gdss='_() { git diff $@ | diff-highlight | diff-ss } ; _'
 alias -r gg='git gui &'
 alias -r ggb='git gui blame'
 alias -r ggc='git gui citool'
-alias -r ghp='hub pull-request'
+alias -r ghp='hub pull-request -a djui'
 alias -r glf='git pull --ff-only'
 alias -r gma='git merge --abort'
 alias -r gn='git number'
@@ -77,6 +80,8 @@ alias -r gro='git reset $(git rev-parse --abbrev-ref --symbolic-full-name @{u})'
 alias -r gs='git number -s'
 alias -r gserv='git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git'
 alias -r gsmu='git submodule update --init --recursive'
+
+alias -r tf='terraform'
 
 
 ## Deprecated

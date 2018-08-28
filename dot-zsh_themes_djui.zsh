@@ -118,6 +118,10 @@ prompt_pure_setup() {
 
 	# prompt turns red if the previous command didn't exit with 0
 	PROMPT='%(?.%F{green}.%F{red})$%f '
+
+        #if [[ $PWD =~ "$HOME/dev/betalo" ]]; then
+        #    PROMPT="💰 $PROMPT"
+        #fi
 }
 
 prompt_pure_setup "$@"

@@ -33,6 +33,8 @@ setopt MENU_COMPLETE
 [ -f ~/.zsh_functions.zsh   ] && source ~/.zsh_functions.zsh
 [ -f ~/.zsh_aliases.zsh     ] && source ~/.zsh_aliases.zsh
 
+[ -f ~/.zsh_aliases_betalo.zsh ] && source ~/.zsh_aliases_betalo.zsh
+
 
 # Misc
 
@@ -44,3 +46,8 @@ if hash direnv &> /dev/null; then eval "$(direnv hook zsh)"; fi
 
 ## Unlock SSH Agent's keys
 { eval `ssh-agent`; ssh-add -A; } &>/dev/null
+
+# added by travis gem
+[ -f /Users/uwe/.travis/travis.sh ] && source /Users/uwe/.travis/travis.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

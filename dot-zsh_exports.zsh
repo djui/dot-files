@@ -33,6 +33,7 @@ export PATH="$PATH:/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/sbin"
 export PATH="$PATH:/sbin"
+export PATH="$PATH:/usr/local/Cellar/php56/5.6.32_8/bin"
 
 export ZSH_PLUGINS_ALIAS_TIPS_TEXT="💡 Alias tip: "
 export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="_"
@@ -45,4 +46,4 @@ export ZSH_PLUGINS_ALIAS_TIPS_EXPAND=1
 export GREP_OPTIONS='--exclude-dir=.git'
 
 # Java
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.9 2> /dev/null)
