@@ -3,7 +3,12 @@
 .DS_Store
 *.beam
 
+/dot-aws/shell/
+/dot-aws/shell/cache/
+/dot-aws/shell/history
+
 /dot-bin/imgcat
+/dot-bin/slackWeather.js
 
 /dot-emacs.d/.mc-lists.el
 /dot-emacs.d/ac-comphist.dat/
