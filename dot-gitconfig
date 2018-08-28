@@ -43,6 +43,7 @@
 
 [merge]
 	summary = true
+	tool = opendiff
 
 [pager]
 	log  = diff-highlight
@@ -55,7 +56,7 @@
 
 [user]
 	name = Uwe Dauernheim
-	email = uwe@dauernheim.net
+	email = djui@users.noreply.github.com
 [gui]
 	tabsize = 4
 	newbranchtemplate = dev-XXX-
