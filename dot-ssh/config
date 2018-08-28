@@ -19,3 +19,21 @@ Host github.com
   IdentityFile ~/.ssh/github_rsa
 Host heroku.com
   IdentityFile ~/.ssh/heroku_rsa
+Host ftp-in.betalo.se # 52.57.69.76
+  User ubuntu
+  IdentityFile ~/.ssh/betalo-ec2-ftp_rsa
+Host 35.156.34.115
+  User ubuntu
+  IdentityFile ~/.ssh/betalo-ec2-ftp_rsa
+Host 52.57.97.35
+  User ubuntu
+  IdentityFile ~/.ssh/betalo-ec2-apex_rsa
+
+# WDProxy
+
+Host 18.195.44.3
+  User ec2-user
+  IdentityFile ~/.ssh/wdproxy_rsa
+Host 3.120.35.223
+  User ec2-user
+  IdentityFile ~/.ssh/wdproxy_rsa
