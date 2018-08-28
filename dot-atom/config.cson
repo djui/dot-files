@@ -10,7 +10,7 @@
       "bottom-dock"
     ]
     projectHome: "/Users/uwe/dev"
-    telemetryConsent: "limited"
+    telemetryConsent: "no"
   editor:
     backUpBeforeSaving: true
     fontFamily: "Fira Code"
@@ -34,6 +34,7 @@
     format:
       tool: "goreturns"
     goPath: "~/dev/go"
+    lint: {}
     navigator: {}
     panelDisplayMode: "closed"
     test:
@@ -52,8 +53,7 @@
       "--disable=gas"
       "./..."
     ]
-  linter:
-    errorPanelHeight: 685
+  linter: {}
   "linter-docker": {}
   "linter-pep8":
     ignoreErrorCodes: [
@@ -61,6 +61,8 @@
     ]
   "linter-rust":
     cargoPath: "/usr/local/bin/cargo"
+  "linter-ui-default":
+    panelHeight: 69
   minimap:
     absoluteMode: true
     plugins:
@@ -70,8 +72,7 @@
       "minimap-autohideDecorationsZIndex": 0
       "minimap-autohider": true
       "minimap-autohiderDecorationsZIndex": 0
-  "one-dark-ui":
-    layoutMode: "Compact"
+  "one-dark-ui": {}
   pigments: {}
   racer: {}
   "rust-api-docs-helper": {}
