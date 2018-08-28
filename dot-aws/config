@@ -1,2 +1,23 @@
 [default]
 region = eu-central-1
+output = json
+
+[profile betalo-uwe]
+region = eu-central-1
+output = json
+
+[profile betalo-iam]
+region = eu-central-1
+output = json
+
+[profile betalo-s3]
+region = eu-central-1
+output = json
+
+[profile betalo-terraform]
+region = eu-central-1
+output = json
+
+[profile betalo-packer]
+region = eu-central-1
+output = json
