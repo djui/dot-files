@@ -3,6 +3,9 @@ set main-view-date-display = relative
 set main-view-author-display = email-user
 set main-view-id-display = yes
 set mailmap = yes
+#set log-options = --topo-order
+#set log-options = --date-order
+#set log-options = --author-date-order
 
 bind generic | :toggle vertical-split
 bind generic ! !git reset --hard %(commit)
