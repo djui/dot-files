@@ -15,7 +15,7 @@ export EDITOR=emacs
 export TERM=xterm-256color
 
 # Go
-export GOPATH="$HOME/dev/go"
+#export GOPATH="$HOME/dev/go"
 
 # Rust
 export RUST_SRC_PATH="/usr/local/Cellar/rust/1.13.0/src"
@@ -27,6 +27,7 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/Dropbox/CLI"
 export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
 export PATH="$PATH:/usr/local/opt/gnu-sed/libexec/gnubin"
+export PATH="$PATH:/usr/local/opt/mysql-client/bin"
 export PATH="$PATH:/usr/local/bin"
 export PATH="$PATH:/usr/bin"
 export PATH="$PATH:/bin"
@@ -47,3 +48,8 @@ export GREP_OPTIONS='--exclude-dir=.git'
 
 # Java
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.9 2> /dev/null)
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion

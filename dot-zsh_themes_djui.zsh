@@ -42,6 +42,13 @@ prompt_pure_git_dirty() {
 	(($? == 1)) && echo '*'
 }
 
+prompt_gcloud() {
+    account="$(gcloud config get-value account 2>/dev/null)"
+    project="$(gcloud config get-value project 2>/dev/null)"
+
+    echo "${account}:${project}"
+}
+
 # displays the exec time of the last command if set threshold was exceeded
 prompt_pure_cmd_exec_time() {
 	local stop=$EPOCHSECONDS
@@ -71,7 +78,7 @@ prompt_pure_precmd() {
 	# git info
 	vcs_info
 
-	local prompt_pure_preprompt="\n%F{blue}%~%F{242}$vcs_info_msg_0_`prompt_pure_git_dirty` $prompt_pure_username%f %F{yellow}`prompt_pure_cmd_exec_time`%f"
+	local prompt_pure_preprompt="\n%F{blue}%~%F{242}$vcs_info_msg_0_`prompt_pure_git_dirty` `prompt_gcloud` $prompt_pure_username%f %F{yellow}`prompt_pure_cmd_exec_time`%f"
 	print -P $prompt_pure_preprompt
 
 	# check async if there is anything to pull

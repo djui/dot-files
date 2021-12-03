@@ -22,7 +22,12 @@ SRCITEMS=(
     vimrc
     w3m
     zshrc
-    zshrc.pre-oh-my-zsh
+    zsh-aliases.zsh
+    zsh_exports.zsh
+    zsh_functions.zsh
+    zsh_keybindings.zsh
+    zsh_options.zsh
+    zsh_themes_djui.zsh
 )
 
 for SRCITEM in ${SRCITEMS[*]} ; do

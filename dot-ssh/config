@@ -8,11 +8,24 @@ Host *
 #  GSSAPIAuthentication yes
 #  GSSAPIDelegateCredentials yes
   IPQoS 0x00
+  UseKeychain yes
 
-Host bitbucket.org
-  HostName bitbucket.org
+Host grace-broadcaster
+  HostName ec2-34-254-181-130.eu-west-1.compute.amazonaws.com
+  User ec2-user
+  IdentityFile ~/.ssh/broadcaster-ec2_rsa
+Host grace-etl
+  HostName ec2-34-242-223-46.eu-west-1.compute.amazonaws.com
+  User ubuntu
+  IdentityFile ~/.ssh/grace_ed25519
+Host grace-vpn
+  HostName ec2-34-246-28-115.eu-west-1.compute.amazonaws.com
+  User ec2-user
+  IdentityFile ~/.ssh/grace_ed25519
+Host grace-gitlab
+  HostName gitlab.com
   User git
-  IdentityFile ~/.ssh/bitbucket_rsa
+  IdentityFile ~/.ssh/grace_ed25519
 Host github.com
   HostName github.com
   User git
@@ -28,12 +41,3 @@ Host 35.156.34.115
 Host 52.57.97.35
   User ubuntu
   IdentityFile ~/.ssh/betalo-ec2-apex_rsa
-
-# WDProxy
-
-Host 18.195.44.3
-  User ec2-user
-  IdentityFile ~/.ssh/wdproxy_rsa
-Host 3.120.35.223
-  User ec2-user
-  IdentityFile ~/.ssh/wdproxy_rsa

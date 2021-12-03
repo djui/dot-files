@@ -41,7 +41,7 @@ alias -r cd..='cd ..'
 alias -r isodate='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 alias -r lower="tr '[:upper:]' '[:lower:]'"
 alias -r lsop='lsof -i'
-alias -r ls='ls --color'
+alias -r ls='ls -G'
 alias -r lt='tree -hDFC'
 alias -r matrix='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
 alias -r go-repl='gore'
@@ -83,6 +83,7 @@ alias -r gsmu='git submodule update --init --recursive'
 
 alias -r tf='terraform'
 
+#alias -r v='voictl'
 
 ## Deprecated
 

@@ -17,7 +17,7 @@
 
 [core]
 	# global per user gitignore file
-	excludesfile = ~/.gitignore_global
+	excludesfile = /Users/uwe/.gitignore_global
 
 [diff]
 	renames = copies
@@ -40,6 +40,7 @@
 
 [init]
 	templatedir = ~/.git_template
+	defaultBranch = main
 
 [merge]
 	summary = true
@@ -62,3 +63,21 @@
 	newbranchtemplate = dev-XXX-
 [http]
 	sslVerify = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /private/var/folders/p2/0p6x8w350vqgpvfby6wnxnhc0000gn/T/AppTranslocation/23E023A1-CEA0-4BBB-A129-D01D1411A535/d/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[url "git@bitbucket.org:"]
+	insteadOf = https://bitbucket.org/
+[pull]
+	ff = only
